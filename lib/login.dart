@@ -32,96 +32,104 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'Login',
-          style: TextStyle(
-              color: Colors.white, fontSize: 25, fontWeight: FontWeight.bold),
-        ),
-        centerTitle: true,
-        backgroundColor: Colors.black,
-      ),
-      body: Form(
-        key: _formKey,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-              child: TextFormField(
-                controller: userController,
-                decoration: const InputDecoration(
-                  suffixIcon: Icon(Icons.people_alt),
-                  border: OutlineInputBorder(),
-                  labelText: 'User',
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your user';
-                  }
-                  if (value != 'gerry') {
-                    return 'Incorrect User';
-                  }
-                  return null;
-                },
+      backgroundColor: Colors.white,
+      body: Center(
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const CircleAvatar(
+                backgroundColor: Colors.grey,
+                radius: 50,
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-              child: TextFormField(
-                controller: passwController,
-                obscureText: _passwordVisible,
-                decoration: InputDecoration(
-                    suffixIcon: IconButton(
-                        icon: Icon(_passwordVisible
-                            ? Icons.visibility
-                            : Icons.visibility_off), onPressed: (){
-                          setState(() {
-                            _passwordVisible = !_passwordVisible;
-                          });
-                    },),
-                    border: OutlineInputBorder(),
-                    labelText: 'Password'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your password';
-                  }
-                  if (value != 'admin') {
-                    return 'Incorrect Password';
-                  }
-                  return null;
-                },
+              const SizedBox(height: 20),
+              const Text(
+                'WELCOME',
+                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
               ),
-            ),
-            Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 8, vertical: 16.0),
-              child: Center(
-                child: ElevatedButton(
-                  style:
-                      ElevatedButton.styleFrom(backgroundColor: Colors.black),
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      userController.clear();
-                      passwController.clear();
-                      //Navigator.push(
-                      //  context,
-                      //  MaterialPageRoute(builder: (context) => MyHomePage()),
-                      //);
-                    } else {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Please fill input')),
-                      );
-                    }
-                  },
-                  child: const Text(
-                    'Submit',
-                    style: TextStyle(color: Colors.white),
+              const SizedBox(height: 40),
+              Form(
+                key: _formKey,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 30),
+                  child: Column(
+                    children: [
+                      TextFormField(
+                        controller: userController,
+                        decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Colors.grey[200],
+                          hintText: 'user',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20),
+                            borderSide: BorderSide.none,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      TextFormField(
+                        controller: passwController,
+                        obscureText: !_passwordVisible,
+                        decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Colors.grey[200],
+                          hintText: 'password',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20),
+                            borderSide: BorderSide.none,
+                          ),
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              _passwordVisible ? Icons.visibility : Icons.visibility_off,
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                _passwordVisible = !_passwordVisible;
+                              });
+                            },
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      TextButton(
+                        onPressed: () {
+                          // Add 'Forgot Password?' action
+                        },
+                        child: const Text(
+                          'No te acuerdas de tu password?',
+                          style: TextStyle(color: Colors.black),
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      ElevatedButton(
+                        onPressed: () {
+                          if (_formKey.currentState!.validate()) {
+                            // Perform login
+                          }
+                        },
+                        style: ElevatedButton.styleFrom(
+
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                        ),
+                        child: const Text('INICIAR SESION'),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          // Add 'Register' action
+                        },
+                        child: const Text(
+                          'REGISTRATE',
+                          style: TextStyle(color: Colors.orange),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
