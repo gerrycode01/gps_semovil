@@ -38,16 +38,11 @@ class _LoginState extends State<Login> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const CircleAvatar(
-                backgroundColor: Colors.grey,
-                radius: 50,
+              Image.asset(
+                'assets/images/SEMOVIL.png',
+                width: 200,
+                height: 200,
               ),
-              const SizedBox(height: 20),
-              const Text(
-                'WELCOME',
-                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 40),
               Form(
                 key: _formKey,
                 child: Padding(
@@ -107,21 +102,32 @@ class _LoginState extends State<Login> {
                             // Perform login
                           }
                         },
-                        style: ElevatedButton.styleFrom(
-
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(Colors.green), // Background color
+                          foregroundColor: MaterialStateProperty.all<Color>(Colors.white), // Text color
+                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
                           ),
                         ),
                         child: const Text('INICIAR SESION'),
                       ),
                       TextButton(
                         onPressed: () {
-                          // Add 'Register' action
+
                         },
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(Colors.orange), // Background color
+                          foregroundColor: MaterialStateProperty.all<Color>(Colors.white), // Text color
+                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                          ),
+                        ),
                         child: const Text(
-                          'REGISTRATE',
-                          style: TextStyle(color: Colors.orange),
+                          'REGISTRATE'
                         ),
                       ),
                     ],
