@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gps_semovil/registrarse.dart';
 
 void main() {
   runApp(const MyApp());
@@ -53,8 +54,8 @@ class _LoginState extends State<Login> {
                         controller: userController,
                         decoration: InputDecoration(
                           filled: true,
-                          fillColor: Colors.grey[200],
-                          hintText: 'user',
+                          fillColor: Colors.orange[100],
+                          hintText: 'usuario o correo',
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(20),
                             borderSide: BorderSide.none,
@@ -67,8 +68,8 @@ class _LoginState extends State<Login> {
                         obscureText: !_passwordVisible,
                         decoration: InputDecoration(
                           filled: true,
-                          fillColor: Colors.grey[200],
-                          hintText: 'password',
+                          fillColor: Colors.orange[100],
+                          hintText: 'contraseña',
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(20),
                             borderSide: BorderSide.none,
@@ -115,7 +116,7 @@ class _LoginState extends State<Login> {
                       ),
                       TextButton(
                         onPressed: () {
-
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => Registrar()));
                         },
                         style: ButtonStyle(
                           backgroundColor: MaterialStateProperty.all<Color>(Colors.orange), // Background color
