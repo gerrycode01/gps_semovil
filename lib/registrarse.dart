@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class Registrar extends StatefulWidget {
   const Registrar({super.key});
@@ -13,6 +14,7 @@ class _RegistrarState extends State<Registrar> {
   TextEditingController userController = TextEditingController();
   TextEditingController passwController = TextEditingController();
   bool _passwordVisible = false;
+  TextEditingController _dateController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,6 +70,7 @@ class _RegistrarState extends State<Registrar> {
             ),
             const SizedBox(height: 10),
             TextFormField(
+              controller: _dateController,
               decoration: InputDecoration(
                 filled: true,
                 fillColor: Colors.orange[100],
@@ -77,6 +80,20 @@ class _RegistrarState extends State<Registrar> {
                   borderSide: BorderSide.none,
                 ),
               ),
+              readOnly: true,
+              onTap: () async {
+                FocusScope.of(context).requestFocus(new FocusNode());
+                DateTime? pickedDate = await showDatePicker(
+                  context: context,
+                  initialDate: DateTime.now(),
+                  firstDate: DateTime(1900),
+                  lastDate: DateTime.now(),
+                );
+                if (pickedDate != null) {
+                  String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate); // Formato que prefieras
+                  _dateController.text = formattedDate; // Setea el texto del campo con la fecha
+                }
+              },
             ),
             const SizedBox(height: 10),
             TextFormField(
@@ -266,5 +283,9 @@ class _RegistrarState extends State<Registrar> {
         ),
       ),
     );
+  }
+  void dispose() {
+    _dateController.dispose();
+    super.dispose();
   }
 }
