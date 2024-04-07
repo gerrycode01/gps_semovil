@@ -1,6 +1,16 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:gps_semovil/usuario/prueba.dart';
 
-void main() => runApp(const MyApp());
+import '../firebase_options.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  runApp(const MyApp());
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -40,29 +50,21 @@ class _MyHomePageState extends State<MyHomePage> {
           )
         ],
       ),
-      body: ListView.builder(
-        itemCount: 5, // Número de elementos en la lista
-        itemBuilder: (BuildContext context, int index) {
-          return Card(
-            margin: const EdgeInsets.all(9.0),
-            child: ListTile(
-              leading: CircleAvatar(
-                backgroundColor: Colors.red,
-                radius: 30, // Ajusta el tamaño como sea necesario
-              ),
-              title: const Text('USER'),
-              subtitle: const Text('Título'),
-              trailing: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: const [
-                  Text('Fecha'),
-                  Text('Hora'),
-                ],
-              ),
-            ),
-          );
-        },
+      body: FutureBuilder(
+        future: getPeople(),
+        builder: ((context, snapshot) {
+          if (snapshot.hasData) {
+            return ListView.builder(
+                itemCount: snapshot.data?.length,
+                itemBuilder: (context, index) {
+                  return Text(snapshot.data?[index]['nombre']);
+                });
+          } else {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+        }),
       ),
       bottomNavigationBar: BottomNavigationBar(
         unselectedItemColor: Colors.black54,

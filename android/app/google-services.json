@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "389860386243",
+    "project_id": "gps-semovil",
+    "storage_bucket": "gps-semovil.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:389860386243:android:c3d122e223905a93534976",
+        "android_client_info": {
+          "package_name": "mx.edu.ittepic.gps_semovil"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCBdGYTPocGBX1YMVB5xe71C0QVXmdhspc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
