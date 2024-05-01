@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-
 import 'package:firebase_core/firebase_core.dart';
-import 'package:gps_semovil/login.dart';
-import 'package:gps_semovil/registrarse.dart';
-import 'package:gps_semovil/usuario/principal.dart';
-import 'firebase_options.dart';
+import 'package:gps_semovil/app/core/login.dart';
+import 'package:gps_semovil/app/core/registrarse.dart';
+import 'package:gps_semovil/user/screens/principal.dart';
+import 'package:gps_semovil/app/core/firebase_options.dart';
 
 
 void main() async {
