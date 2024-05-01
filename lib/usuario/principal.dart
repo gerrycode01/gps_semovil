@@ -1,14 +1,7 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:gps_semovil/usuario/prueba.dart';
 
-import '../firebase_options.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+void main() {
   runApp(const MyApp());
 }
 
@@ -18,20 +11,20 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: MyHomePage(),
+      home: UsuarioPage(),
       debugShowCheckedModeBanner: false,
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
+class UsuarioPage extends StatefulWidget {
+  const UsuarioPage({super.key});
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<UsuarioPage> createState() => _UsuarioPageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _UsuarioPageState extends State<UsuarioPage> {
   int _selectedIndex = 0;
 
   @override
@@ -50,22 +43,7 @@ class _MyHomePageState extends State<MyHomePage> {
           )
         ],
       ),
-      body: FutureBuilder(
-        future: getPeople(),
-        builder: ((context, snapshot) {
-          if (snapshot.hasData) {
-            return ListView.builder(
-                itemCount: snapshot.data?.length,
-                itemBuilder: (context, index) {
-                  return Text(snapshot.data?[index]['nombre']);
-                });
-          } else {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-        }),
-      ),
+      body: ListView(),
       bottomNavigationBar: BottomNavigationBar(
         unselectedItemColor: Colors.black54,
         selectedItemColor: Colors.white,

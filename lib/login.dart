@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gps_semovil/registrarse.dart';
 
 void main() {
   runApp(const MyApp());
@@ -116,7 +115,7 @@ class _LoginState extends State<Login> {
                       ),
                       TextButton(
                         onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => Registrar()));
+                          Navigator.pushNamed(context, '/registrar');
                         },
                         style: ButtonStyle(
                           backgroundColor: MaterialStateProperty.all<Color>(Colors.orange), // Background color
