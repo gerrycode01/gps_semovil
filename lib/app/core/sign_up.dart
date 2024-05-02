@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class Registrar extends StatefulWidget {
-  const Registrar({super.key});
+class SignUp extends StatefulWidget {
+  const SignUp({super.key});
 
   @override
-  State<Registrar> createState() => _RegistrarState();
+  State<SignUp> createState() => _SignUpState();
 }
 
-class _RegistrarState extends State<Registrar> {
+class _SignUpState extends State<SignUp> {
   bool termsAccepted = false;
   final _formKey = GlobalKey<FormState>();
-  TextEditingController userController = TextEditingController();
-  TextEditingController passwController = TextEditingController();
+  final userController = TextEditingController();
+  final passwController = TextEditingController();
   bool _passwordVisible = false;
-  TextEditingController _dateController = TextEditingController();
+  final _dateController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,7 +44,7 @@ class _RegistrarState extends State<Registrar> {
                 ),
               ),
             ),
-            SizedBox(height: 10,),
+            const SizedBox(height: 10,),
             TextFormField(
               decoration: InputDecoration(
                 filled: true,
@@ -82,7 +82,7 @@ class _RegistrarState extends State<Registrar> {
               ),
               readOnly: true,
               onTap: () async {
-                FocusScope.of(context).requestFocus(new FocusNode());
+                FocusScope.of(context).requestFocus(FocusNode());
                 DateTime? pickedDate = await showDatePicker(
                   context: context,
                   initialDate: DateTime.now(),
@@ -283,9 +283,5 @@ class _RegistrarState extends State<Registrar> {
         ),
       ),
     );
-  }
-  void dispose() {
-    _dateController.dispose();
-    super.dispose();
   }
 }

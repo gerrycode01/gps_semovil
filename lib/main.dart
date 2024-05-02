@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:gps_semovil/app/core/login.dart';
 import 'package:gps_semovil/app/core/sign_up.dart';
-import 'package:gps_semovil/user/screens/principal.dart';
+import 'package:gps_semovil/user/screens/user_home_page.dart';
 import 'package:gps_semovil/firebase_options.dart';
 
 
@@ -25,8 +25,8 @@ class MyApp extends StatelessWidget {
         initialRoute: '/',
         routes: {
           '/': (context) => const Login(),
-          '/registrar': (context) => const Registrar(),
-          '/home/usuario' : (context) => const UsuarioPage()
+          '/registrar': (context) => const SignUp(),
+          '/usuario' : (context) => const UserHomePage()
         });
   }
 }
