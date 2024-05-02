@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class Design{
-
   static TextFormField campoTexto(TextEditingController t, String texto){
     return TextFormField(
       controller: t,
