@@ -21,12 +21,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'MaterialApp',
+        title: 'SEMOVIL - Tu aliado en tránsito',
         initialRoute: '/',
         routes: {
           '/': (context) => const Login(),
-          '/registrar': (context) => const SignUp(),
-          '/usuario' : (context) => const UserHomePage()
+          '/sign_up': (context) => const SignUp(),
+          '/user_homepage' : (context) => const UserHomePage()
         });
   }
 }

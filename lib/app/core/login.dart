@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'modules/authentication/authentication.dart';
+
 
 void main() {
   runApp(const MyApp());
@@ -26,7 +28,7 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   final _formKey = GlobalKey<FormState>();
   TextEditingController userController = TextEditingController();
-  TextEditingController passwController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
   bool _passwordVisible = false;
 
   @override
@@ -54,7 +56,7 @@ class _LoginState extends State<Login> {
                         decoration: InputDecoration(
                           filled: true,
                           fillColor: Colors.orange[100],
-                          hintText: 'usuario o correo',
+                          hintText: 'Correo',
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(20),
                             borderSide: BorderSide.none,
@@ -63,12 +65,12 @@ class _LoginState extends State<Login> {
                       ),
                       const SizedBox(height: 8),
                       TextFormField(
-                        controller: passwController,
+                        controller: passwordController,
                         obscureText: !_passwordVisible,
                         decoration: InputDecoration(
                           filled: true,
                           fillColor: Colors.orange[100],
-                          hintText: 'contraseña',
+                          hintText: 'Contraseña',
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(20),
                             borderSide: BorderSide.none,
@@ -87,19 +89,22 @@ class _LoginState extends State<Login> {
                       ),
                       const SizedBox(height: 20),
                       TextButton(
-                        onPressed: () {
-                          // Add 'Forgot Password?' action
+                        onPressed: () async{
+                          await Authentication.resetPassword(userController.text);
                         },
                         child: const Text(
-                          'No te acuerdas de tu password?',
+                          'He olvidado mi contraseña',
                           style: TextStyle(color: Colors.black),
                         ),
                       ),
                       const SizedBox(height: 20),
                       ElevatedButton(
-                        onPressed: () {
+                        onPressed: () async {
                           if (_formKey.currentState!.validate()) {
-                            // Perform login
+                            if (await Authentication.loginUser(userController.text, passwordController.text)){
+                              Navigator.pushNamed(context, '/user_homepage');
+                            }
+
                           }
                         },
                         style: ButtonStyle(
@@ -111,11 +116,11 @@ class _LoginState extends State<Login> {
                             ),
                           ),
                         ),
-                        child: const Text('INICIAR SESION'),
+                        child: const Text('Login'),
                       ),
                       TextButton(
                         onPressed: () {
-                          Navigator.pushNamed(context, '/registrar');
+                          Navigator.pushNamed(context, '/sign_up');
                         },
                         style: ButtonStyle(
                           backgroundColor: MaterialStateProperty.all<Color>(Colors.orange), // Background color
@@ -127,7 +132,7 @@ class _LoginState extends State<Login> {
                           ),
                         ),
                         child: const Text(
-                          'REGISTRATE'
+                          'Sign up'
                         ),
                       ),
                     ],
@@ -140,4 +145,8 @@ class _LoginState extends State<Login> {
       ),
     );
   }
+}
+
+void forgotPassword() {
+
 }
