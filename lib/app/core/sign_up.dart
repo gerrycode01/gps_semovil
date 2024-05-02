@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import 'modules/authentication/authentication.dart';
+
 class SignUp extends StatefulWidget {
   const SignUp({super.key});
 
@@ -198,6 +200,7 @@ class _SignUpState extends State<SignUp> {
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
             ),
             TextFormField(
+              controller: userController,
               decoration: InputDecoration(
                 filled: true,
                 fillColor: Colors.orange[100],
@@ -272,10 +275,9 @@ class _SignUpState extends State<SignUp> {
             SizedBox(
               width: double.infinity, // Ensures the button stretches to fill the width
               child: ElevatedButton(
-                onPressed: termsAccepted ? () {
-                  // Perform registration logic
+                onPressed: termsAccepted ? () async {
+                  await Authentication.registerUser(userController.text, passwController.text);
                 } : null, // Disable the button if terms are not accepted
-
                 child: const Text('Registrarse'),
               ),
             ),
