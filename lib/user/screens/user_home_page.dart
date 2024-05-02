@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gps_semovil/user/screens/%20formalities/options.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -45,7 +46,12 @@ class _UserHomePageState extends State<UserHomePage> {
               style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: Colors.green),
             ), // Mensaje de bienvenida grande y en negritas
             SizedBox(height: 20), // Espacio entre el texto de bienvenida y los íconos
-            IconButtonRow(icon: Icons.assignment, color: Colors.blue, label: "Trámites", onPressed: () {}),
+            IconButtonRow(icon: Icons.assignment, color: Colors.blue, label: "Trámites", onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const Options()));
+            }),
             IconButtonRow(icon: Icons.report, color: Colors.red, label: "Reportes", onPressed: () {}),
             IconButtonRow(icon: Icons.payment, color: Colors.purple, label: "Pagos", onPressed: () {}),
           ],
