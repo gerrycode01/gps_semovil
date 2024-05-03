@@ -1,55 +1,64 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UserModel {
-  final String? id;
-  final String? curp;
-  final String? names;
-  final String? lastname;
-  final String? lastname2;
+  final String? curp; //
+  final String? doccurp; //
+  final String? names; //
+  final String? lastname; //
+  final String? lastname2; //
+  final String? address; //
+  final String? docaddress; //
   final String? email;
-  final String? phone;
-  final String? borndate;
-  final String? blood_type;
+  final String? phone; //
+  final String? borndate; //
+  final String? bloodtype; //
 
   UserModel(
-      {this.id,
-      this.curp,
+      {this.curp,
+      this.doccurp,
       this.names,
       this.lastname,
       this.lastname2,
+      this.address,
+      this.docaddress,
       this.email,
       this.phone,
       this.borndate,
-      this.blood_type
-      });
+      this.bloodtype});
 
-  static UserModel fromSnapshot(
-      DocumentSnapshot<Map<String, dynamic>> snapshot) {
+  factory UserModel.fromFirestore(
+    DocumentSnapshot<Map<String, dynamic>> snapshot,
+    SnapshotOptions? options,
+  ) {
+    final data = snapshot.data();
     return UserModel(
-      id: snapshot['id'],
-      curp: snapshot['curp'],
-      names: snapshot['names'],
-      lastname: snapshot['lastname'],
-      lastname2: snapshot['lastname2'],
-      email: snapshot['email'],
-      phone: snapshot['phone'],
-      borndate: snapshot['borndate'],
-      blood_type: snapshot['blood_type'],
-
+      curp: data?['curp'],
+      doccurp: data?['doccurp'],
+      names: data?['names'],
+      lastname: data?['lastname'],
+      lastname2: data?['lastname2'],
+      address: data?['address'],
+      docaddress: data?['docaddress'],
+      email: data?['email'],
+      phone: data?['phone'],
+      borndate: data?['borndate'],
+      bloodtype: data?['bloodtype'],
     );
   }
 
   Map<String, dynamic> toJSON() {
     return {
-      'id': id,
       'curp': curp,
+      'doccurp': doccurp,
       'names': names,
       'lastname': lastname,
       'lastname2': lastname2,
+      'address': address,
+      'docaddress': docaddress,
       'email': email,
       'phone': phone,
       'borndate': borndate,
-      'blood_type': blood_type,
+      'bloodtype': bloodtype,
     };
   }
 }

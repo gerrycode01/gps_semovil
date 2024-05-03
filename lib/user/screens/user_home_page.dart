@@ -41,11 +41,11 @@ class _UserHomePageState extends State<UserHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
+            const Text(
               'Bienvenido',
               style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: Colors.green),
             ), // Mensaje de bienvenida grande y en negritas
-            SizedBox(height: 20), // Espacio entre el texto de bienvenida y los íconos
+            const SizedBox(height: 20), // Espacio entre el texto de bienvenida y los íconos
             IconButtonRow(icon: Icons.assignment, color: Colors.blue, label: "Trámites", onPressed: () {
               Navigator.push(
                   context,
@@ -68,12 +68,12 @@ class IconButtonRow extends StatelessWidget {
   final VoidCallback onPressed;
 
   const IconButtonRow({
-    Key? key,
+    super.key,
     required this.icon,
     required this.color,
     required this.label,
     required this.onPressed,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

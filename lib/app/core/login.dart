@@ -1,23 +1,6 @@
 import 'package:flutter/material.dart';
 import 'modules/authentication/authentication.dart';
 
-
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Login(),
-    );
-  }
-}
-
 class Login extends StatefulWidget {
   const Login({super.key});
 
@@ -77,7 +60,9 @@ class _LoginState extends State<Login> {
                           ),
                           suffixIcon: IconButton(
                             icon: Icon(
-                              _passwordVisible ? Icons.visibility : Icons.visibility_off,
+                              _passwordVisible
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
                             ),
                             onPressed: () {
                               setState(() {
@@ -89,8 +74,9 @@ class _LoginState extends State<Login> {
                       ),
                       const SizedBox(height: 20),
                       TextButton(
-                        onPressed: () async{
-                          await Authentication.resetPassword(userController.text);
+                        onPressed: () async {
+                          await Authentication.resetPassword(
+                              userController.text);
                         },
                         child: const Text(
                           'He olvidado mi contraseña',
@@ -101,16 +87,19 @@ class _LoginState extends State<Login> {
                       ElevatedButton(
                         onPressed: () async {
                           if (_formKey.currentState!.validate()) {
-                            if (await Authentication.loginUser(userController.text, passwordController.text)){
+                            if (await Authentication.loginUser(
+                                userController.text, passwordController.text)) {
                               Navigator.pushNamed(context, '/user_homepage');
                             }
-
                           }
                         },
                         style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all<Color>(Colors.green), // Background color
-                          foregroundColor: MaterialStateProperty.all<Color>(Colors.white), // Text color
-                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              Colors.green), // Background color
+                          foregroundColor: MaterialStateProperty.all<Color>(
+                              Colors.white), // Text color
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
                             RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20),
                             ),
@@ -123,17 +112,18 @@ class _LoginState extends State<Login> {
                           Navigator.pushNamed(context, '/sign_up');
                         },
                         style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all<Color>(Colors.orange), // Background color
-                          foregroundColor: MaterialStateProperty.all<Color>(Colors.white), // Text color
-                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              Colors.orange), // Background color
+                          foregroundColor: MaterialStateProperty.all<Color>(
+                              Colors.white), // Text color
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
                             RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20),
                             ),
                           ),
                         ),
-                        child: const Text(
-                          'Sign up'
-                        ),
+                        child: const Text('Sign up'),
                       ),
                     ],
                   ),
@@ -147,6 +137,4 @@ class _LoginState extends State<Login> {
   }
 }
 
-void forgotPassword() {
-
-}
+void forgotPassword() {}

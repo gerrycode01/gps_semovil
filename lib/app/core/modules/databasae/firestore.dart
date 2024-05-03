@@ -1,18 +1,24 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:gps_semovil/user/user_model.dart';
 
 FirebaseFirestore db = FirebaseFirestore.instance;
 
-Future<List> getPeople() async {
-  List people = [];
-  CollectionReference collectionReferencePeople = db.collection('personas');
-
-  QuerySnapshot queryPeople = await collectionReferencePeople.get();
-  for (var documento in queryPeople.docs) {
-    people.add(documento.data());
+Future<UserModel> getUser(String curp) async {
+  final ref = db.collection('user').doc(curp).withConverter(
+        fromFirestore: UserModel.fromFirestore,
+        toFirestore: (UserModel userModel, _) => userModel.toJSON(),
+      );
+  final docSnap = await ref.get();
+  final user = docSnap.data(); // Convert to City object
+  if (user != null) {
+    print(user);
+    return user;
+  } else {
+    print("No such document.");
+    return UserModel();
   }
-  return people;
 }
 
-Future<void> addPeople(String name) async {
-  await db.collection('personas').add({'nombre': name});
+Future<void> addUser(UserModel userModel) async {
+  await db.collection('user').add(userModel.toJSON());
 }
