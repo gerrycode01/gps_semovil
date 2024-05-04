@@ -273,14 +273,45 @@ class _SignUpState extends State<SignUp> {
               ],
             ),
             SizedBox(
-              width: double.infinity, // Ensures the button stretches to fill the width
+              width: double.infinity, // Asegura que el botón se expanda para llenar el ancho
               child: ElevatedButton(
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all<Color>(Colors.green), // Color de fondo
+                  foregroundColor: MaterialStateProperty.all<Color>(Colors.white), // Color del texto
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                  ),
+                ),
                 onPressed: termsAccepted ? () async {
-                  await Authentication.registerUser(userController.text, passwController.text);
-                } : null, // Disable the button if terms are not accepted
+                  try {
+                    await Authentication.registerUser(userController.text, passwController.text);
+                    // Muestra el SnackBar en caso de éxito
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('Registro exitoso!'),
+                          duration: Duration(seconds: 2),
+                          backgroundColor: Colors.green,
+                        )
+                    );
+                    // Cierra la ventana después de mostrar el SnackBar
+                    Navigator.pop(context);
+                  } catch (e) {
+                    // Muestra el SnackBar en caso de error
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('Error al registrar: $e'),
+                          duration: Duration(seconds: 2),
+                          backgroundColor: Colors.red,
+                        )
+                    );
+                  }
+                } : null, // Deshabilita el botón si los términos no están aceptados
                 child: const Text('Registrarse'),
               ),
             ),
+
           ],
         ),
       ),
