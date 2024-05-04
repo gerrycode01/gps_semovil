@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gps_semovil/app/core/login.dart';
 
 class UserSettings extends StatefulWidget {
   const UserSettings({super.key});
@@ -15,10 +16,9 @@ class _UserSettingsState extends State<UserSettings> {
         title: const Text('Cuenta'),
         actions: [
           IconButton(
-            icon: const Icon(Icons.settings),
+            icon: const Icon(Icons.settings, color: Colors.white,),
             onPressed: () {
-              // Acción al presionar el ícono de configuración
-              print('Configuración presionada');
+
             },
           ),
         ],
@@ -90,9 +90,12 @@ class _UserSettingsState extends State<UserSettings> {
               minimumSize: Size(double.infinity, 50),
             ),
             onPressed: () {
-              // Acción para eliminar cuenta
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const Login()));
             },
-            child: const Text('Eliminar cuenta'),
+            child: const Text('Cerrar sesion'),
           ),
         ],
       ),
