@@ -10,7 +10,7 @@ class UserModel {
   final String? docaddress; //
   final String? email;
   final String? phone; //
-  final String? borndate; //
+  final String? birthdate; //
   final String? bloodtype; //
 
   UserModel(
@@ -23,7 +23,7 @@ class UserModel {
       this.docaddress,
       this.email,
       this.phone,
-      this.borndate,
+      this.birthdate,
       this.bloodtype});
 
   factory UserModel.fromFirestore(
@@ -41,7 +41,7 @@ class UserModel {
       docaddress: data?['docaddress'],
       email: data?['email'],
       phone: data?['phone'],
-      borndate: data?['borndate'],
+      birthdate: data?['birthdate'],
       bloodtype: data?['bloodtype'],
     );
   }
@@ -57,7 +57,7 @@ class UserModel {
       'docaddress': docaddress,
       'email': email,
       'phone': phone,
-      'borndate': borndate,
+      'birthdate': birthdate,
       'bloodtype': bloodtype,
     };
   }

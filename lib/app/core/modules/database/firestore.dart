@@ -20,5 +20,5 @@ Future<UserModel> getUser(String curp) async {
 }
 
 Future<void> addUser(UserModel userModel) async {
-  await db.collection('user').add(userModel.toJSON());
+  await db.collection('user').doc(userModel.email).set(userModel.toJSON());
 }
