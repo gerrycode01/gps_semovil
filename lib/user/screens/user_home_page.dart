@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gps_semovil/user/screens/%20formalities/options.dart';
+import 'package:gps_semovil/user/screens/user_settings.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -32,7 +33,10 @@ class _UserHomePageState extends State<UserHomePage> {
             color: Colors.white,
             icon: const Icon(Icons.person),
             onPressed: () {
-              // Acciones del ícono de usuario
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const UserSettings()));
             },
           )
         ],
