@@ -89,24 +89,23 @@ class _LoginState extends State<Login> {
                           if (_formKey.currentState!.validate()) {
                             if (await Authentication.loginUser(
                                 userController.text, passwordController.text)) {
-                              Navigator.pushNamed(context, '/user_homepage');
+                              // Usando pushReplacementNamed para evitar regresar al login
+                              Navigator.pushReplacementNamed(context, '/user_homepage');
                             }
                           }
                         },
                         style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all<Color>(
-                              Colors.green), // Background color
-                          foregroundColor: MaterialStateProperty.all<Color>(
-                              Colors.white), // Text color
-                          shape:
-                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                          backgroundColor: MaterialStateProperty.all<Color>(Colors.green), // Background color
+                          foregroundColor: MaterialStateProperty.all<Color>(Colors.white), // Text color
+                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                             RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20),
                             ),
                           ),
                         ),
-                        child: const Text('Login'),
+                        child: const Text('Log in'),
                       ),
+
                       TextButton(
                         onPressed: () {
                           Navigator.pushNamed(context, '/sign_up');
