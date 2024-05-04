@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gps_semovil/user/screens/%20formalities/options.dart';
+import 'package:gps_semovil/user/screens/news/news.dart';
 import 'package:gps_semovil/user/screens/user_settings.dart';
 
 class MyApp extends StatelessWidget {
@@ -41,37 +42,55 @@ class _UserHomePageState extends State<UserHomePage> {
           )
         ],
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SizedBox(height: 50,),
+          const Padding(
+            padding: EdgeInsets.only(bottom: 20),
+            child: Text(
               'Bienvenido',
               style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: Colors.green),
-            ), // Mensaje de bienvenida grande y en negritas
-            const SizedBox(height: 20), // Espacio entre el texto de bienvenida y los íconos
-            IconButtonRow(icon: Icons.assignment, color: Colors.blue, label: "Trámites", onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const Options()));
-            }),
-            IconButtonRow(icon: Icons.report, color: Colors.red, label: "Reportes", onPressed: () {}),
-            IconButtonRow(icon: Icons.payment, color: Colors.purple, label: "Pagos", onPressed: () {}),
-          ],
-        ),
+            ),
+          ),
+          Expanded(
+            child: GridView.count(
+              crossAxisCount: 2,
+              childAspectRatio: 1.5,
+              padding: const EdgeInsets.all(8),
+              mainAxisSpacing: 8,
+              crossAxisSpacing: 8,
+              children: <Widget>[
+                IconActionButton(icon: Icons.assignment, color: Colors.blue, label: "Trámites", onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const Options()));
+                }),
+                IconActionButton(icon: Icons.report, color: Colors.red, label: "Reportes", onPressed: () {}),
+                IconActionButton(icon: Icons.payment, color: Colors.purple, label: "Pagos", onPressed: () {}),
+                IconActionButton(icon: Icons.newspaper, color: Colors.orange, label: "Noticias", onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const News()));
+                }),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
 }
 
-class IconButtonRow extends StatelessWidget {
+class IconActionButton extends StatelessWidget {
   final IconData icon;
   final Color color;
   final String label;
   final VoidCallback onPressed;
 
-  const IconButtonRow({
+  const IconActionButton({
     super.key,
     required this.icon,
     required this.color,
@@ -81,19 +100,16 @@ class IconButtonRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          IconButton(
-            iconSize: 60, // Aumenta el tamaño del ícono
-            icon: Icon(icon, color: color),
-            onPressed: onPressed,
-          ),
-          Text(label, style: TextStyle(fontSize: 16, color: color)), // Etiqueta debajo del ícono
-        ],
-      ),
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        IconButton(
+          iconSize: 60,
+          icon: Icon(icon, color: color),
+          onPressed: onPressed,
+        ),
+        Text(label, style: TextStyle(fontSize: 16, color: color)),
+      ],
     );
   }
 }
