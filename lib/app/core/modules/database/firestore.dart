@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:gps_semovil/user/user_model.dart';
+import 'package:gps_semovil/user/models/user_model.dart';
 
 FirebaseFirestore db = FirebaseFirestore.instance;
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gps_semovil/user/user_model.dart';
+import 'package:gps_semovil/user/models/user_model.dart';
 import 'package:intl/intl.dart';
 
 import 'modules/authentication/authentication.dart';
