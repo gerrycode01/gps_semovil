@@ -39,7 +39,7 @@ class Design{
       },
       style: ButtonStyle(
         backgroundColor: MaterialStateProperty.all<Color>(Colors.red), // Background color
-        foregroundColor: MaterialStateProperty.all<Color>(Colors.blue), // Text color
+        foregroundColor: MaterialStateProperty.all<Color>(Colors.white), // Text color
         shape: MaterialStateProperty.all<RoundedRectangleBorder>(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),

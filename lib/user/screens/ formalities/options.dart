@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:gps_semovil/user/screens/%20formalities/firstime.dart';
+import 'package:gps_semovil/user/screens/%20formalities/information.dart';
 
 class Options extends StatefulWidget {
   const Options({super.key});
@@ -22,7 +24,12 @@ class _OptionsState extends State<Options> {
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                CustomButton(label: 'Primera vez', icon: Icons.fiber_new, onPressed: () {}),
+                CustomButton(label: 'Primera vez', icon: Icons.fiber_new, onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const Information()));
+                }),
                 const SizedBox(height: 20),
                 CustomButton(label: 'Renovación', icon: Icons.refresh, onPressed: () {}),
                 const SizedBox(height: 20),

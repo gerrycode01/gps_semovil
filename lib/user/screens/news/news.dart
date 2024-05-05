@@ -18,16 +18,16 @@ class _NewsState extends State<News> {
       body: ListView.builder(
         itemCount: 5, // Número de noticias, puedes modificar esto según la fuente de datos
         itemBuilder: (context, index) {
-          return Card(
-            margin: const EdgeInsets.all(8),
+          return const Card(
+            margin: EdgeInsets.all(8),
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: EdgeInsets.all(8.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: const [
+                    children: [
                       // Aquí se mostrará el logo
                       CircleAvatar(
                         radius: 20,
@@ -37,24 +37,17 @@ class _NewsState extends State<News> {
                       Text('05/05/2024 14:00', style: TextStyle(color: Colors.grey)),
                     ],
                   ),
-                  const SizedBox(height: 10),
-                  const Text(
+                  SizedBox(height: 10),
+                  Text(
                     'Título de la Noticia',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
                     ),
                   ),
-                  const SizedBox(height: 10),
-                  const Text(
+                  SizedBox(height: 10),
+                  Text(
                       'Descripción breve de la noticia donde se explica el contenido principal...'
-                  ),
-                  const SizedBox(height: 10),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: const [
-                      Text('Leer más...', style: TextStyle(color: Colors.blue)),
-                    ],
                   ),
                 ],
               ),
