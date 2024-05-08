@@ -12,6 +12,7 @@ class UserModel {
   final String? phone; //
   final String? birthdate; //
   final String? bloodtype; //
+  final String? rol; //
 
   UserModel(
       {this.curp,
@@ -24,7 +25,8 @@ class UserModel {
       this.email,
       this.phone,
       this.birthdate,
-      this.bloodtype});
+      this.bloodtype,
+      this.rol});
 
   factory UserModel.fromFirestore(
     DocumentSnapshot<Map<String, dynamic>> snapshot,
@@ -43,6 +45,7 @@ class UserModel {
       phone: data?['phone'],
       birthdate: data?['birthdate'],
       bloodtype: data?['bloodtype'],
+      rol: data?['rol'],
     );
   }
 
@@ -59,6 +62,7 @@ class UserModel {
       'phone': phone,
       'birthdate': birthdate,
       'bloodtype': bloodtype,
+      'rol': rol,
     };
   }
 }
