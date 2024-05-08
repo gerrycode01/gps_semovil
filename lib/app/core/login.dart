@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:gps_semovil/app/core/modules/database/firestore.dart';
+import 'package:gps_semovil/user/models/user_model.dart';
 import 'modules/authentication/authentication.dart';
 
 class Login extends StatefulWidget {
@@ -90,18 +92,29 @@ class _LoginState extends State<Login> {
                         const SizedBox(height: 20),
                         ElevatedButton(
                           onPressed: () async {
-                            if (_formKey.currentState!.validate()) {
-                              if (await Authentication.loginUser(
-                                  userController.text, passwordController.text)) {
-                                // Usando pushReplacementNamed para evitar regresar al login
-                                Navigator.pushReplacementNamed(context, '/user_homepage');
-                              }
+                            if (_formKey.currentState!.validate() == false) {
+                              return;
                             }
+                            if (await Authentication.loginUser(
+                                    userController.text,
+                                    passwordController.text) ==
+                                false) {
+                              return;
+                            }
+                            UserModel userModel =
+                                await getUser(userController.text);
+
+                            Navigator.pushReplacementNamed(
+                                context, '/user_homepage',
+                                arguments: userModel);
                           },
                           style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all<Color>(Colors.green), // Background color
-                            foregroundColor: MaterialStateProperty.all<Color>(Colors.white), // Text color
-                            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                            backgroundColor: MaterialStateProperty.all<Color>(
+                                Colors.green), // Background color
+                            foregroundColor: MaterialStateProperty.all<Color>(
+                                Colors.white), // Text color
+                            shape: MaterialStateProperty.all<
+                                RoundedRectangleBorder>(
                               RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20),
                               ),
@@ -109,7 +122,9 @@ class _LoginState extends State<Login> {
                           ),
                           child: const Text('Log in'),
                         ),
-                        SizedBox(height: 10,),
+                        const SizedBox(
+                          height: 10,
+                        ),
                         TextButton(
                           onPressed: () {
                             Navigator.pushNamed(context, '/sign_up');
@@ -119,8 +134,8 @@ class _LoginState extends State<Login> {
                                 Colors.orange), // Background color
                             foregroundColor: MaterialStateProperty.all<Color>(
                                 Colors.white), // Text color
-                            shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                            shape: MaterialStateProperty.all<
+                                RoundedRectangleBorder>(
                               RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20),
                               ),
