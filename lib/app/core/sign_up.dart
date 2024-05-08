@@ -236,7 +236,8 @@ class _SignUpState extends State<SignUp> {
           email: emailController.text,
           phone: phoneController.text,
           birthdate: birthdateController.text,
-          bloodtype: selectedBloodType);
+          bloodtype: selectedBloodType,
+          rol: 'user');
 
       await addUser(userModel).then((_) {
         // Muestra el SnackBar en caso de éxito
