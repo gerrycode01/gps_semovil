@@ -27,10 +27,22 @@ class _UserSettingsState extends State<UserSettings> {
       body: ListView(
         padding: const EdgeInsets.all(20),
         children: [
-          CircleAvatar(
-            radius: 50,
-            backgroundColor: Colors.red,
-            child: const Text('Imagen', style: TextStyle(color: Colors.white)), // Reemplazar con Image.network() o Image.asset() si tienes una imagen
+          InkWell(
+            onTap: () {
+              // Aquí colocas lo que deseas que ocurra cuando se toque la imagen
+              print('Imagen clickeada');
+            },
+            child: CircleAvatar(
+              radius: 50,
+              backgroundColor: Colors.red,
+              // Si tienes una URL de imagen, usa Image.network()
+              // Si tienes una imagen local, usa Image.asset()
+              // Ejemplo usando Image.network():
+              child: Image.network(
+                'https://example.com/your-image.jpg',
+                fit: BoxFit.cover,
+              ),
+            ),
           ),
           const SizedBox(height: 20),
           ListTile(
