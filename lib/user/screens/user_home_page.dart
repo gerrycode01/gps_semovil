@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gps_semovil/user/screens/%20formalities/options.dart';
-import 'package:gps_semovil/user/screens/news/news.dart';
+import 'package:gps_semovil/user/screens/news.dart';
 import 'package:gps_semovil/user/screens/user_settings.dart';
 
 class MyApp extends StatelessWidget {
