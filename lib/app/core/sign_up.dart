@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gps_semovil/app/core/design.dart';
 import 'package:gps_semovil/user/models/user_model.dart';
 import 'package:intl/intl.dart';
 
@@ -51,116 +52,47 @@ class _SignUpState extends State<SignUp> {
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
             ),
             const SizedBox(height: 10),
-            TextFormField(
-              controller: nameController,
-              decoration: InputDecoration(
-                filled: true,
-                fillColor: Colors.orange[100],
-                hintText: 'Nombre(s)',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(30),
-                  borderSide: BorderSide.none,
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            TextFormField(
-              controller: lastnameController,
-              decoration: InputDecoration(
-                filled: true,
-                fillColor: Colors.orange[100],
-                hintText: 'Apellido paterno',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(30),
-                  borderSide: BorderSide.none,
-                ),
-              ),
-            ),
+            Design.campoTexto(nameController, "Nombre(s)"),
+            const SizedBox(height: 10,),
+            Design.campoTexto(lastnameController, "Apellido Paterno"),
             const SizedBox(height: 10),
-            TextFormField(
-              controller: lastname2Controller,
-              decoration: InputDecoration(
-                filled: true,
-                fillColor: Colors.orange[100],
-                hintText: 'Apellido materno',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(30),
-                  borderSide: BorderSide.none,
+            Design.campoTexto(lastname2Controller, "Apellido Materno"),
+            const SizedBox(height: 10),
+            Design.campoFecha(context, birthdateController, 'Fecha de nacimiento'),
+            const SizedBox(height: 10),
+            Design.campoTexto(curpController, "CURP"),
+            const SizedBox(height: 10),
+            Design.campoTexto(phoneController, "Telefono"),
+            const SizedBox(height: 10),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+              decoration: BoxDecoration(
+                color: Colors.orange[100], // Fondo naranja claro
+                borderRadius: BorderRadius.circular(30), // Bordes redondeados
+                border: Border.all(color: Colors.transparent), // Sin bordes visibles
+              ),
+              child: DropdownButtonHideUnderline(
+                child: DropdownButton<String>(
+                  value: selectedBloodType, // Valor actual seleccionado
+                  isExpanded: true, // Expande el dropdown a todo el ancho del contenedor
+                  icon: const Icon(Icons.arrow_drop_down, color: Colors.black), // Icono del dropdown
+                  iconSize: 24, // Tamaño del icono
+                  elevation: 16, // Elevación para sombra (opcional)
+                  style: const TextStyle(color: Colors.black, fontSize: 16), // Estilo del texto dentro del dropdown
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      selectedBloodType = newValue; // Cambia el valor seleccionado
+                    });
+                  },
+                  items: Const.bloodtypes.map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value), // Muestra cada tipo de sangre como opción
+                    );
+                  }).toList(),
+                  hint: const Text('Selecciona un tipo de sangre', style: TextStyle(color: Colors.black)), // Texto de pista cuando no hay nada seleccionado
                 ),
               ),
-            ),
-            const SizedBox(height: 10),
-            TextFormField(
-              controller: birthdateController,
-              decoration: InputDecoration(
-                filled: true,
-                fillColor: Colors.orange[100],
-                hintText: 'Fecha de nacimiento',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(30),
-                  borderSide: BorderSide.none,
-                ),
-              ),
-              readOnly: true,
-              onTap: () async {
-                FocusScope.of(context).requestFocus(FocusNode());
-                DateTime? pickedDate = await showDatePicker(
-                  context: context,
-                  initialDate: DateTime.now(),
-                  firstDate: DateTime(1900),
-                  lastDate: DateTime.now(),
-                );
-                if (pickedDate != null) {
-                  String formattedDate = DateFormat('yyyy-MM-dd')
-                      .format(pickedDate); // Formato que prefieras
-                  birthdateController.text =
-                      formattedDate; // Setea el texto del campo con la fecha
-                }
-              },
-            ),
-            const SizedBox(height: 10),
-            TextFormField(
-              controller: curpController,
-              decoration: InputDecoration(
-                filled: true,
-                fillColor: Colors.orange[100],
-                hintText: 'CURP',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(30),
-                  borderSide: BorderSide.none,
-                ),
-              ),
-            ),
-            const SizedBox(height: 10),
-            TextFormField(
-              controller: phoneController,
-              decoration: InputDecoration(
-                filled: true,
-                fillColor: Colors.orange[100],
-                hintText: 'Telefono',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(30),
-                  borderSide: BorderSide.none,
-                ),
-              ),
-            ),
-            const SizedBox(height: 10),
-            DropdownButton<String>(
-              value: selectedBloodType,
-              items: Const.bloodtypes.map((String bloodType) {
-                return DropdownMenuItem<String>(
-                  value: bloodType,
-                  child: Text(bloodType),
-                );
-              }).toList(),
-              onChanged: (String? newValue) {
-                setState(() {
-                  selectedBloodType = newValue;
-                });
-              },
-              hint: const Text('Selecciona un tipo de sangre'),
             ),
             const SizedBox(height: 20),
             const Text(
@@ -169,80 +101,21 @@ class _SignUpState extends State<SignUp> {
             ),
             Row(
               children: <Widget>[
-                Expanded(
-                  child: TextFormField(
-                    controller: address1Controller,
-                    decoration: InputDecoration(
-                      filled: true,
-                      fillColor: Colors.orange[100],
-                      hintText: 'Calle',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30),
-                        borderSide: BorderSide.none,
-                      ),
-                    ),
-                  ),
-                ),
+                Expanded(child: Design.campoTexto(address1Controller, "Calle"),),
                 const SizedBox(width: 10),
-                Expanded(
-                  child: TextFormField(
-                    controller: address2Controller,
-                    decoration: InputDecoration(
-                      filled: true,
-                      fillColor: Colors.orange[100],
-                      hintText: 'No',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30),
-                        borderSide: BorderSide.none,
-                      ),
-                    ),
-                  ),
-                ),
+                Expanded(child: Design.campoTexto(address2Controller, "No."),),
               ],
             ),
             const SizedBox(height: 10), // Espacio entre las filas
-            TextFormField(
-              controller: address3Controller,
-              decoration: InputDecoration(
-                filled: true,
-                fillColor: Colors.orange[100],
-                hintText: 'Colonia',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(30),
-                  borderSide: BorderSide.none,
-                ),
-              ),
-            ),
+            Design.campoTexto(nameController, "Colonia"),
             const SizedBox(height: 10),
-            TextFormField(
-              controller: address4Controller,
-              decoration: InputDecoration(
-                filled: true,
-                fillColor: Colors.orange[100],
-                hintText: 'Localidad',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(30),
-                  borderSide: BorderSide.none,
-                ),
-              ),
-            ),
+            Design.campoTexto(address4Controller, "Localidad"),
             const SizedBox(height: 20),
             const Text(
               'Cuenta',
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
             ),
-            TextFormField(
-              controller: emailController,
-              decoration: InputDecoration(
-                filled: true,
-                fillColor: Colors.orange[100],
-                hintText: 'Correo',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(30),
-                  borderSide: BorderSide.none,
-                ),
-              ),
-            ),
+            Design.campoTexto(emailController, "Correo electronico"),
             const SizedBox(height: 10),
             TextFormField(
               controller: passwordController,
@@ -363,7 +236,8 @@ class _SignUpState extends State<SignUp> {
           email: emailController.text,
           phone: phoneController.text,
           birthdate: birthdateController.text,
-          bloodtype: selectedBloodType);
+          bloodtype: selectedBloodType,
+          rol: 'user');
 
       await addUser(userModel).then((_) {
         // Muestra el SnackBar en caso de éxito

@@ -10,6 +10,15 @@ class Authentication {
     }
   }
 
+  static Future<String?> getUserEmail() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user == null) {
+      return null;
+    } else {
+      return user.email;
+    }
+  }
+
   static Future<bool> registerUser(String email, String password) async {
     try {
       await FirebaseAuth.instance
