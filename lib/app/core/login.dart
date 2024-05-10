@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gps_semovil/app/core/modules/database/firestore.dart';
+import 'package:gps_semovil/local.dart';
 import 'package:gps_semovil/user/models/user_model.dart';
 import 'modules/authentication/authentication.dart';
 
@@ -12,9 +13,38 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   final _formKey = GlobalKey<FormState>();
-  TextEditingController userController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+  final TextEditingController _emailController =
+      TextEditingController(text: Local.email);
+  final TextEditingController _passwordController =
+      TextEditingController(text: Local.password);
   bool _passwordVisible = false;
+
+  bool _loading = false;
+
+  void _login() async {
+    setState(() {
+      _loading = true;
+    });
+
+    String email = _emailController.text.trim();
+    String password = _passwordController.text.trim();
+
+    bool success = await Authentication.loginUser(email, password);
+
+    if (success) {
+      UserModel userModel = await getUser(_emailController.text);
+
+      Navigator.pushReplacementNamed(context, '/user_homepage',
+          arguments: userModel);
+      print('Login exitoso');
+    } else {
+      print('Error al iniciar sesión');
+    }
+
+    setState(() {
+      _loading = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +71,7 @@ class _LoginState extends State<Login> {
                     child: Column(
                       children: [
                         TextFormField(
-                          controller: userController,
+                          controller: _emailController,
                           decoration: InputDecoration(
                             filled: true,
                             fillColor: Colors.orange[100],
@@ -54,7 +84,7 @@ class _LoginState extends State<Login> {
                         ),
                         const SizedBox(height: 8),
                         TextFormField(
-                          controller: passwordController,
+                          controller: _passwordController,
                           obscureText: !_passwordVisible,
                           decoration: InputDecoration(
                             filled: true,
@@ -82,7 +112,7 @@ class _LoginState extends State<Login> {
                         TextButton(
                           onPressed: () async {
                             await Authentication.resetPassword(
-                                userController.text);
+                                _emailController.text);
                           },
                           child: const Text(
                             'He olvidado mi contraseña',
@@ -90,38 +120,32 @@ class _LoginState extends State<Login> {
                           ),
                         ),
                         const SizedBox(height: 20),
-                        ElevatedButton(
-                          onPressed: () async {
-                            if (_formKey.currentState!.validate() == false) {
-                              return;
-                            }
-                            if (await Authentication.loginUser(
-                                    userController.text,
-                                    passwordController.text) ==
-                                false) {
-                              return;
-                            }
-                            UserModel userModel =
-                                await getUser(userController.text);
-
-                            Navigator.pushReplacementNamed(
-                                context, '/user_homepage',
-                                arguments: userModel);
-                          },
-                          style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                                Colors.green), // Background color
-                            foregroundColor: MaterialStateProperty.all<Color>(
-                                Colors.white), // Text color
-                            shape: MaterialStateProperty.all<
-                                RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20),
+                        _loading
+                            ? const CircularProgressIndicator()
+                            : ElevatedButton(
+                                onPressed: () async {
+                                  if (_formKey.currentState!.validate() ==
+                                      false) {
+                                    return;
+                                  }
+                                  _login();
+                                },
+                                style: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStateProperty.all<Color>(
+                                          Colors.green), // Background color
+                                  foregroundColor:
+                                      MaterialStateProperty.all<Color>(
+                                          Colors.white), // Text color
+                                  shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                    RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                  ),
+                                ),
+                                child: const Text('Log in'),
                               ),
-                            ),
-                          ),
-                          child: const Text('Log in'),
-                        ),
                         const SizedBox(
                           height: 10,
                         ),
