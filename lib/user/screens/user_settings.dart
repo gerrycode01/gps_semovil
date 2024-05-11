@@ -15,9 +15,6 @@ class UserSettings extends StatefulWidget {
 }
 
 class _UserSettingsState extends State<UserSettings> {
-  File? image_to_upload;
-  bool profilePhoto = false;
-
   @override
   void initState() {
     // TODO: implement initState
@@ -46,7 +43,7 @@ class _UserSettingsState extends State<UserSettings> {
         children: [
           CircularImage(
             userModel: widget.userModel, // Reemplaza con tu URL de imagen
-            radius: 80.0, // Tamaño del círculo
+            radius: 100.0, // Tamaño del círculo
           ),
           const SizedBox(height: 20),
           ListTile(
@@ -54,9 +51,12 @@ class _UserSettingsState extends State<UserSettings> {
             subtitle: Text(widget.userModel.names!),
             leading: Icon(Icons.person,
                 color: Theme.of(context).colorScheme.secondary),
-            trailing: IconButton(icon: const Icon(Icons.edit), onPressed: (){
-              widget.userModel.doccurp = '';
-            },),
+            trailing: IconButton(
+              icon: const Icon(Icons.edit),
+              onPressed: () {
+                widget.userModel.doccurp = '';
+              },
+            ),
           ),
           ListTile(
             title: const Text('Apellido Paterno'),
@@ -126,11 +126,5 @@ class _UserSettingsState extends State<UserSettings> {
         ],
       ),
     );
-  }
-
-  void cargarDatos() {
-    if (widget.userModel.profilePhoto!.isNotEmpty) {
-      profilePhoto = true;
-    }
   }
 }

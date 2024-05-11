@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:gps_semovil/user/models/user_model.dart';
 
 FirebaseFirestore db = FirebaseFirestore.instance;
@@ -21,4 +22,14 @@ Future<UserModel> getUser(String email) async {
 
 Future<void> addUser(UserModel userModel) async {
   await db.collection('user').doc(userModel.email).set(userModel.toJSON());
+}
+
+Future<void> updateUser(UserModel userModel) async {
+  try {
+    final ref = db.collection('user').doc(userModel.email);
+    await ref.update(userModel.toJSON());
+    print("Usuario actualizado correctamente");
+  } catch (e) {
+    print("Error actualizando usuario: $e");
+  }
 }
