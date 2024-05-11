@@ -1,18 +1,19 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UserModel {
-  final String? curp; //
-  final String? doccurp; //
-  final String? names; //
-  final String? lastname; //
-  final String? lastname2; //
-  final String? address; //
-  final String? docaddress; //
+  String? curp; //
+  String? doccurp; //
+  String? names; //
+  String? lastname; //
+  String? lastname2; //
+  String? address; //
+  String? docaddress; //
   final String? email;
-  final String? phone; //
-  final String? birthdate; //
-  final String? bloodtype; //
-  final String? rol; //
+  String? phone; //
+  String? birthdate; //
+  String? bloodtype; //
+  String? rol; //
+  String? profilePhoto; //
 
   UserModel(
       {this.curp,
@@ -26,7 +27,9 @@ class UserModel {
       this.phone,
       this.birthdate,
       this.bloodtype,
-      this.rol});
+      this.rol,
+      this.profilePhoto
+      });
 
   factory UserModel.fromFirestore(
     DocumentSnapshot<Map<String, dynamic>> snapshot,
@@ -46,6 +49,7 @@ class UserModel {
       birthdate: data?['birthdate'],
       bloodtype: data?['bloodtype'],
       rol: data?['rol'],
+      profilePhoto: data?['profilePhoto'],
     );
   }
 
@@ -63,6 +67,7 @@ class UserModel {
       'birthdate': birthdate,
       'bloodtype': bloodtype,
       'rol': rol,
+      'profilePhoto': profilePhoto,
     };
   }
 }

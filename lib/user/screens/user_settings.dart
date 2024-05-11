@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:gps_semovil/app/core/login.dart';
+import 'package:gps_semovil/app/core/modules/components/circular_image.dart';
 import 'package:gps_semovil/user/models/user_model.dart';
 
 class UserSettings extends StatefulWidget {
@@ -12,10 +15,14 @@ class UserSettings extends StatefulWidget {
 }
 
 class _UserSettingsState extends State<UserSettings> {
+  File? image_to_upload;
+  bool profilePhoto = false;
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    //cargarDatos();
   }
 
   @override
@@ -37,16 +44,9 @@ class _UserSettingsState extends State<UserSettings> {
       body: ListView(
         padding: const EdgeInsets.all(20),
         children: [
-          CircleAvatar(
-            radius: 50,
-            backgroundColor: Colors.red,
-            child: IconButton(
-              icon: Icon(Icons.person),
-              iconSize: 50,
-              onPressed: () {
-                print('IconButton presionado');
-              },
-            ),
+          CircularImage(
+            userModel: widget.userModel, // Reemplaza con tu URL de imagen
+            radius: 80.0, // Tamaño del círculo
           ),
           const SizedBox(height: 20),
           ListTile(
@@ -54,6 +54,9 @@ class _UserSettingsState extends State<UserSettings> {
             subtitle: Text(widget.userModel.names!),
             leading: Icon(Icons.person,
                 color: Theme.of(context).colorScheme.secondary),
+            trailing: IconButton(icon: const Icon(Icons.edit), onPressed: (){
+              widget.userModel.doccurp = '';
+            },),
           ),
           ListTile(
             title: const Text('Apellido Paterno'),
@@ -123,5 +126,11 @@ class _UserSettingsState extends State<UserSettings> {
         ],
       ),
     );
+  }
+
+  void cargarDatos() {
+    if (widget.userModel.profilePhoto!.isNotEmpty) {
+      profilePhoto = true;
+    }
   }
 }

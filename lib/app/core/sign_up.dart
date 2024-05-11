@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gps_semovil/app/core/design.dart';
 import 'package:gps_semovil/user/models/user_model.dart';
-import 'package:intl/intl.dart';
 
 import 'modules/authentication/authentication.dart';
 import 'modules/database/constantes.dart';
@@ -53,12 +52,15 @@ class _SignUpState extends State<SignUp> {
             ),
             const SizedBox(height: 10),
             Design.campoTexto(nameController, "Nombre(s)"),
-            const SizedBox(height: 10,),
+            const SizedBox(
+              height: 10,
+            ),
             Design.campoTexto(lastnameController, "Apellido Paterno"),
             const SizedBox(height: 10),
             Design.campoTexto(lastname2Controller, "Apellido Materno"),
             const SizedBox(height: 10),
-            Design.campoFecha(context, birthdateController, 'Fecha de nacimiento'),
+            Design.campoFecha(
+                context, birthdateController, 'Fecha de nacimiento'),
             const SizedBox(height: 10),
             Design.campoTexto(curpController, "CURP"),
             const SizedBox(height: 10),
@@ -69,28 +71,41 @@ class _SignUpState extends State<SignUp> {
               decoration: BoxDecoration(
                 color: Colors.orange[100], // Fondo naranja claro
                 borderRadius: BorderRadius.circular(30), // Bordes redondeados
-                border: Border.all(color: Colors.transparent), // Sin bordes visibles
+                border: Border.all(
+                    color: Colors.transparent), // Sin bordes visibles
               ),
               child: DropdownButtonHideUnderline(
                 child: DropdownButton<String>(
-                  value: selectedBloodType, // Valor actual seleccionado
-                  isExpanded: true, // Expande el dropdown a todo el ancho del contenedor
-                  icon: const Icon(Icons.arrow_drop_down, color: Colors.black), // Icono del dropdown
-                  iconSize: 24, // Tamaño del icono
-                  elevation: 16, // Elevación para sombra (opcional)
-                  style: const TextStyle(color: Colors.black, fontSize: 16), // Estilo del texto dentro del dropdown
+                  value: selectedBloodType,
+                  // Valor actual seleccionado
+                  isExpanded: true,
+                  // Expande el dropdown a todo el ancho del contenedor
+                  icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
+                  // Icono del dropdown
+                  iconSize: 24,
+                  // Tamaño del icono
+                  elevation: 16,
+                  // Elevación para sombra (opcional)
+                  style: const TextStyle(color: Colors.black, fontSize: 16),
+                  // Estilo del texto dentro del dropdown
                   onChanged: (String? newValue) {
                     setState(() {
-                      selectedBloodType = newValue; // Cambia el valor seleccionado
+                      selectedBloodType =
+                          newValue; // Cambia el valor seleccionado
                     });
                   },
-                  items: Const.bloodtypes.map<DropdownMenuItem<String>>((String value) {
+                  items: Const.bloodtypes
+                      .map<DropdownMenuItem<String>>((String value) {
                     return DropdownMenuItem<String>(
                       value: value,
-                      child: Text(value), // Muestra cada tipo de sangre como opción
+                      child: Text(
+                          value), // Muestra cada tipo de sangre como opción
                     );
                   }).toList(),
-                  hint: const Text('Selecciona un tipo de sangre', style: TextStyle(color: Colors.black)), // Texto de pista cuando no hay nada seleccionado
+                  hint: const Text('Selecciona un tipo de sangre',
+                      style: TextStyle(
+                          color: Colors
+                              .black)), // Texto de pista cuando no hay nada seleccionado
                 ),
               ),
             ),
@@ -101,9 +116,13 @@ class _SignUpState extends State<SignUp> {
             ),
             Row(
               children: <Widget>[
-                Expanded(child: Design.campoTexto(address1Controller, "Calle"),),
+                Expanded(
+                  child: Design.campoTexto(address1Controller, "Calle"),
+                ),
                 const SizedBox(width: 10),
-                Expanded(child: Design.campoTexto(address2Controller, "No."),),
+                Expanded(
+                  child: Design.campoTexto(address2Controller, "No."),
+                ),
               ],
             ),
             const SizedBox(height: 10), // Espacio entre las filas
@@ -237,7 +256,8 @@ class _SignUpState extends State<SignUp> {
           phone: phoneController.text,
           birthdate: birthdateController.text,
           bloodtype: selectedBloodType,
-          rol: 'user');
+          rol: 'user',
+          profilePhoto: '');
 
       await addUser(userModel).then((_) {
         // Muestra el SnackBar en caso de éxito

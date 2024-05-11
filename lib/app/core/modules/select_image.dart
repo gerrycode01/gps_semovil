@@ -5,9 +5,22 @@ Future<XFile?> getImage() async {
   final XFile? image = await picker.pickImage(source: ImageSource.gallery);
   return image;
 }
+/*
 
-//File? image_to_upload;
-//onPressed: () async {
-//final XFile? imagen = await getImage();
-//setState((){image_to_upload = File(imagen!.path)})
-//},
+CircleAvatar(
+radius: 50,
+backgroundColor: Colors.red,
+child: IconButton(
+icon: const Icon(Icons.person),
+iconSize: 50,
+onPressed: () async {
+final image = await getImage();
+setState(() {
+image_to_upload = File(image!.path);
+});
+print('IconButton presionado');
+},
+),
+)
+
+ */
