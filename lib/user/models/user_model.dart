@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UserModel {
-  String? curp; //
+  final String? curp; //
   String? doccurp; //
   String? names; //
   String? lastname; //
@@ -12,7 +12,7 @@ class UserModel {
   String? phone; //
   String? birthdate; //
   String? bloodtype; //
-  String? rol; //
+  final String? rol; //
   String? profilePhoto; //
 
   UserModel(
