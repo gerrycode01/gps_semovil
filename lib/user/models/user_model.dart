@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UserModel {
-  final String? curp; //
+  final String curp; //
   String? doccurp; //
   String? names; //
   String? lastname; //
@@ -16,41 +16,45 @@ class UserModel {
   String? profilePhoto; //
 
   UserModel(
-      {this.curp,
+      {required this.curp,
       this.doccurp,
       this.names,
       this.lastname,
       this.lastname2,
       this.address,
       this.docaddress,
-      this.email,
+      required this.email,
       this.phone,
       this.birthdate,
       this.bloodtype,
-      this.rol,
-      this.profilePhoto
-      });
+      required this.rol,
+      this.profilePhoto});
 
   factory UserModel.fromFirestore(
     DocumentSnapshot<Map<String, dynamic>> snapshot,
     SnapshotOptions? options,
   ) {
     final data = snapshot.data();
-    return UserModel(
-      curp: data?['curp'],
-      doccurp: data?['doccurp'],
-      names: data?['names'],
-      lastname: data?['lastname'],
-      lastname2: data?['lastname2'],
-      address: data?['address'],
-      docaddress: data?['docaddress'],
-      email: data?['email'],
-      phone: data?['phone'],
-      birthdate: data?['birthdate'],
-      bloodtype: data?['bloodtype'],
-      rol: data?['rol'],
-      profilePhoto: data?['profilePhoto'],
-    );
+    if (data?['rol'] == 'user') {
+      return UserModel(
+        curp: data?['curp'],
+        doccurp: data?['doccurp'],
+        names: data?['names'],
+        lastname: data?['lastname'],
+        lastname2: data?['lastname2'],
+        address: data?['address'],
+        docaddress: data?['docaddress'],
+        email: data?['email'],
+        phone: data?['phone'],
+        birthdate: data?['birthdate'],
+        bloodtype: data?['bloodtype'],
+        rol: data?['rol'],
+        profilePhoto: data?['profilePhoto'],
+      );
+    } else {
+      return UserModel(
+          curp: data?['curp'], email: data?['email'], rol: data?['rol']);
+    }
   }
 
   Map<String, dynamic> toJSON() {

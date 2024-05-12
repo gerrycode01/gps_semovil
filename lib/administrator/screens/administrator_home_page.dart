@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:gps_semovil/user/models/user_model.dart';
 
-class ScreenAdministrador extends StatelessWidget {
-  const ScreenAdministrador({super.key});
+class AdministradorHomePage extends StatelessWidget {
+  const AdministradorHomePage({super.key, required this.admin});
+
+  final UserModel admin;
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +25,10 @@ class AdministratorHomePage extends StatefulWidget {
 class _AdministratorHomePageState extends State<AdministratorHomePage> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('ADMINISTRADOR'),
+      ),
+    );
   }
 }

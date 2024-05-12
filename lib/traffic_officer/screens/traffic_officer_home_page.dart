@@ -1,19 +1,10 @@
 import 'package:flutter/material.dart';
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: TrafficOfficerHomePage(),
-      debugShowCheckedModeBanner: false,
-    );
-  }
-}
+import 'package:gps_semovil/user/models/user_model.dart';
 
 class TrafficOfficerHomePage extends StatefulWidget {
-  const TrafficOfficerHomePage({super.key});
+  const TrafficOfficerHomePage({super.key, required this.trafficOfficer});
+
+  final UserModel trafficOfficer;
 
   @override
   State<TrafficOfficerHomePage> createState() => _TrafficOfficerHomePageState();
@@ -22,6 +13,8 @@ class TrafficOfficerHomePage extends StatefulWidget {
 class _TrafficOfficerHomePageState extends State<TrafficOfficerHomePage> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return const CircularProgressIndicator(
+      color: Colors.red,
+    );
   }
 }

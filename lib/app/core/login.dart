@@ -34,8 +34,26 @@ class _LoginState extends State<Login> {
     if (success) {
       UserModel userModel = await getUser(_emailController.text);
 
-      Navigator.pushReplacementNamed(context, '/user_homepage',
-          arguments: userModel);
+      switch (userModel.rol) {
+        case 'user':
+          {
+            Navigator.pushReplacementNamed(context, '/user_homepage',
+                arguments: userModel);
+            break;
+          }
+        case 'admin':
+          {
+            Navigator.pushReplacementNamed(context, '/admin_homepage',
+                arguments: userModel);
+            break;
+          }
+        default: {
+          Navigator.pushReplacementNamed(context, '/traffic_officer_homepage',
+              arguments: userModel);
+          break;
+        }
+      }
+
       print('Login exitoso');
     } else {
       print('Error al iniciar sesión');

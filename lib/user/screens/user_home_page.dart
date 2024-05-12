@@ -5,9 +5,9 @@ import 'package:gps_semovil/user/screens/news.dart';
 import 'package:gps_semovil/user/screens/user_settings.dart';
 
 class UserHomePage extends StatefulWidget {
-  const UserHomePage({super.key, required this.userModel});
+  const UserHomePage({super.key, required this.user});
 
-  final UserModel userModel;
+  final UserModel user;
 
   @override
   State<UserHomePage> createState() => _UserHomePageState();
@@ -29,7 +29,7 @@ class _UserHomePageState extends State<UserHomePage> {
                   context,
                   MaterialPageRoute(
                       builder: (context) => UserSettings(
-                            userModel: widget.userModel,
+                            userModel: widget.user,
                           ))).then((value) => setState(() {}));
             },
           )

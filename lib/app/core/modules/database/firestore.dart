@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:gps_semovil/user/models/user_model.dart';
 
 FirebaseFirestore db = FirebaseFirestore.instance;
@@ -16,7 +15,7 @@ Future<UserModel> getUser(String email) async {
     return user;
   } else {
     print("No such document.");
-    return UserModel();
+    return UserModel(curp: '', email: '', rol: '');
   }
 }
 

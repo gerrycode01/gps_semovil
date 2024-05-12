@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:gps_semovil/administrator/screens/administrator_home_page.dart';
 import 'package:gps_semovil/app/core/login.dart';
 import 'package:gps_semovil/app/core/sign_up.dart';
+import 'package:gps_semovil/traffic_officer/screens/traffic_officer_home_page.dart';
 import 'package:gps_semovil/user/models/user_model.dart';
 import 'package:gps_semovil/user/screens/user_home_page.dart';
 import 'package:gps_semovil/firebase_options.dart';
@@ -28,7 +30,13 @@ class MyApp extends StatelessWidget {
           '/': (context) => const Login(),
           '/sign_up': (context) => const SignUp(),
           '/user_homepage' : (context) => UserHomePage(
-            userModel: ModalRoute.of(context)!.settings.arguments as UserModel,
+            user: ModalRoute.of(context)!.settings.arguments as UserModel,
+          ),
+          '/admin_homepage' : (context) => AdministradorHomePage(
+            admin: ModalRoute.of(context)!.settings.arguments as UserModel,
+          ),
+          '/traffic_officer_homepage' : (context) => TrafficOfficerHomePage(
+            trafficOfficer: ModalRoute.of(context)!.settings.arguments as UserModel,
           ),
         });
   }
