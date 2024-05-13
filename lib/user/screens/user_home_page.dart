@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gps_semovil/user/models/user_model.dart';
 import 'package:gps_semovil/user/screens/%20formalities/options.dart';
-import 'package:gps_semovil/user/screens/news.dart';
+import 'package:gps_semovil/user/screens/news_screen.dart';
+import 'package:gps_semovil/user/screens/user_reports.dart';
 import 'package:gps_semovil/user/screens/user_settings.dart';
 
 class UserHomePage extends StatefulWidget {
@@ -73,7 +74,14 @@ class _UserHomePageState extends State<UserHomePage> {
                     icon: Icons.report,
                     color: Colors.red,
                     label: "Reportes",
-                    onPressed: () {}),
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => UserReports(
+                                user: widget.user,
+                              ))).then((value) => setState(() {}));
+                    }),
                 IconActionButton(
                     icon: Icons.payment,
                     color: Colors.purple,

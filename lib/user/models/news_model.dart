@@ -1,12 +1,15 @@
-class News{
-  String title;
-  String description;
-  String date;
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
 
-  News({
-    required this.title,
-    required this.description,
-    required this.date
+class NewsModel{
+  final String? title;
+  final String? description;
+  final Timestamp? date;
+
+  NewsModel({
+    this.title,
+    this.description,
+    this.date
   });
 
 
@@ -19,5 +22,25 @@ class News{
   }
 
 
+  // Método para formatear el campo de fecha como una cadena legible
+  String formattedDate() {
+    if (date != null) {
+      // Convierte el Timestamp en un objeto DateTime
+      DateTime dateTime = date!.toDate();
+      // Formatea la fecha y hora como una cadena legible
+      return DateFormat('dd/MM/yyyy HH:mm').format(dateTime);
+    } else {
+      return 'Fecha no disponible';
+    }
+  }
+
+  factory NewsModel.fromFirestore(DocumentSnapshot<Map<String, dynamic>> snapshot) {
+    final data = snapshot.data();
+    return NewsModel(
+      title: data?['title'],
+      description: data?['description'],
+      date: data?['date'],
+    );
+  }
 
 }

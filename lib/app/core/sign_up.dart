@@ -3,7 +3,7 @@ import 'package:gps_semovil/app/core/design.dart';
 import 'package:gps_semovil/user/models/user_model.dart';
 
 import 'modules/authentication/authentication.dart';
-import 'modules/database/constantes.dart';
+import 'modules/database/constants.dart';
 import 'modules/database/firestore.dart';
 
 class SignUp extends StatefulWidget {
@@ -31,7 +31,6 @@ class _SignUpState extends State<SignUp> {
   bool passwordVisible = false;
   bool passwordVisible2 = false;
   bool termsAccepted = false;
-  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -126,7 +125,7 @@ class _SignUpState extends State<SignUp> {
               ],
             ),
             const SizedBox(height: 10), // Espacio entre las filas
-            Design.campoTexto(nameController, "Colonia"),
+            Design.campoTexto(address3Controller, "Colonia"),
             const SizedBox(height: 10),
             Design.campoTexto(address4Controller, "Localidad"),
             const SizedBox(height: 20),
