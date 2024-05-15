@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 
 class ReportModel {
+  String? id;
   String? reportType;
   String? description;
   Timestamp? date;
@@ -17,7 +18,8 @@ class ReportModel {
 
 
   ReportModel(
-      {this.reportType,
+      {this.id,
+      this.reportType,
       this.description,
       this.date,
       this.place,
@@ -32,6 +34,7 @@ class ReportModel {
       DocumentSnapshot<Map<String, dynamic>> snapshot) {
     final data = snapshot.data();
     return ReportModel(
+      id: snapshot.id,
       reportType: data?['title'],
       description: data?['description'],
       date: data?['date'],

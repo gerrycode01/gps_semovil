@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:gps_semovil/user/controllers/news_controller.dart';
 import 'package:gps_semovil/user/models/news_model.dart';
+
+import '../../app/core/modules/database/news_firestore.dart';
 
 
 class NewsScreen extends StatefulWidget {
@@ -24,7 +25,7 @@ class _NewsScreenState extends State<NewsScreen> {
 
   Future<void> loadNewsList() async{
     try {
-      List<NewsModel> news = await News_controller.getAllNews();
+      List<NewsModel> news = await getAllNews();
       setState(() {
         _newsList = news;
       });

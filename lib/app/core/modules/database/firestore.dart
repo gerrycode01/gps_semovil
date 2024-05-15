@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:gps_semovil/user/models/user_model.dart';
 
-import '../../../../user/models/report_model.dart';
 
 FirebaseFirestore db = FirebaseFirestore.instance;
 
@@ -35,11 +34,5 @@ Future<void> updateUser(UserModel userModel) async {
   }
 }
 
-Future<void> addReport(ReportModel report) async {
-  try{
-    await db.collection('report').add(report.toJSON()).then((documentSnapshot) => print('Reporte subido correctamente'));
-  } catch (e) {
-    print ("Error al subir el reporte: $e");
-  }
-}
+
 

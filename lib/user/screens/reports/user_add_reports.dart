@@ -1,7 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import '../../../app/core/design.dart';
+import '../../../app/core/modules/database/report_firestore.dart';
+import '../../models/report_model.dart';
 import '../../models/user_model.dart';
-import 'package:intl/intl.dart';  // Añade intl a tus dependencias para formateo de fecha
 
 class UserAddReports extends StatefulWidget {
   final UserModel user;
@@ -14,7 +16,6 @@ class UserAddReports extends StatefulWidget {
 class _UserAddReportsState extends State<UserAddReports> {
   final reportTypeController = TextEditingController();
   final descriptionController = TextEditingController();
-  final dateController = TextEditingController(text: DateFormat('yyyy-MM-dd – kk:mm').format(DateTime.now()));  // Fecha y hora actual
   final placeController = TextEditingController();
   final routeController = TextEditingController();  // Solo para transporte público
   final GURBController = TextEditingController();
@@ -60,8 +61,6 @@ class _UserAddReportsState extends State<UserAddReports> {
             const SizedBox(height: 20),
             Design.campoTexto(descriptionController, "Descripción"),
             const SizedBox(height: 20),
-            Design.campoTexto(dateController, "Fecha y hora"),
-            const SizedBox(height: 20),
             Design.campoTexto(placeController, "Ubicación"),
             const SizedBox(height: 20),
             if (reportType == "Transporte público") ...[
@@ -77,7 +76,20 @@ class _UserAddReportsState extends State<UserAddReports> {
             Design.campoTexto(evidenceController, "Evidencia (opcional)"),
             const SizedBox(height: 30),
             ElevatedButton(
-              onPressed: submitReport,
+              onPressed:(){
+                ReportModel report = ReportModel(
+                  reportType: reportType,
+                  description: descriptionController.text,
+                  date: Timestamp.fromDate(DateTime.now()),
+                  place: placeController.text,
+                  GURB: GURBController.text,
+                  evidence: evidenceController.text,
+                  accidentType: accidentTypeController.text,
+                  status: "En revisión",
+                  user: widget.user.toJSON(),
+                );
+                addReport(report);
+              },
               child: Text("Subir reporte"),
               style: ElevatedButton.styleFrom(
                 foregroundColor: Colors.white, backgroundColor: Theme.of(context).primaryColor,
@@ -89,8 +101,5 @@ class _UserAddReportsState extends State<UserAddReports> {
     );
   }
 
-  void submitReport() {
-    // Lógica para enviar el reporte
-    print("Reporte enviado");
-  }
+
 }

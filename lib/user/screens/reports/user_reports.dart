@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:gps_semovil/app/core/modules/database/report_firestore.dart';
 import '../../models/report_model.dart';
 import '../../models/user_model.dart';
 import 'user_add_reports.dart';
@@ -14,7 +14,7 @@ class UserReports extends StatefulWidget {
 }
 
 class _UserReportsState extends State<UserReports> {
-  List<ReportModel> reports = []; // Esta lista debería ser cargada desde una base de datos
+  List<ReportModel> _reportsList = []; // Esta lista debería ser cargada desde una base de datos
 
   @override
   void initState() {
@@ -23,7 +23,14 @@ class _UserReportsState extends State<UserReports> {
   }
 
   void loadReports() async {
-    //List<ReportModel> r = await
+    try {
+      List<ReportModel> news = await getReportsByUser(widget.user.curp);
+      setState(() {
+        _reportsList = news;
+      });
+    } catch (error) {
+      print("Error cargando la lista de noticias: $error");
+    }
   }
 
   @override
@@ -46,14 +53,14 @@ class _UserReportsState extends State<UserReports> {
         ],
       ),
       body: ListView.builder(
-        itemCount: reports.length,
+        itemCount: _reportsList.length,
         itemBuilder: (context, index) {
-          ReportModel report = reports[index];
+          ReportModel report = _reportsList[index];
           return Card(
             elevation: 5,
             margin: EdgeInsets.all(10),
             child: ListTile(
-              leading: Image.network(report.evidence?? "", width: 50, height: 50, fit: BoxFit.cover),
+           //   leading: Image.network(report.evidence?? "", width: 50, height: 50, fit: BoxFit.cover),
               title: Text(report.reportType?? ""),
               subtitle: Text(report.description?? ""),
               isThreeLine: true,

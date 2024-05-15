@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../app/core/design.dart';
 import '../../app/core/modules/database/report_firestore.dart';
 import '../../user/models/report_model.dart';
 import '../../user/models/user_model.dart';
@@ -84,8 +85,9 @@ class _TrafficOfficerReportsState extends State<TrafficOfficerReports> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          Text('Leer más...',
-                              style: TextStyle(color: Colors.blue)),
+                          Design.botonGreen("Atender", () {
+                              attendReport(widget.trafficOfficer, _reportsList[index].id ?? '');
+                          })
                         ],
                       ),
                     ],
