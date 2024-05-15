@@ -87,4 +87,14 @@ class UserModel {
       'profilePhoto': profilePhoto,
     };
   }
+
+  Map<String, dynamic> toSmallJSON() {
+    return {
+      'curp': curp,
+      'names': names,
+      'lastname': lastname,
+      'lastname2': lastname2,
+      'rol': rol,
+    };
+  }
 }

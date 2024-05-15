@@ -20,21 +20,23 @@ class TrafficOfficerReports extends StatefulWidget {
 class _TrafficOfficerReportsState extends State<TrafficOfficerReports> {
   List<ReportModel> _reportsList = [];
 
+  String? previousStatus;
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    loadNewsList();
+    loadReportsList();
   }
 
-  Future<void> loadNewsList() async{
+  Future<void> loadReportsList() async{
     try {
-      List<ReportModel> news = await getAllReports();
+      List<ReportModel> reports = await getAllReports();
       setState(() {
-        _reportsList = news;
+        _reportsList = reports;
       });
     } catch (error) {
-      print("Error cargando la lista de noticias: $error");
+      print("Error cargando la lista de reportes: $error");
     }
   }
 
@@ -48,6 +50,7 @@ class _TrafficOfficerReportsState extends State<TrafficOfficerReports> {
       body: ListView.builder(
         itemCount: _reportsList.length,
         itemBuilder: (context, index) {
+          previousStatus = _reportsList[index].status;
           return InkWell(
               onTap: () async {},
               child: Card(
@@ -85,17 +88,33 @@ class _TrafficOfficerReportsState extends State<TrafficOfficerReports> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          Design.botonGreen("Atender", () {
-                              attendReport(widget.trafficOfficer, _reportsList[index].id ?? '');
-                          })
+                          attendButton(index)
+                          ])
                         ],
                       ),
-                    ],
                   ),
                 ),
-              ));
+              );
         },
       ),
     );
+  }
+
+  Widget attendButton(int index) {
+    if (previousStatus == "Reportado"){
+      return Design.botonGreen("Atender", () {
+        attendReport(widget.trafficOfficer, _reportsList[index].id ?? '');
+        loadReportsList();
+      });
+    }
+    if (previousStatus == "Atendiendo") {
+      return Design.botonRed("Finalizar", () {
+        finalizeReport(_reportsList[index].id ?? '');
+        loadReportsList();
+      });
+    }
+    else {
+      return Text("Finalizado");
+    }
   }
 }

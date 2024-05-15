@@ -10,7 +10,7 @@ FirebaseFirestore db = FirebaseFirestore.instance;
 Future<List<ReportModel>> getAllReports() async{
 try {
 final querySnapshot = await db.collection('report').get();
-print("Operación completada exitosamente");
+print("Reportes obtenidos exitosamente");
 return querySnapshot.docs
     .map((docSnapshot) => ReportModel.fromFirestore(docSnapshot))
     .toList();
@@ -23,7 +23,7 @@ return []; // Devuelve una lista vacía en caso de error
 Future<void> attendReport(UserModel model, String id) async{
   try{
     db.collection('report').doc(id).update({'status': 'Atendiendo'});
-    db.collection('report').doc(id).update({'officer': model.toJSON()});
+    db.collection('report').doc(id).update({'officer': model.toSmallJSON()});
     print("Reporte atendido exitosamente");
 
   } catch (e) {
@@ -33,7 +33,7 @@ Future<void> attendReport(UserModel model, String id) async{
 
 Future<void> finalizeReport(String id) async {
   try{
-    db.collection('report').doc(id).update({'status': 'Finalizado'});
+    db.collection('report').doc(id).update({'status': 'Atendido'});
     print("Reporte finalizado exitosamente");
 
   } catch (e) {

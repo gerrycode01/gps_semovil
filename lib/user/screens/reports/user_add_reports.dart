@@ -14,6 +14,7 @@ class UserAddReports extends StatefulWidget {
 }
 
 class _UserAddReportsState extends State<UserAddReports> {
+
   final reportTypeController = TextEditingController();
   final descriptionController = TextEditingController();
   final placeController = TextEditingController();
@@ -85,8 +86,8 @@ class _UserAddReportsState extends State<UserAddReports> {
                   GURB: GURBController.text,
                   evidence: evidenceController.text,
                   accidentType: accidentTypeController.text,
-                  status: "En revisión",
-                  user: widget.user.toJSON(),
+                  status: "Reportado",
+                  user: widget.user.toSmallJSON(),
                 );
                 addReport(report);
               },
