@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:gps_semovil/app/core/modules/database/firestore.dart';
+import 'package:gps_semovil/app/core/modules/database/user_firestore.dart';
 import 'package:gps_semovil/app/core/modules/database/storage.dart';
 import 'package:gps_semovil/app/core/modules/select_image.dart';
 import 'package:gps_semovil/user/models/user_model.dart';
@@ -52,7 +52,7 @@ class _CircularImageState extends State<CircularImage> {
     });
 
     final url = await uploadFileToFirestorage(
-        imageToUpload, widget.userModel.curp!, 'profilePhoto');
+        imageToUpload, widget.userModel.curp, 'profilePhoto');
     widget.userModel.profilePhoto = url;
     if (url != 'ERROR') {
       await updateUser(widget.userModel);

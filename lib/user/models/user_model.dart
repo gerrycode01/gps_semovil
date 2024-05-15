@@ -3,8 +3,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class UserModel {
   final String curp; //
   String? doccurp; //
-  String? names; //
-  String? lastname; //
+  String names; //
+  String lastname; //
   String? lastname2; //
   String? address; //
   String? docaddress; //
@@ -18,8 +18,8 @@ class UserModel {
   UserModel(
       {required this.curp,
       this.doccurp,
-      this.names,
-      this.lastname,
+      required this.names,
+      required this.lastname,
       this.lastname2,
       this.address,
       this.docaddress,
@@ -53,8 +53,21 @@ class UserModel {
       );
     } else {
       return UserModel(
-          curp: data?['curp'], email: data?['email'], rol: data?['rol']);
+          curp: data?['curp'],
+          email: data?['email'],
+          rol: data?['rol'],
+          names: data?['names'],
+          lastname: data?['lastname']);
     }
+  }
+
+  factory UserModel.fromMap(Map<String, dynamic> map) {
+    return UserModel(
+        curp: map['curp'],
+        email: map['email'],
+        rol: map['rol'],
+        names: map['names'],
+        lastname: map['lastname']);
   }
 
   Map<String, dynamic> toJSON() {

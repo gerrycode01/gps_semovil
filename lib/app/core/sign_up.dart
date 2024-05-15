@@ -4,7 +4,7 @@ import 'package:gps_semovil/user/models/user_model.dart';
 
 import 'modules/authentication/authentication.dart';
 import 'modules/database/constants.dart';
-import 'modules/database/firestore.dart';
+import 'modules/database/user_firestore.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key});

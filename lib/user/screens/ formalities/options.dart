@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gps_semovil/user/screens/%20formalities/firstime.dart';
 import 'package:gps_semovil/user/screens/%20formalities/information.dart';
 
 class Options extends StatefulWidget {
@@ -14,31 +13,49 @@ class _OptionsState extends State<Options> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Opciones'),
+        title: const Text('Opciones'),
         backgroundColor: Colors.blue.shade400,
       ),
       body: Center(
-        child: ListView(
-          padding: EdgeInsets.all(50),
-          children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                CustomButton(label: 'Primera vez', icon: Icons.fiber_new, onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const Information()));
-                }),
-                const SizedBox(height: 20),
-                CustomButton(label: 'Renovación', icon: Icons.refresh, onPressed: () {}),
-                const SizedBox(height: 20),
-                CustomButton(label: 'Extraviado', icon: Icons.error_outline, onPressed: () {}),
-              ],
-            ),
-          ],
-        )
-      ),
+          child: ListView(
+        padding: const EdgeInsets.all(50),
+        children: [
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              CustomButton(
+                  label: 'Primera vez',
+                  icon: Icons.fiber_new,
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const Information(mode: 0)));
+                  }),
+              const SizedBox(height: 20),
+              CustomButton(
+                  label: 'Renovación',
+                  icon: Icons.refresh,
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const Information(mode: 1)));
+                  }),
+              const SizedBox(height: 20),
+              CustomButton(
+                  label: 'Extraviado',
+                  icon: Icons.error_outline,
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const Information(mode: 2)));
+                  }),
+            ],
+          ),
+        ],
+      )),
     );
   }
 }
@@ -49,11 +66,11 @@ class CustomButton extends StatelessWidget {
   final VoidCallback onPressed;
 
   const CustomButton({
-    Key? key,
+    super.key,
     required this.label,
     required this.icon,
     required this.onPressed,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -64,9 +81,13 @@ class CustomButton extends StatelessWidget {
         label: Text(label),
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          foregroundColor: Colors.white, backgroundColor: Colors.blueAccent, // Color de texto e ícono
-          textStyle: TextStyle(fontSize: 20, fontWeight: FontWeight.bold), // Aumenta el tamaño del texto
-          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20), // Aumenta el relleno para un botón más grande
+          foregroundColor: Colors.white,
+          backgroundColor: Colors.blueAccent,
+          // Color de texto e ícono
+          textStyle: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          // Aumenta el tamaño del texto
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+          // Aumenta el relleno para un botón más grande
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8), // Bordes redondeados
           ),

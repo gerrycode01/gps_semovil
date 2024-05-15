@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:gps_semovil/user/models/user_model.dart';
 
-
 FirebaseFirestore db = FirebaseFirestore.instance;
 
 Future<UserModel> getUser(String email) async {
@@ -16,7 +15,7 @@ Future<UserModel> getUser(String email) async {
     return user;
   } else {
     print("No such document.");
-    return UserModel(curp: '', email: '', rol: '');
+    return UserModel(curp: '', email: '', rol: '', names: '', lastname: '');
   }
 }
 
@@ -33,6 +32,3 @@ Future<void> updateUser(UserModel userModel) async {
     print("Error actualizando usuario: $e");
   }
 }
-
-
-
