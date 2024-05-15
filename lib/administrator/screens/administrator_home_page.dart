@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:gps_semovil/user/models/user_model.dart';
 
+import '../../app/core/design.dart';
+import 'administrator_add_news.dart';
+
 class AdministradorHomePage extends StatelessWidget {
   const AdministradorHomePage({super.key, required this.admin});
 
@@ -27,8 +30,18 @@ class _AdministratorHomePageState extends State<AdministratorHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('ADMINISTRADOR'),
+        title: const Text('Administrador'),
       ),
+      body: ListView(
+        children: [
+          Design.botonRed("Noticias", () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => AdministratorAddNews()));
+          })
+        ],
+      )
     );
   }
 }

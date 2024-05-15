@@ -2,11 +2,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 
 class NewsModel{
+  final String? id;
   final String? title;
   final String? description;
   final Timestamp? date;
 
   NewsModel({
+    this.id,
     this.title,
     this.description,
     this.date
@@ -37,6 +39,7 @@ class NewsModel{
   factory NewsModel.fromFirestore(DocumentSnapshot<Map<String, dynamic>> snapshot) {
     final data = snapshot.data();
     return NewsModel(
+      id: snapshot.id,
       title: data?['title'],
       description: data?['description'],
       date: data?['date'],
