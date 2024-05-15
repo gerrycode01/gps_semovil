@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:gps_semovil/administrator/screens/administrator_home_page.dart';
 import 'package:gps_semovil/app/core/login.dart';
 import 'package:gps_semovil/app/core/sign_up.dart';
+import 'package:gps_semovil/traffic_officer/screens/traffic-officer_reports.dart';
 import 'package:gps_semovil/traffic_officer/screens/traffic_officer_home_page.dart';
 import 'package:gps_semovil/user/models/user_model.dart';
 import 'package:gps_semovil/user/screens/reports/user_reports.dart';
@@ -37,6 +38,9 @@ class MyApp extends StatelessWidget {
             admin: ModalRoute.of(context)!.settings.arguments as UserModel,
           ),
           '/traffic_officer_homepage' : (context) => TrafficOfficerHomePage(
+            trafficOfficer: ModalRoute.of(context)!.settings.arguments as UserModel,
+          ),
+          '/traffic_officer_reports' : (context) => TrafficOfficerReports(
             trafficOfficer: ModalRoute.of(context)!.settings.arguments as UserModel,
           ),
           '/reports_screen' : (context) => UserReports(user: ModalRoute.of(context)!.settings.arguments as UserModel),

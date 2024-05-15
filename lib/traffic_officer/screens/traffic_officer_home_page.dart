@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gps_semovil/traffic_officer/screens/traffic-officer_reports.dart';
 import 'package:gps_semovil/user/models/user_model.dart';
 
 class TrafficOfficerHomePage extends StatefulWidget {
@@ -13,8 +14,20 @@ class TrafficOfficerHomePage extends StatefulWidget {
 class _TrafficOfficerHomePageState extends State<TrafficOfficerHomePage> {
   @override
   Widget build(BuildContext context) {
-    return const CircularProgressIndicator(
-      color: Colors.red,
+    return Scaffold(
+      body: ListView(
+        children: [
+          ElevatedButton(onPressed: (){
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => TrafficOfficerReports(
+                      trafficOfficer: widget.trafficOfficer,
+                    ))).then((value) => setState(() {}));
+          },
+          child: Text("Reportes"),)
+        ]
+      ),
     );
   }
 }

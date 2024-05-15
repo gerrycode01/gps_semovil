@@ -95,7 +95,7 @@ class _UserHomePageState extends State<UserHomePage> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const News()));
+                              builder: (context) => const NewsScreen()));
                     }),
               ],
             ),
