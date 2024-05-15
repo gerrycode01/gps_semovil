@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gps_semovil/user/models/user_model.dart';
 import 'package:gps_semovil/user/screens/%20formalities/options.dart';
 import 'package:gps_semovil/user/screens/news_screen.dart';
-import 'package:gps_semovil/user/screens/user_reports.dart';
+import 'package:gps_semovil/user/screens/reports/user_reports.dart';
 import 'package:gps_semovil/user/screens/user_settings.dart';
 
 class UserHomePage extends StatefulWidget {

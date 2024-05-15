@@ -31,7 +31,9 @@ class _UserSettingsState extends State<UserSettings> {
               Icons.settings,
               color: Colors.white,
             ),
-            onPressed: () {},
+            onPressed: () {
+
+            },
           ),
         ],
         backgroundColor: Colors.green,
