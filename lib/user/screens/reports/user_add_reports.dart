@@ -14,20 +14,24 @@ class UserAddReports extends StatefulWidget {
 }
 
 class _UserAddReportsState extends State<UserAddReports> {
+  String? reportType;  // Tipo de reporte seleccionado
+  String? selectedAccidentType;  // Tipo de accidente seleccionado
 
-  final reportTypeController = TextEditingController();
+  final List<DropdownMenuItem<String>> reportTypes = [
+    DropdownMenuItem(value: "Transporte público", child: Text("Transporte público")),
+    DropdownMenuItem(value: "Accidente vial", child: Text("Accidente vial")),
+  ];
+  final List<DropdownMenuItem<String>> accidentTypes = [
+    DropdownMenuItem(value: "Accidente con peatones", child: Text("Accidente con peatones")),
+    DropdownMenuItem(value: "Accidente con ciclistas", child: Text("Accidente con ciclistas")),
+    DropdownMenuItem(value: "Accidente con transporte público", child: Text("Accidente con transporte público")),
+  ];
+
   final descriptionController = TextEditingController();
   final placeController = TextEditingController();
   final routeController = TextEditingController();  // Solo para transporte público
   final GURBController = TextEditingController();
   final evidenceController = TextEditingController();
-  final accidentTypeController = TextEditingController();  // Solo para accidente vial
-  String? reportType;  // Tipo de reporte seleccionado
-
-  List<DropdownMenuItem<String>> reportTypes = [
-    DropdownMenuItem(value: "Transporte público", child: Text("Transporte público")),
-    DropdownMenuItem(value: "Accidente vial", child: Text("Accidente vial")),
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -47,6 +51,7 @@ class _UserAddReportsState extends State<UserAddReports> {
               onChanged: (String? value) {
                 setState(() {
                   reportType = value;
+                  selectedAccidentType = null;  // Reset when report type changes
                 });
               },
               decoration: InputDecoration(
@@ -60,47 +65,68 @@ class _UserAddReportsState extends State<UserAddReports> {
               ),
             ),
             const SizedBox(height: 20),
-            Design.campoTexto(descriptionController, "Descripción"),
-            const SizedBox(height: 20),
-            Design.campoTexto(placeController, "Ubicación"),
-            const SizedBox(height: 20),
-            if (reportType == "Transporte público") ...[
-              Design.campoTexto(routeController, "Ruta"),
+            if (reportType != null) ...[
+              Design.campoTexto(descriptionController, "Descripción"),
               const SizedBox(height: 20),
-              Design.campoTexto(GURBController, "GURB (opcional)"),
-              const SizedBox(height: 20),
-            ],
-            if (reportType == "Accidente vial") ...[
-              Design.campoTexto(accidentTypeController, "Tipo de accidente"),
-              const SizedBox(height: 20),
-            ],
-            Design.campoTexto(evidenceController, "Evidencia (opcional)"),
-            const SizedBox(height: 30),
-            ElevatedButton(
-              onPressed:(){
-                ReportModel report = ReportModel(
-                  reportType: reportType,
-                  description: descriptionController.text,
-                  date: Timestamp.fromDate(DateTime.now()),
-                  place: placeController.text,
-                  GURB: GURBController.text,
-                  evidence: evidenceController.text,
-                  accidentType: accidentTypeController.text,
-                  status: "Reportado",
-                  user: widget.user.toSmallJSON(),
-                );
-                addReport(report);
-              },
-              child: Text("Subir reporte"),
-              style: ElevatedButton.styleFrom(
-                foregroundColor: Colors.white, backgroundColor: Theme.of(context).primaryColor,
+              DropdownButtonFormField(
+                value: selectedAccidentType,
+                onChanged: (String? newValue) {
+                  setState(() {
+                    selectedAccidentType = newValue;
+                  });
+                },
+                items: accidentTypes,
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: Colors.orange[100],
+                  hintText: "Tipo de accidente",
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(20),
+                    borderSide: BorderSide.none,
+                  ),
+                ),
               ),
-            ),
+              const SizedBox(height: 20),
+              Design.campoTexto(placeController, "Ubicación"),
+              const SizedBox(height: 20),
+              if (reportType == "Transporte público") ...[
+                Design.campoTexto(routeController, "Ruta"),
+                const SizedBox(height: 20),
+                Design.campoTexto(GURBController, "GURB (opcional)"),
+                const SizedBox(height: 20),
+              ],
+              if (reportType == "Accidente vial") ...[
+                // Since we're using Dropdown for accident type, no need for another Text Field here
+                const SizedBox(height: 20),
+              ],
+              Design.campoTexto(evidenceController, "Evidencia (opcional)"),
+              const SizedBox(height: 30),
+              ElevatedButton(
+                onPressed: () {
+                  ReportModel report = ReportModel(
+                    reportType: reportType,
+                    description: descriptionController.text,
+                    date: Timestamp.fromDate(DateTime.now()),
+                    place: placeController.text,
+                    GURB: GURBController.text,
+                    evidence: evidenceController.text,
+                    accidentType: selectedAccidentType, // Use the dropdown selection
+                    status: "Reportado",
+                    user: widget.user.toSmallJSON(),
+                  );
+                  addReport(report);
+                  Design.showSnackBarGood(context, "REPORTE REGISTRADO");
+                  Navigator.pop(context);
+                },
+                child: Text("Subir reporte"),
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.white, backgroundColor: Theme.of(context).primaryColor,
+                ),
+              ),
+            ],
           ],
         ),
       ),
     );
   }
-
-
 }

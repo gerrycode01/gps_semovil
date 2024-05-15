@@ -35,7 +35,7 @@ class ReportModel {
     final data = snapshot.data();
     return ReportModel(
       id: snapshot.id,
-      reportType: data?['title'],
+      reportType: data?['reportType'],
       description: data?['description'],
       date: data?['date'],
       place: data?['place'],
