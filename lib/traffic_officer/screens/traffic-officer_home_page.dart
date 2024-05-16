@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gps_semovil/app/core/design.dart';
+import 'package:gps_semovil/traffic_officer/screens/traffic-officer_fines.dart';
 import 'package:gps_semovil/traffic_officer/screens/traffic-officer_reports.dart';
 import 'package:gps_semovil/user/models/user_model.dart';
 
@@ -56,9 +57,8 @@ class _TrafficOfficerHomePageState extends State<TrafficOfficerHomePage> {
             ListTile(
               leading: const Icon(Icons.receipt_long, color: Colors.red),
               title: const Text('Multas',style: TextStyle(color: Design.teal),),
-              onTap: () {
-                Navigator.pop(context); // Cerrar el drawer
-                // Navegación a Multas
+              onTap: () {// Cerrar el drawer
+                Navigator.push(context, MaterialPageRoute(builder: (context) => TrafficOfficerFines(trafficOfficer: widget.trafficOfficer)));
               },
             ),
 
