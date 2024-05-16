@@ -33,3 +33,19 @@ Future<void> fineUser(FineModel fine) async{
 }
 
 
+
+
+Future<List<FineModel>> getFinesByUser(String curp) async {
+  try {
+    final querySnapshot = await FirebaseFirestore.instance.collection('fine')
+        .where('user.curp', isEqualTo: curp) // Accediendo a la CURP dentro del mapa 'user'
+        .get();
+
+    return querySnapshot.docs
+        .map((docSnapshot) => FineModel.fromFirestore(docSnapshot))
+        .toList();
+  } catch (e) {
+    print("Error buscando multas por CURP de usuario: $e");
+    return [];
+  }
+}

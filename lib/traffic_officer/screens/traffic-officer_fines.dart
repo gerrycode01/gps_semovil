@@ -23,8 +23,11 @@ class _TrafficOfficerFinesState extends State<TrafficOfficerFines> {
   TextEditingController placeController = TextEditingController();
   TextEditingController municipalityController = TextEditingController();
   TextEditingController article1Controller = TextEditingController();
+  TextEditingController justification1Controller = TextEditingController();
   TextEditingController article2Controller = TextEditingController();
+  TextEditingController justification2Controller = TextEditingController();
   TextEditingController article3Controller = TextEditingController();
+  TextEditingController justification3Controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -47,8 +50,11 @@ class _TrafficOfficerFinesState extends State<TrafficOfficerFines> {
           Design.campoTexto(placeController, "Dirección de la infracción"),
           Design.campoTexto(municipalityController, "Municipio"),
           Design.campoTexto(article1Controller, "Fundamento legal o artículos infringidos"),
+          Design.campoTexto(justification3Controller, "Descripcion o justificacion de la infracción"),
           Design.campoTexto(article2Controller, "Fundamento legal o artículos infringidos"),
+          Design.campoTexto(justification3Controller, "Descripcion o justificacion de la infracción"),
           Design.campoTexto(article3Controller, "Fundamento legal o artículos infringidos"),
+          Design.campoTexto(justification3Controller, "Descripcion o justificacion de la infracción"),
 
           Design.botonGreen("Subir multa", () {
             FineModel fine = FineModel(
@@ -58,8 +64,12 @@ class _TrafficOfficerFinesState extends State<TrafficOfficerFines> {
               user: user?.toSmallJSON(),
               trafficOfficer: widget.trafficOfficer.toSmallJSON(),
               article1: article1Controller.text,
+              justification1: justification1Controller.text,
               article2: article2Controller.text,
+              justification2: justification1Controller.text,
               article3: article3Controller.text,
+              justification3: justification1Controller.text,
+              status: 'Pendiente'
             );
 
             fineUser(fine);

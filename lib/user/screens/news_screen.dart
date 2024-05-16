@@ -19,7 +19,6 @@ class _NewsScreenState extends State<NewsScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     loadNewsList();
   }
