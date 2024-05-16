@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 
-
 class FineModel {
   String? id;
   String? place;
@@ -17,48 +16,54 @@ class FineModel {
   String? justification3;
   String? status;
 
-  FineModel({
-    this.id,
-    this.place,
-    this.date,
-    this.municipality,
-    this.user,
-    this.trafficOfficer,
-    this.article1,
-    this.justification1,
-    this.article2,
-    this.justification2,
-    this.article3,
-    this.justification3,
-    this.status
-  });
+  FineModel(
+      {this.id,
+      this.place,
+      this.date,
+      this.municipality,
+      this.user,
+      this.trafficOfficer,
+      this.article1,
+      this.justification1,
+      this.article2,
+      this.justification2,
+      this.article3,
+      this.justification3,
+      this.status});
 
-  factory FineModel.fromFirestore(DocumentSnapshot<Map<String, dynamic>> snapshot) {
+  factory FineModel.fromFirestore(
+      DocumentSnapshot<Map<String, dynamic>> snapshot) {
     final data = snapshot.data();
     return FineModel(
-      id: snapshot.id,
-      place: data?['place'],
-      date: data?['date'],
-      municipality: data?['municipality'],
-      user: data?['user'],
-      trafficOfficer: data?['trafficOfficer'],
-      article1: data?['article1'],
-      article2: data?['article2'],
-      article3: data?['article3'],
-      status: data?['status']
-    );
+        id: snapshot.id,
+        place: data?['place'],
+        date: data?['date'],
+        municipality: data?['municipality'],
+        user: data?['user'],
+        trafficOfficer: data?['trafficOfficer'],
+        article1: data?['article1'],
+        justification1: data?['justification1'],
+        article2: data?['article2'],
+        justification2: data?['justification2'],
+        article3: data?['article3'],
+        justification3: data?['justification3'],
+        status: data?['status']);
   }
 
   Map<String, dynamic> toJSON() {
     return {
       'place': place,
       'date': date,
-      'municipality':municipality,
-      'user':user,
+      'municipality': municipality,
+      'user': user,
       'trafficOfficer': trafficOfficer,
-      'article1':article1,
-      'article2':article2,
-      'article3':article3,
+      'article1': article1,
+      'justification1': justification1,
+      'article2': article2,
+      'justification2': justification2,
+      'article3': article3,
+      'justification3': justification3,
+      'status': status
     };
   }
 

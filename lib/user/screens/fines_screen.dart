@@ -31,6 +31,8 @@ class _FinesScreenState extends State<FinesScreen> {
       setState(() {
         _finesList = fines;
       });
+
+      print(_finesList.length);
     } catch (error) {
       print("Error cargando la lista de reportes: $error");
     }
@@ -39,7 +41,7 @@ class _FinesScreenState extends State<FinesScreen> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 3,
+      length: 2,
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Design.teal,
@@ -58,15 +60,17 @@ class _FinesScreenState extends State<FinesScreen> {
         ),
         body: TabBarView(
           children: [
-            buildReportList('Pendiente'),
-            buildReportList('Atendido'),
+
+            buildFineList('Pendiente'),
+            buildFineList('Atendido'),
           ],
         ),
       ),
     );
   }
 
-  Widget buildReportList(String status) {
+  Widget buildFineList(String status) {
+
     List<FineModel> filteredFines = _finesList.where((fine) => fine.status == status).toList();
     return ListView.builder(
       itemCount: filteredFines.length,
@@ -77,10 +81,10 @@ class _FinesScreenState extends State<FinesScreen> {
           elevation: 5,
           margin: EdgeInsets.all(10),
           child: ListTile(
-            title: Text(fine.formattedDate(), style: TextStyle(fontWeight: FontWeight.bold)),
+            trailing: Text(fine.formattedDate(), style: TextStyle(fontWeight: FontWeight.bold)),
             subtitle: Text(fine.place ?? ""),
             isThreeLine: true,
-            trailing: Text("${fine.article1} - fine.${fine.justification1}", style: TextStyle(fontStyle: FontStyle.italic)),
+            title: Text("${fine.article1} - ${fine.justification1}", style: TextStyle(fontStyle: FontStyle.italic)),
             onTap: () {
               // Aquí puedes implementar una acción al tocar cada reporte, por ejemplo, mostrar detalles
             },

@@ -50,9 +50,9 @@ class _TrafficOfficerFinesState extends State<TrafficOfficerFines> {
           Design.campoTexto(placeController, "Dirección de la infracción"),
           Design.campoTexto(municipalityController, "Municipio"),
           Design.campoTexto(article1Controller, "Fundamento legal o artículos infringidos"),
-          Design.campoTexto(justification3Controller, "Descripcion o justificacion de la infracción"),
+          Design.campoTexto(justification1Controller, "Descripcion o justificacion de la infracción"),
           Design.campoTexto(article2Controller, "Fundamento legal o artículos infringidos"),
-          Design.campoTexto(justification3Controller, "Descripcion o justificacion de la infracción"),
+          Design.campoTexto(justification2Controller, "Descripcion o justificacion de la infracción"),
           Design.campoTexto(article3Controller, "Fundamento legal o artículos infringidos"),
           Design.campoTexto(justification3Controller, "Descripcion o justificacion de la infracción"),
 
@@ -66,12 +66,11 @@ class _TrafficOfficerFinesState extends State<TrafficOfficerFines> {
               article1: article1Controller.text,
               justification1: justification1Controller.text,
               article2: article2Controller.text,
-              justification2: justification1Controller.text,
+              justification2: justification2Controller.text,
               article3: article3Controller.text,
-              justification3: justification1Controller.text,
+              justification3: justification3Controller.text,
               status: 'Pendiente'
             );
-
             fineUser(fine);
           })
 

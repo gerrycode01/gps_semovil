@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gps_semovil/app/core/design.dart';
 import 'package:gps_semovil/user/models/user_model.dart';
 import 'package:gps_semovil/user/screens/%20formalities/options.dart';
+import 'package:gps_semovil/user/screens/fines_screen.dart';
 import 'package:gps_semovil/user/screens/news_screen.dart';
 import 'package:gps_semovil/user/screens/reports/user_reports.dart';
 import 'package:gps_semovil/user/screens/user_settings.dart';
@@ -78,7 +79,14 @@ class _UserHomePageState extends State<UserHomePage> {
                     icon: Icons.payment,
                     color: Design.teal,
                     label: "Pagos",
-                    onPressed: () {}),
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => FinesScreen(
+                                user: widget.user,
+                              ))).then((value) => setState(() {}));
+                    }),
                 IconActionButton(
                     icon: Icons.newspaper,
                     color: Design.teal,
