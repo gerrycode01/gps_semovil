@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gps_semovil/app/core/modules/database/constants.dart';
 
 class DriverLicenseForm extends StatefulWidget {
   const DriverLicenseForm({super.key, required this.mode});
@@ -14,6 +15,7 @@ class _DriverLicenseFormState extends State<DriverLicenseForm> {
   bool addressProofUp = false;
   bool previousDriversLicense = false;
   bool thefLostCertificate = false;
+  String? selectedDriverLicensesType;
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +39,21 @@ class _DriverLicenseFormState extends State<DriverLicenseForm> {
             body: ListView(
               padding: const EdgeInsets.all(40),
               children: [
+                DropdownButton<String>(
+                    value: selectedDriverLicensesType,
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        selectedDriverLicensesType = newValue;
+                      });
+                    },
+                    items: Const.driverLicensesTypes
+                        .map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                    hint: const Text('SELECCIONA EL TIPO DE LICENCIA')),
                 Row(
                   children: [
                     Text(ineUp == false ? 'SUBE TU INE' : 'INE ARRIBA'),
@@ -99,6 +116,21 @@ class _DriverLicenseFormState extends State<DriverLicenseForm> {
             body: ListView(
               padding: const EdgeInsets.all(40),
               children: [
+                DropdownButton<String>(
+                    value: selectedDriverLicensesType,
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        selectedDriverLicensesType = newValue;
+                      });
+                    },
+                    items: Const.driverLicensesTypes
+                        .map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                    hint: const Text('SELECCIONA EL TIPO DE LICENCIA')),
                 Row(
                   children: [
                     Text(ineUp == false ? 'SUBE TU INE' : 'INE ARRIBA'),
@@ -137,8 +169,9 @@ class _DriverLicenseFormState extends State<DriverLicenseForm> {
                         onPressed: () {
                           //TODO: METODO PARA AGREGAR CERTIFICADO DE PERDIDA O ROBO
                         },
-                        icon: Icon(
-                            thefLostCertificate == false ? Icons.add : Icons.check))
+                        icon: Icon(thefLostCertificate == false
+                            ? Icons.add
+                            : Icons.check))
                   ],
                 ),
               ],
@@ -160,6 +193,21 @@ class _DriverLicenseFormState extends State<DriverLicenseForm> {
             body: ListView(
               padding: const EdgeInsets.all(40),
               children: [
+                DropdownButton<String>(
+                    value: selectedDriverLicensesType,
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        selectedDriverLicensesType = newValue;
+                      });
+                    },
+                    items: Const.driverLicensesTypes
+                        .map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                    hint: const Text('SELECCIONA EL TIPO DE LICENCIA')),
                 Row(
                   children: [
                     Text(ineUp == false ? 'SUBE TU INE' : 'INE ARRIBA'),
