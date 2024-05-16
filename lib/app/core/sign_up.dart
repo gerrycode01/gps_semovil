@@ -35,10 +35,11 @@ class _SignUpState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text('Registrate'),
+        title:  Text('Registrate',style: TextStyle(color: Colors.white),),
         centerTitle: true,
-        backgroundColor: Colors.green, // Adjust the color to match your theme
+        backgroundColor: Design.teal, // Adjust the color to match your theme
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
@@ -47,7 +48,7 @@ class _SignUpState extends State<SignUp> {
           children: [
             const Text(
               'Datos personales',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Design.teal),
             ),
             const SizedBox(height: 10),
             Design.campoTexto(nameController, "Nombre(s)"),

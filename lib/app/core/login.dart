@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gps_semovil/app/core/design.dart';
 import 'package:gps_semovil/local.dart';
 import 'package:gps_semovil/user/models/user_model.dart';
 import 'modules/authentication/authentication.dart';
@@ -88,25 +89,14 @@ class _LoginState extends State<Login> {
                     padding: const EdgeInsets.symmetric(horizontal: 30),
                     child: Column(
                       children: [
-                        TextFormField(
-                          controller: _emailController,
-                          decoration: InputDecoration(
-                            filled: true,
-                            fillColor: Colors.orange[100],
-                            hintText: 'Correo',
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(20),
-                              borderSide: BorderSide.none,
-                            ),
-                          ),
-                        ),
+                        Design.campoTexto(_emailController, 'Correo'),
                         const SizedBox(height: 8),
                         TextFormField(
                           controller: _passwordController,
                           obscureText: !_passwordVisible,
                           decoration: InputDecoration(
                             filled: true,
-                            fillColor: Colors.orange[100],
+                            fillColor: Design.lightOrange,
                             hintText: 'Contraseña',
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(20),
@@ -134,8 +124,9 @@ class _LoginState extends State<Login> {
                           },
                           child: const Text(
                             'He olvidado mi contraseña',
-                            style: TextStyle(color: Colors.black),
+                            style: TextStyle(color: Design.teal),
                           ),
+
                         ),
                         const SizedBox(height: 20),
                         _loading
@@ -151,7 +142,7 @@ class _LoginState extends State<Login> {
                                 style: ButtonStyle(
                                   backgroundColor:
                                       MaterialStateProperty.all<Color>(
-                                          Colors.green), // Background color
+                                          Design.seaGreen), // Background color
                                   foregroundColor:
                                       MaterialStateProperty.all<Color>(
                                           Colors.white), // Text color
@@ -161,6 +152,7 @@ class _LoginState extends State<Login> {
                                       borderRadius: BorderRadius.circular(20),
                                     ),
                                   ),
+                                  elevation: MaterialStateProperty.all(8.0),
                                 ),
                                 child: const Text('Log in'),
                               ),
@@ -173,7 +165,7 @@ class _LoginState extends State<Login> {
                           },
                           style: ButtonStyle(
                             backgroundColor: MaterialStateProperty.all<Color>(
-                                Colors.orange), // Background color
+                                Design.paleYellow), // Background color
                             foregroundColor: MaterialStateProperty.all<Color>(
                                 Colors.white), // Text color
                             shape: MaterialStateProperty.all<
@@ -182,8 +174,9 @@ class _LoginState extends State<Login> {
                                 borderRadius: BorderRadius.circular(20),
                               ),
                             ),
+                            elevation: MaterialStateProperty.all(8.0),
                           ),
-                          child: const Text('Sign up'),
+                          child: const Text('Sign up',style: TextStyle(color: Design.teal),),
                         ),
                       ],
                     ),

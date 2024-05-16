@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gps_semovil/app/core/design.dart';
 import 'package:gps_semovil/user/models/user_model.dart';
 import 'package:gps_semovil/user/screens/%20formalities/options.dart';
 import 'package:gps_semovil/user/screens/news_screen.dart';
@@ -6,9 +7,8 @@ import 'package:gps_semovil/user/screens/reports/user_reports.dart';
 import 'package:gps_semovil/user/screens/user_settings.dart';
 
 class UserHomePage extends StatefulWidget {
-  const UserHomePage({super.key, required this.user});
-
   final UserModel user;
+  const UserHomePage({super.key, required this.user});
 
   @override
   State<UserHomePage> createState() => _UserHomePageState();
@@ -18,20 +18,21 @@ class _UserHomePageState extends State<UserHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Design.paleYellow,
       appBar: AppBar(
-        backgroundColor: Colors.green,
-        title: const Text('HOME', style: TextStyle(color: Colors.white)),
+        backgroundColor: Design.teal,
+        title: const Text('Bienvenido', style: TextStyle(color: Design.paleYellow)),
         actions: [
           IconButton(
-            color: Colors.white,
+            color: Design.paleYellow,
             icon: const Icon(Icons.person),
             onPressed: () {
               Navigator.push(
                   context,
                   MaterialPageRoute(
                       builder: (context) => UserSettings(
-                            userModel: widget.user,
-                          ))).then((value) => setState(() {}));
+                        userModel: widget.user,
+                      ))).then((value) => setState(() {}));
             },
           )
         ],
@@ -39,18 +40,9 @@ class _UserHomePageState extends State<UserHomePage> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const SizedBox(
-            height: 50,
-          ),
-          const Padding(
-            padding: EdgeInsets.only(bottom: 20),
-            child: Text(
-              'Bienvenido',
-              style: TextStyle(
-                  fontSize: 32,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.green),
-            ),
+          Image.asset("assets/images/secre11.png"),
+          SizedBox(
+            height: 30,
           ),
           Expanded(
             child: GridView.count(
@@ -62,7 +54,7 @@ class _UserHomePageState extends State<UserHomePage> {
               children: <Widget>[
                 IconActionButton(
                     icon: Icons.assignment,
-                    color: Colors.blue,
+                    color: Design.teal,
                     label: "Trámites",
                     onPressed: () {
                       Navigator.push(
@@ -72,7 +64,7 @@ class _UserHomePageState extends State<UserHomePage> {
                     }),
                 IconActionButton(
                     icon: Icons.report,
-                    color: Colors.red,
+                    color: Design.teal,
                     label: "Reportes",
                     onPressed: () {
                       Navigator.push(
@@ -84,12 +76,12 @@ class _UserHomePageState extends State<UserHomePage> {
                     }),
                 IconActionButton(
                     icon: Icons.payment,
-                    color: Colors.purple,
+                    color: Design.teal,
                     label: "Pagos",
                     onPressed: () {}),
                 IconActionButton(
                     icon: Icons.newspaper,
-                    color: Colors.orange,
+                    color: Design.teal,
                     label: "Noticias",
                     onPressed: () {
                       Navigator.push(

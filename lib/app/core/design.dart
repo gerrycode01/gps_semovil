@@ -7,7 +7,7 @@ class Design{
       controller: t,
       decoration: InputDecoration(
         filled: true,
-        fillColor: Colors.orange[100],
+        fillColor: Design.lightOrange,
         hintText: texto,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(20),
@@ -22,13 +22,14 @@ class Design{
         accion();
       },
       style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all<Color>(Colors.green), // Background color
+        backgroundColor: MaterialStateProperty.all<Color>(Design.teal), // Background color
         foregroundColor: MaterialStateProperty.all<Color>(Colors.white), // Text color
         shape: MaterialStateProperty.all<RoundedRectangleBorder>(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
           ),
         ),
+        elevation: MaterialStateProperty.all(8.0),
       ),
       child: Text(texto),
     );
@@ -46,6 +47,7 @@ class Design{
             borderRadius: BorderRadius.circular(20),
           ),
         ),
+        elevation: MaterialStateProperty.all(8.0),
       ),
       child: Text(texto),
     );
@@ -62,6 +64,7 @@ class Design{
           borderSide: BorderSide.none,
         ),
       ),
+
       readOnly: true,
       onTap: () async {
         FocusScope.of(context).requestFocus(FocusNode());
@@ -187,6 +190,14 @@ class Design{
       MaterialPageRoute(builder: (context) => page),
     );
   }
+  static const Color brightRed = Color(0xFFFF1D44);
+  static const Color paleYellow = Color(0xFFFBEBAF);
+  static const Color mintGreen = Color(0xFF74BF9D);
+  static const Color seaGreen = Color(0xFF56A292);
+  static const Color teal = Color(0xFF1C8080);
+  static Color? lightOrange = Colors.orange[100];
+
+
 
 
 }
