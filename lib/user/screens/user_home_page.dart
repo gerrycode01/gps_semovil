@@ -60,7 +60,7 @@ class _UserHomePageState extends State<UserHomePage> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const Options()));
+                              builder: (context) => Options(user: widget.user,)));
                     }),
                 IconActionButton(
                     icon: Icons.report,

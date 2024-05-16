@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:gps_semovil/app/core/design.dart';
+import 'package:gps_semovil/user/models/user_model.dart';
 import 'package:gps_semovil/user/screens/%20formalities/information.dart';
 
 class Options extends StatefulWidget {
-  const Options({super.key});
+  const Options({super.key, required this.user});
+
+  final UserModel user;
 
   @override
   State<Options> createState() => _OptionsState();
@@ -14,7 +17,8 @@ class _OptionsState extends State<Options> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Opciones', style: TextStyle(color: Design.paleYellow)),
+        title:
+            const Text('Opciones', style: TextStyle(color: Design.paleYellow)),
         backgroundColor: Design.teal,
       ),
       body: Center(
@@ -25,14 +29,15 @@ class _OptionsState extends State<Options> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               CustomButton(
-                  label: 'Primera vez',
-                  icon: Icons.fiber_new,
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const Information(mode: 0)));
-                  },
+                label: 'Primera vez',
+                icon: Icons.fiber_new,
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              Information(mode: 0, user: widget.user)));
+                },
               ),
               const SizedBox(height: 20),
               CustomButton(
@@ -42,7 +47,8 @@ class _OptionsState extends State<Options> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const Information(mode: 1)));
+                            builder: (context) =>
+                                Information(mode: 1, user: widget.user)));
                   }),
               const SizedBox(height: 20),
               CustomButton(
@@ -52,7 +58,8 @@ class _OptionsState extends State<Options> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const Information(mode: 2)));
+                            builder: (context) =>
+                                Information(mode: 2, user: widget.user)));
                   }),
             ],
           ),

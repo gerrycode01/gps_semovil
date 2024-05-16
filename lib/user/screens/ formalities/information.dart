@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:gps_semovil/app/core/design.dart';
+import 'package:gps_semovil/user/models/user_model.dart';
 import 'package:gps_semovil/user/screens/%20formalities/driver_license.dart';
 
 class Information extends StatefulWidget {
-  const Information({super.key, required this.mode});
+  const Information({super.key, required this.mode, required this.user});
 
+  final UserModel user;
   final int mode;
 
   @override
@@ -74,27 +76,24 @@ class _InformationState extends State<Information> {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => const DriverLicenseForm(
-                        mode: 1,
-                      )));
+                  builder: (context) =>
+                      DriverLicenseForm(mode: 1, user: widget.user)));
         }
       case 2:
         {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => const DriverLicenseForm(
-                        mode: 2,
-                      )));
+                  builder: (context) =>
+                      DriverLicenseForm(mode: 2, user: widget.user)));
         }
       default:
         {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => const DriverLicenseForm(
-                        mode: 0,
-                      )));
+                  builder: (context) =>
+                      DriverLicenseForm(mode: 0, user: widget.user)));
         }
     }
   }
