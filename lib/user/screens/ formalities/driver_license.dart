@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:gps_semovil/app/core/modules/database/constants.dart';
+import 'package:gps_semovil/app/core/modules/select_image.dart';
 import 'package:gps_semovil/user/models/user_model.dart';
 
 class DriverLicenseForm extends StatefulWidget {
@@ -15,9 +18,15 @@ class DriverLicenseForm extends StatefulWidget {
 class _DriverLicenseFormState extends State<DriverLicenseForm> {
   bool ineUp = false;
   bool addressProofUp = false;
-  bool previousDriversLicense = false;
-  bool thefLostCertificate = false;
+  bool oldLicenseUp = false;
+  bool thefLostCertificateUp = false;
+
   String? selectedDriverLicensesType;
+
+  File? ineInPDF;
+  File? addressProofInPDF;
+  File? oldLicenseInPDF;
+  File? lostThefCertificateInPDF;
 
   @override
   Widget build(BuildContext context) {
@@ -73,9 +82,7 @@ class _DriverLicenseFormState extends State<DriverLicenseForm> {
             children: [
               Text(ineUp == false ? 'SUBE TU INE' : 'INE ARRIBA'),
               IconButton(
-                  onPressed: () {
-                    //TODO: METODO PARA AGREGAR INE
-                  },
+                  onPressed: addIne,
                   icon: Icon(ineUp == false ? Icons.add : Icons.check))
             ],
           ),
@@ -88,9 +95,7 @@ class _DriverLicenseFormState extends State<DriverLicenseForm> {
                   ? 'SUBE TU COMPROBANTE DE DOMICILIO'
                   : 'COMPROBANTE DE DOMICILIO'),
               IconButton(
-                  onPressed: () {
-                    //TODO: METODO PARA AGREGAR COMPROBANTE DE DOMICILIO
-                  },
+                  onPressed: addAddressProof,
                   icon: Icon(addressProofUp == false ? Icons.add : Icons.check))
             ],
           ),
@@ -99,16 +104,12 @@ class _DriverLicenseFormState extends State<DriverLicenseForm> {
           ),
           Row(
             children: [
-              Text(previousDriversLicense == false
+              Text(oldLicenseUp == false
                   ? 'SUBE TU LICENCIA DE CONDUCIR ANTERIOR'
                   : 'LICENCIA DE CONDUCIR ANTERIOR'),
               IconButton(
-                  onPressed: () {
-                    //TODO: METODO PARA AGREGAR LICENCIA DE CONDUCIR ANTERIOR
-                  },
-                  icon: Icon(previousDriversLicense == false
-                      ? Icons.add
-                      : Icons.check))
+                  onPressed: addOldLicenses,
+                  icon: Icon(oldLicenseUp == false ? Icons.add : Icons.check))
             ],
           ),
         ],
@@ -148,9 +149,7 @@ class _DriverLicenseFormState extends State<DriverLicenseForm> {
             children: [
               Text(ineUp == false ? 'SUBE TU INE' : 'INE ARRIBA'),
               IconButton(
-                  onPressed: () {
-                    //TODO: METODO PARA AGREGAR INE
-                  },
+                  onPressed: addIne,
                   icon: Icon(ineUp == false ? Icons.add : Icons.check))
             ],
           ),
@@ -163,9 +162,7 @@ class _DriverLicenseFormState extends State<DriverLicenseForm> {
                   ? 'SUBE TU COMPROBANTE DE DOMICILIO'
                   : 'COMPROBANTE DE DOMICILIO'),
               IconButton(
-                  onPressed: () {
-                    //TODO: METODO PARA AGREGAR COMPROBANTE DE DOMICILIO
-                  },
+                  onPressed: addAddressProof,
                   icon: Icon(addressProofUp == false ? Icons.add : Icons.check))
             ],
           ),
@@ -174,15 +171,13 @@ class _DriverLicenseFormState extends State<DriverLicenseForm> {
           ),
           Row(
             children: [
-              Text(thefLostCertificate == false
+              Text(thefLostCertificateUp == false
                   ? 'SUBE TU CERTIFICADO DE PERDIDA O ROBO'
                   : 'CERTIFICADO DE PERDIDA O ROBO'),
               IconButton(
-                  onPressed: () {
-                    //TODO: METODO PARA AGREGAR CERTIFICADO DE PERDIDA O ROBO
-                  },
+                  onPressed: addAddressProof,
                   icon: Icon(
-                      thefLostCertificate == false ? Icons.add : Icons.check))
+                      thefLostCertificateUp == false ? Icons.add : Icons.check))
             ],
           ),
         ],
@@ -222,9 +217,7 @@ class _DriverLicenseFormState extends State<DriverLicenseForm> {
             children: [
               Text(ineUp == false ? 'SUBE TU INE' : 'INE ARRIBA'),
               IconButton(
-                  onPressed: () {
-                    //TODO: METODO PARA AGREGAR INE
-                  },
+                  onPressed: addIne,
                   icon: Icon(ineUp == false ? Icons.add : Icons.check))
             ],
           ),
@@ -237,9 +230,7 @@ class _DriverLicenseFormState extends State<DriverLicenseForm> {
                   ? 'SUBE TU COMPROBANTE DE DOMICILIO'
                   : 'COMPROBANTE DE DOMICILIO'),
               IconButton(
-                  onPressed: () {
-                    //TODO: METODO PARA AGREGAR COMPROBANTE DE DOMICILIO
-                  },
+                  onPressed: addAddressProof,
                   icon: Icon(addressProofUp == false ? Icons.add : Icons.check))
             ],
           ),
@@ -250,12 +241,57 @@ class _DriverLicenseFormState extends State<DriverLicenseForm> {
           TextButton(
               onPressed: () {
                 //TODO: REGRESAR AL MENU PRINCIPAL
-                Navigator.pushNamed(context, '/user_homepage',
+                Navigator.pushReplacementNamed(context, '/user_homepage',
                     arguments: widget.user);
               },
               child: const Text('CANCELAR'))
         ],
       ),
     );
+  }
+
+  void addIne() async {
+    //TODO: METODO PARA AGREGAR INE
+    final pdf = await pickPDFFile();
+    ineInPDF = File(pdf as String);
+
+    if (ineInPDF != null) {
+      setState(() {
+        ineUp = true;
+      });
+    }
+  }
+
+  void addOldLicenses() async {
+    final pdf = await pickPDFFile();
+    oldLicenseInPDF = File(pdf as String);
+
+    if (oldLicenseInPDF != null) {
+      setState(() {
+        oldLicenseUp = true;
+      });
+    }
+  }
+
+  void addAddressProof() async {
+    final pdf = await pickPDFFile();
+    addressProofInPDF = File(pdf as String);
+
+    if (addressProofInPDF != null) {
+      setState(() {
+        addressProofUp = true;
+      });
+    }
+  }
+
+  void addLostThefCertificate() async {
+    final pdf = await pickPDFFile();
+    lostThefCertificateInPDF = File(pdf as String);
+
+    if (lostThefCertificateInPDF != null) {
+      setState(() {
+        thefLostCertificateUp = true;
+      });
+    }
   }
 }
