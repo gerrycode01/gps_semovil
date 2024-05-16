@@ -14,6 +14,7 @@ class UserModel {
   String? bloodtype; //
   final String? rol; //
   String? profilePhoto; //
+  List<String>? plates;
 
   UserModel(
       {required this.curp,
@@ -28,7 +29,8 @@ class UserModel {
       this.birthdate,
       this.bloodtype,
       required this.rol,
-      this.profilePhoto});
+      this.profilePhoto,
+      this.plates});
 
   factory UserModel.fromFirestore(
     DocumentSnapshot<Map<String, dynamic>> snapshot,
@@ -50,6 +52,7 @@ class UserModel {
         bloodtype: data?['bloodtype'],
         rol: data?['rol'],
         profilePhoto: data?['profilePhoto'],
+        plates: data?['plates']
       );
     } else {
       return UserModel(
@@ -85,16 +88,19 @@ class UserModel {
       'bloodtype': bloodtype,
       'rol': rol,
       'profilePhoto': profilePhoto,
+      'plates': plates,
     };
   }
 
   Map<String, dynamic> toSmallJSON() {
     return {
       'curp': curp,
+      'email': email,
       'names': names,
       'lastname': lastname,
       'lastname2': lastname2,
       'rol': rol,
     };
   }
+
 }
