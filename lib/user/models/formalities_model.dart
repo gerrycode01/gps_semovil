@@ -3,29 +3,29 @@ import 'package:gps_semovil/user/models/user_model.dart';
 
 class Formalities {
   final int idFormalities;
-  final String formalitiesType;
+  final String driverLicenseType;
   final UserModel user;
   final Timestamp date;
   String ineDoc;
   String addressProofDoc;
   final bool firsTime;
+  String? oldDriversLicense;
+  String? theftLostCertificate;
   String? paidProofDoc;
-  String? previousDriversLicense;
-  String? thefLostCertificate;
   int status;
   UserModel? trafficOfficer;
 
   Formalities(
       {required this.idFormalities,
-      required this.formalitiesType,
+      required this.driverLicenseType,
       required this.user,
       required this.date,
       required this.ineDoc,
       required this.addressProofDoc,
       required this.firsTime,
+      this.oldDriversLicense,
+      this.theftLostCertificate,
       this.paidProofDoc,
-      this.previousDriversLicense,
-      this.thefLostCertificate,
       required this.status,
       this.trafficOfficer});
 
@@ -36,25 +36,25 @@ class Formalities {
     final data = snapshot.data();
     return Formalities(
         idFormalities: data?['idFormalities'],
-        formalitiesType: data?['formalitiesType'],
+        driverLicenseType: data?['driverLicenseType'],
         user: UserModel.fromMap(data?['user']),
         date: data?['date'],
         ineDoc: data?['ineDoc'],
-        paidProofDoc: data?['paidProofDoc'],
-        previousDriversLicense: data?['previousDriversLicense'],
-        thefLostCertificate: data?['thefLostCertificate'],
-        firsTime: data?['firsTime'],
         addressProofDoc: data?['addressProofDoc'],
+        firsTime: data?['firsTime'],
+        oldDriversLicense: data?['oldDriversLicense'],
+        theftLostCertificate: data?['theftLostCertificate'],
+        paidProofDoc: data?['paidProofDoc'],
         status: data?['status'],
         trafficOfficer: data?['trafficOfficer'] != null
-            ? UserModel.fromMap(data!['trafficOfficer'])
+            ? UserModel.fromMap(data?['trafficOfficer'])
             : null);
   }
 
   Map<String, dynamic> toJSON() {
     return {
       'idFormalities': idFormalities,
-      'formalitiesType': formalitiesType,
+      'driverLicenseType': driverLicenseType,
       'user': {
         'curp': user.curp,
         'doccurp': user.doccurp,
@@ -74,9 +74,9 @@ class Formalities {
       'ineDoc': ineDoc,
       'addressProofDoc': addressProofDoc,
       'firsTime': firsTime,
+      'oldDriversLicense': oldDriversLicense,
+      'theftLostCertificate': theftLostCertificate,
       'paidProofDoc': paidProofDoc,
-      'previousDriversLicense': previousDriversLicense,
-      'thefLostCertificate': thefLostCertificate,
       'status': status,
       'trafficOfficer': {
         'curp': trafficOfficer?.curp ?? '',

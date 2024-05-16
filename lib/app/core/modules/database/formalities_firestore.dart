@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:gps_semovil/user/models/formalities_model.dart';
 
 FirebaseFirestore db = FirebaseFirestore.instance;
 
@@ -25,4 +26,11 @@ Future<int> getNumberOfFormalities() async {
     print("Error al obtener el número de formalidades: $e");
     return 0; // Retornar cero o manejar según el caso de uso
   }
+}
+
+Future<void> addFormalities(Formalities formalities) async {
+  await db
+      .collection('formalities')
+      .doc(formalities.idFormalities.toString())
+      .set(formalities.toJSON());
 }

@@ -1,8 +1,12 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:gps_semovil/app/core/modules/database/constants.dart';
+import 'package:gps_semovil/app/core/modules/database/formalities_firestore.dart';
+import 'package:gps_semovil/app/core/modules/database/storage.dart';
 import 'package:gps_semovil/app/core/modules/select_image.dart';
+import 'package:gps_semovil/user/models/formalities_model.dart';
 import 'package:gps_semovil/user/models/user_model.dart';
 
 class DriverLicenseForm extends StatefulWidget {
@@ -19,7 +23,8 @@ class _DriverLicenseFormState extends State<DriverLicenseForm> {
   bool ineUp = false;
   bool addressProofUp = false;
   bool oldLicenseUp = false;
-  bool thefLostCertificateUp = false;
+  bool lostTheftCertificateUp = false;
+  bool loading = false;
 
   String? selectedDriverLicensesType;
 
@@ -112,6 +117,27 @@ class _DriverLicenseFormState extends State<DriverLicenseForm> {
                   icon: Icon(oldLicenseUp == false ? Icons.add : Icons.check))
             ],
           ),
+          TextButton(
+              onPressed: () {
+                //TODO: VALIDACIONES DE FORMA CORRECTA
+                if(selectedDriverLicensesType == null) return;
+                if (!ineUp || !addressProofUp || !oldLicenseUp) return;
+
+                _loading();
+              },
+              child: loading == true
+                  ? const CircularProgressIndicator()
+                  : const Text('CONTINUAR')),
+          const SizedBox(
+            height: 20,
+          ),
+          TextButton(
+              onPressed: () {
+                //TODO: REGRESAR AL MENU PRINCIPAL
+                Navigator.pushReplacementNamed(context, '/user_homepage',
+                    arguments: widget.user);
+              },
+              child: const Text('CANCELAR'))
         ],
       ),
     );
@@ -171,15 +197,36 @@ class _DriverLicenseFormState extends State<DriverLicenseForm> {
           ),
           Row(
             children: [
-              Text(thefLostCertificateUp == false
+              Text(lostTheftCertificateUp == false
                   ? 'SUBE TU CERTIFICADO DE PERDIDA O ROBO'
                   : 'CERTIFICADO DE PERDIDA O ROBO'),
               IconButton(
                   onPressed: addAddressProof,
                   icon: Icon(
-                      thefLostCertificateUp == false ? Icons.add : Icons.check))
+                      lostTheftCertificateUp == false ? Icons.add : Icons.check))
             ],
           ),
+          TextButton(
+              onPressed: () {
+                //TODO: VALIDACIONES DE FORMA CORRECTA
+                if(selectedDriverLicensesType == null) return;
+                if (!ineUp || !addressProofUp || !lostTheftCertificateUp) return;
+
+                _loading();
+              },
+              child: loading == true
+                  ? const CircularProgressIndicator()
+                  : const Text('CONTINUAR')),
+          const SizedBox(
+            height: 20,
+          ),
+          TextButton(
+              onPressed: () {
+                //TODO: REGRESAR AL MENU PRINCIPAL
+                Navigator.pushReplacementNamed(context, '/user_homepage',
+                    arguments: widget.user);
+              },
+              child: const Text('CANCELAR'))
         ],
       ),
     );
@@ -234,7 +281,16 @@ class _DriverLicenseFormState extends State<DriverLicenseForm> {
                   icon: Icon(addressProofUp == false ? Icons.add : Icons.check))
             ],
           ),
-          TextButton(onPressed: () {}, child: const Text('CONTINUAR')),
+          TextButton(
+              onPressed: () {
+                //TODO: VALIDACIONES DE FORMA CORRECTA
+                if(selectedDriverLicensesType == null) return;
+                if (!ineUp || !addressProofUp) return;
+                _loading();
+              },
+              child: loading == true
+                  ? const CircularProgressIndicator()
+                  : const Text('CONTINUAR')),
           const SizedBox(
             height: 20,
           ),
@@ -251,7 +307,6 @@ class _DriverLicenseFormState extends State<DriverLicenseForm> {
   }
 
   void addIne() async {
-    //TODO: METODO PARA AGREGAR INE
     final pdf = await pickPDFFile();
     ineInPDF = File(pdf as String);
 
@@ -290,8 +345,52 @@ class _DriverLicenseFormState extends State<DriverLicenseForm> {
 
     if (lostThefCertificateInPDF != null) {
       setState(() {
-        thefLostCertificateUp = true;
+        lostTheftCertificateUp = true;
       });
     }
+  }
+
+  void _loading() async {
+    setState(() {
+      loading = true;
+    });
+
+    //Subir formalities a firestorage
+    String urlINE =
+    await uploadFileToFirestorage(ineInPDF!, widget.user.curp, 'INE.pdf');
+    String urlAddressProof = await uploadFileToFirestorage(
+        addressProofInPDF!, widget.user.curp, 'address_proof.pdf');
+    String? urlOldLicense;
+    if (oldLicenseUp) {
+      urlOldLicense = await uploadFileToFirestorage(
+          oldLicenseInPDF!, widget.user.curp, 'old_license.pdf');
+    }
+    String? urlLostThefCertificate;
+    if (lostTheftCertificateUp) {
+      urlLostThefCertificate = await uploadFileToFirestorage(
+          lostThefCertificateInPDF!,
+          widget.user.curp,
+          'thef_lost_certificate.pdf');
+    }
+
+    int idFormalities = await getNumberOfFormalities();
+
+    Formalities formalities = Formalities(
+        idFormalities: idFormalities+1,
+        driverLicenseType: selectedDriverLicensesType!,
+        user: widget.user,
+        date: Timestamp.fromDate(DateTime.now()),
+        ineDoc: urlINE,
+        addressProofDoc: urlAddressProof,
+        firsTime: widget.mode == 0,
+        oldDriversLicense: urlOldLicense,
+        theftLostCertificate: urlLostThefCertificate,
+        status: 0);
+
+    await addFormalities(formalities);
+
+    setState(() {
+      loading = false;
+    });
   }
 }
