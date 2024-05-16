@@ -190,6 +190,56 @@ class Design{
       MaterialPageRoute(builder: (context) => page),
     );
   }
+
+  static Widget textoConIcono({
+    required String texto,
+    required IconData icono,
+    required Color color, // Color para el texto y el ícono
+    double size = 16.0, // Tamaño del texto
+    double iconSize = 24.0, // Tamaño del ícono
+  }) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        Icon(icono, color: color, size: iconSize),
+        SizedBox(width: 8), // Espacio entre ícono y texto
+        Text(
+          texto,
+          style: TextStyle(
+            fontSize: size,
+            color: color,
+          ),
+        ),
+      ],
+    );
+  }
+  static Widget campoTextoNoEditable({
+    required TextEditingController controller,
+    required String hintText,
+    Color backgroundColor = Design.paleYellow, // Color de fondo del campo
+    double fontSize = 16.0, // Tamaño del texto
+  }) {
+    return TextFormField(
+      controller: controller,
+      decoration: InputDecoration(
+        hintText: hintText,
+        filled: true,
+        fillColor: backgroundColor, // Color de fondo personalizable
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(20),
+          borderSide: BorderSide.none,
+        ),
+        contentPadding: EdgeInsets.all(10), // Padding dentro del campo
+      ),
+      style: TextStyle(
+        fontSize: fontSize,
+        color: Colors.black, // Color del texto
+      ),
+      readOnly: true, // Hace que el campo sea solo de lectura
+      enabled: false, // Deshabilita el campo
+    );
+  }
+
   static const Color brightRed = Color(0xFFFF1D44);
   static const Color paleYellow = Color(0xFFFBEBAF);
   static const Color mintGreen = Color(0xFF74BF9D);

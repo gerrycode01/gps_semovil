@@ -42,9 +42,14 @@ class _TrafficOfficerReportsState extends State<TrafficOfficerReports> {
       length: 3,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Reportes'),
-          backgroundColor: Colors.green,
+          title: const Text('Reportes',style: TextStyle(color: Design.paleYellow),),
+          backgroundColor: Design.teal,
           bottom: TabBar(
+            labelColor: Design.paleYellow,
+            dividerColor: Design.seaGreen,
+            automaticIndicatorColorAdjustment: true,
+            indicatorColor: Design.seaGreen,
+            unselectedLabelColor: Colors.white,
             tabs: [
               Tab(text: 'Reportado'),
               Tab(text: 'Atendiendo'),
@@ -72,6 +77,8 @@ class _TrafficOfficerReportsState extends State<TrafficOfficerReports> {
         return InkWell(
           onTap: () async {},
           child: Card(
+            elevation: 5,
+            color: Design.paleYellow,
             margin: EdgeInsets.all(8),
             child: Padding(
               padding: EdgeInsets.all(8.0),
@@ -83,12 +90,13 @@ class _TrafficOfficerReportsState extends State<TrafficOfficerReports> {
                     children: [
                       CircleAvatar(
                         radius: 20,
-                        backgroundColor: Colors.blue,
+                        backgroundColor: Colors.teal
+                        ,
                         child: Icon(Icons.directions_car, color: Colors.white),
                       ),
                       Text(
                         "${report.formattedDate()}",
-                        style: TextStyle(color: Colors.grey),
+                        style: TextStyle(color: Design.teal),
                       ),
                     ],
                   ),
@@ -129,7 +137,7 @@ class _TrafficOfficerReportsState extends State<TrafficOfficerReports> {
         loadReportsList();
       });
     } else {
-      return Text("Finalizado");
+      return Design.textoConIcono(texto: "Finalizado", icono: Icons.check, color: Design.teal);
     }
   }
 }

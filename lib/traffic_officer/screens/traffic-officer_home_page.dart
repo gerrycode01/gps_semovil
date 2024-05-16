@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gps_semovil/traffic_officer/screens/traffic-officer_fines.dart';
+import 'package:gps_semovil/app/core/design.dart';
 import 'package:gps_semovil/traffic_officer/screens/traffic-officer_reports.dart';
 import 'package:gps_semovil/user/models/user_model.dart';
 
@@ -16,7 +16,8 @@ class _TrafficOfficerHomePageState extends State<TrafficOfficerHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Inicio'),
+        backgroundColor: Design.teal,
+        title: const Text('Inicio',style: TextStyle(color: Design.paleYellow),),
       ),
       drawer: Drawer(
         child: ListView(
@@ -26,19 +27,19 @@ class _TrafficOfficerHomePageState extends State<TrafficOfficerHomePage> {
               accountName: Text(widget.trafficOfficer.names), // Nombre del usuario
               accountEmail: Text(widget.trafficOfficer.lastname), // Email del usuario
               currentAccountPicture: CircleAvatar(
-                backgroundColor: Colors.white,
+                backgroundColor: Design.seaGreen,
                 child: Text(
                   widget.trafficOfficer.names[0], // Primera letra del nombre
-                  style: const TextStyle(fontSize: 40.0),
+                  style: const TextStyle(fontSize: 40.0,color: Design.paleYellow),
                 ),
               ),
               decoration: const BoxDecoration(
-                color: Colors.blue, // Cambia al color que prefieras
+                color: Colors.teal, // Cambia al color que prefieras
               ),
             ),
             ListTile(
               leading: const Icon(Icons.newspaper, color: Colors.blue),
-              title: const Text('Noticias'),
+              title: const Text('Noticias',style: TextStyle(color: Design.teal),),
               onTap: () {
                 Navigator.pop(context); // Cerrar el drawer
                 // Navegación a Noticias
@@ -46,7 +47,7 @@ class _TrafficOfficerHomePageState extends State<TrafficOfficerHomePage> {
             ),
             ListTile(
               leading: const Icon(Icons.report, color: Colors.green),
-              title: const Text('Reportes'),
+              title: const Text('Reportes',style: TextStyle(color: Design.teal),),
               onTap: () {
                 Navigator.pop(context);
                 Navigator.push(context, MaterialPageRoute(builder: (context) => TrafficOfficerReports(trafficOfficer: widget.trafficOfficer)));
@@ -54,10 +55,10 @@ class _TrafficOfficerHomePageState extends State<TrafficOfficerHomePage> {
             ),
             ListTile(
               leading: const Icon(Icons.receipt_long, color: Colors.red),
-              title: const Text('Multas'),
+              title: const Text('Multas',style: TextStyle(color: Design.teal),),
               onTap: () {
                 Navigator.pop(context); // Cerrar el drawer
-                Navigator.push(context, MaterialPageRoute(builder: (context) => TrafficOfficerFines(trafficOfficer: widget.trafficOfficer)));
+                // Navegación a Multas
               },
             ),
 
