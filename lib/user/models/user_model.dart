@@ -14,7 +14,7 @@ class UserModel {
   String? bloodtype; //
   final String? rol; //
   String? profilePhoto; //
-  List<String>? plates;
+  List<dynamic>? plates;
 
   UserModel(
       {required this.curp,
