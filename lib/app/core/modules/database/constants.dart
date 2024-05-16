@@ -9,4 +9,10 @@ class Const {
     'O+',
     'O-'
   ];
+
+  static List<String> driverLicensesTypes = [
+    'Licencia de chofer',
+    'Licencia de automovilista',
+    'Licencia de motociclista'
+  ];
 }
