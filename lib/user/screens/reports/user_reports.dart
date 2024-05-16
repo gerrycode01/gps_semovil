@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gps_semovil/app/core/design.dart';
 import 'package:gps_semovil/app/core/modules/database/report_firestore.dart';
 import '../../models/report_model.dart';
 import '../../models/user_model.dart';
@@ -39,9 +40,11 @@ class _UserReportsState extends State<UserReports> {
       length: 3,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Tus reportes'),
+          backgroundColor: Design.teal,
+          title: Text('Tus reportes',style: TextStyle(color: Colors.white),),
           actions: [
             IconButton(
+              color: Colors.white,
               onPressed: () {
                 Navigator.push(
                   context,
@@ -54,6 +57,11 @@ class _UserReportsState extends State<UserReports> {
             ),
           ],
           bottom: TabBar(
+            labelColor: Design.paleYellow,
+            dividerColor: Design.seaGreen,
+            automaticIndicatorColorAdjustment: true,
+            indicatorColor: Design.seaGreen,
+            unselectedLabelColor: Colors.white,
             tabs: [
               Tab(text: 'Reportado'),
               Tab(text: 'Atendiendo'),
@@ -79,6 +87,7 @@ class _UserReportsState extends State<UserReports> {
       itemBuilder: (context, index) {
         ReportModel report = filteredReports[index];
         return Card(
+          color: Design.paleYellow,
           elevation: 5,
           margin: EdgeInsets.all(10),
           child: ListTile(

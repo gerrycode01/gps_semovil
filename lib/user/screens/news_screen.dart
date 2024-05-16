@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gps_semovil/app/core/design.dart';
 import 'package:gps_semovil/user/models/news_model.dart';
 
 import '../../app/core/modules/database/news_firestore.dart';
@@ -38,8 +39,9 @@ class _NewsScreenState extends State<NewsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Noticias'),
-        backgroundColor: Colors.green,
+        centerTitle: true,
+        title: const Text('Noticias', style: TextStyle(color: Design.paleYellow)),
+        backgroundColor: Design.teal,
       ),
       body: ListView.builder(
         itemCount: _newsList.length,
@@ -47,6 +49,7 @@ class _NewsScreenState extends State<NewsScreen> {
           return InkWell(
               onTap: () async {},
               child: Card(
+                color: Design.paleYellow,
                 margin: EdgeInsets.all(8),
                 child: Padding(
                   padding:  EdgeInsets.all(8.0),
@@ -58,12 +61,12 @@ class _NewsScreenState extends State<NewsScreen> {
                         children: [
                           CircleAvatar(
                             radius: 20,
-                            backgroundColor: Colors.blue,
+                            backgroundColor: Design.teal,
                             child:
                                 Icon(Icons.directions_car, color: Colors.white),
                           ),
                           Text("${_newsList[index].formattedDate()}",
-                              style: TextStyle(color: Colors.grey)
+                              style: TextStyle(color: Design.seaGreen)
                           ),
                         ],
                       ),
@@ -82,7 +85,7 @@ class _NewsScreenState extends State<NewsScreen> {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           Text('Leer más...',
-                              style: TextStyle(color: Colors.blue)),
+                              style: TextStyle(color: Design.teal)),
                         ],
                       ),
                     ],

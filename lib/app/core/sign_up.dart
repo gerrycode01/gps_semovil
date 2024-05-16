@@ -112,7 +112,7 @@ class _SignUpState extends State<SignUp> {
             const SizedBox(height: 20),
             const Text(
               'Domicilio',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20,color: Design.teal),
             ),
             Row(
               children: <Widget>[
@@ -132,7 +132,7 @@ class _SignUpState extends State<SignUp> {
             const SizedBox(height: 20),
             const Text(
               'Cuenta',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20,color: Design.teal),
             ),
             Design.campoTexto(emailController, "Correo electronico"),
             const SizedBox(height: 10),
@@ -202,7 +202,8 @@ class _SignUpState extends State<SignUp> {
               child: ElevatedButton(
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all<Color>(
-                      Colors.green), // Color de fondo
+                      Design.teal
+                  ), // Color de fondo
                   foregroundColor: MaterialStateProperty.all<Color>(
                       Colors.white), // Color del texto
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -210,6 +211,7 @@ class _SignUpState extends State<SignUp> {
                       borderRadius: BorderRadius.circular(20),
                     ),
                   ),
+                  elevation: MaterialStateProperty.all(8.0),
                 ),
                 onPressed: termsAccepted
                     ? () async {

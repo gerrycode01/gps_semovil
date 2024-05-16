@@ -18,7 +18,7 @@ class _UserHomePageState extends State<UserHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Design.paleYellow,
+      backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Design.teal,
         title: const Text('Bienvenido', style: TextStyle(color: Design.paleYellow)),

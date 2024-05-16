@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gps_semovil/app/core/design.dart';
 import 'package:gps_semovil/app/core/login.dart';
 import 'package:gps_semovil/app/core/modules/components/circular_image.dart';
 import 'package:gps_semovil/user/models/user_model.dart';
@@ -24,19 +25,19 @@ class _UserSettingsState extends State<UserSettings> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Cuenta'),
+        title: const Text('Cuenta',style: TextStyle(color: Design.paleYellow),),
         actions: [
           IconButton(
-            icon: const Icon(
+            icon: Icon(
               Icons.settings,
-              color: Colors.white,
+              color: Design.paleYellow,
             ),
             onPressed: () {
 
             },
           ),
         ],
-        backgroundColor: Colors.green,
+        backgroundColor: Design.teal,
       ),
       body: ListView(
         padding: const EdgeInsets.all(20),
@@ -47,7 +48,7 @@ class _UserSettingsState extends State<UserSettings> {
           ),
           const SizedBox(height: 20),
           ListTile(
-            title: const Text('Nombre(s)'),
+            title: const Text('Nombre(s)',style: TextStyle(color: Design.teal),),
             subtitle: Text(widget.userModel.names!),
             leading: Icon(Icons.person,
                 color: Theme.of(context).colorScheme.secondary),
@@ -59,70 +60,22 @@ class _UserSettingsState extends State<UserSettings> {
             ),
           ),
           ListTile(
-            title: const Text('Apellido Paterno'),
+            title: const Text('Apellido Paterno',style: TextStyle(color: Design.teal),),
             subtitle: Text(widget.userModel.lastname!),
             leading: Icon(Icons.person,
                 color: Theme.of(context).colorScheme.secondary),
           ),
           ListTile(
-            title: const Text('Apellido Materno'),
+            title: const Text('Apellido Materno',style: TextStyle(color: Design.teal),),
             subtitle: Text(widget.userModel.lastname2!),
             leading: Icon(Icons.person,
                 color: Theme.of(context).colorScheme.secondary),
           ),
-          const SizedBox(height: 30),
-          ElevatedButton.icon(
-            icon: const Icon(Icons.credit_card),
-            label: const Text('Licencia digital'),
-            onPressed: () {
-              // Acción para Licencia digital
-            },
-            style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all<Color>(Colors.orange),
-              // Color de fondo
-              foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-              // Color del texto
-              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          ElevatedButton.icon(
-            icon: const Icon(Icons.payment),
-            label: const Text('Formas de pago'),
-            onPressed: () {
-              // Acción para Formas de pago
-            },
-            style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all<Color>(Colors.orange),
-              // Color de fondo
-              foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-              // Color del texto
-              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(height: 30),
-          TextButton(
-            style: TextButton.styleFrom(
-              foregroundColor: Colors.white,
-              backgroundColor: Colors.red,
-              minimumSize: const Size(double.infinity, 50),
-            ),
-            onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const Login()));
-            },
-            child: const Text('Cerrar sesion'),
-          ),
+          const SizedBox(height: 60),
+          Design.botonRed("Cerrar sesión", () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const Login()));
+          })
         ],
       ),
     );

@@ -37,7 +37,7 @@ class _UserAddReportsState extends State<UserAddReports> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Agregar Reporte'),
+        title: Text('Agregar Reporte',style: TextStyle(color: Colors.teal),),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -101,28 +101,22 @@ class _UserAddReportsState extends State<UserAddReports> {
               ],
               Design.campoTexto(evidenceController, "Evidencia (opcional)"),
               const SizedBox(height: 30),
-              ElevatedButton(
-                onPressed: () {
-                  ReportModel report = ReportModel(
-                    reportType: reportType,
-                    description: descriptionController.text,
-                    date: Timestamp.fromDate(DateTime.now()),
-                    place: placeController.text,
-                    GURB: GURBController.text,
-                    evidence: evidenceController.text,
-                    accidentType: selectedAccidentType, // Use the dropdown selection
-                    status: "Reportado",
-                    user: widget.user.toSmallJSON(),
-                  );
-                  addReport(report);
-                  Design.showSnackBarGood(context, "REPORTE REGISTRADO");
-                  Navigator.pop(context);
-                },
-                child: Text("Subir reporte"),
-                style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.white, backgroundColor: Theme.of(context).primaryColor,
-                ),
-              ),
+              Design.botonGreen("Subir reporte", () {
+                ReportModel report = ReportModel(
+                  reportType: reportType,
+                  description: descriptionController.text,
+                  date: Timestamp.fromDate(DateTime.now()),
+                  place: placeController.text,
+                  GURB: GURBController.text,
+                  evidence: evidenceController.text,
+                  accidentType: selectedAccidentType, // Use the dropdown selection
+                  status: "Reportado",
+                  user: widget.user.toSmallJSON(),
+                );
+                addReport(report);
+                Design.showSnackBarGood(context, "REPORTE REGISTRADO");
+                Navigator.pop(context);
+              })
             ],
           ],
         ),
