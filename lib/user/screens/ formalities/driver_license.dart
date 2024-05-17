@@ -120,7 +120,7 @@ class _DriverLicenseFormState extends State<DriverLicenseForm> {
           TextButton(
               onPressed: () {
                 //TODO: VALIDACIONES DE FORMA CORRECTA
-                if(selectedDriverLicensesType == null) return;
+                if (selectedDriverLicensesType == null) return;
                 if (!ineUp || !addressProofUp || !oldLicenseUp) return;
 
                 _loading();
@@ -202,15 +202,17 @@ class _DriverLicenseFormState extends State<DriverLicenseForm> {
                   : 'CERTIFICADO DE PERDIDA O ROBO'),
               IconButton(
                   onPressed: addAddressProof,
-                  icon: Icon(
-                      lostTheftCertificateUp == false ? Icons.add : Icons.check))
+                  icon: Icon(lostTheftCertificateUp == false
+                      ? Icons.add
+                      : Icons.check))
             ],
           ),
           TextButton(
               onPressed: () {
                 //TODO: VALIDACIONES DE FORMA CORRECTA
-                if(selectedDriverLicensesType == null) return;
-                if (!ineUp || !addressProofUp || !lostTheftCertificateUp) return;
+                if (selectedDriverLicensesType == null) return;
+                if (!ineUp || !addressProofUp || !lostTheftCertificateUp)
+                  return;
 
                 _loading();
               },
@@ -284,7 +286,7 @@ class _DriverLicenseFormState extends State<DriverLicenseForm> {
           TextButton(
               onPressed: () {
                 //TODO: VALIDACIONES DE FORMA CORRECTA
-                if(selectedDriverLicensesType == null) return;
+                if (selectedDriverLicensesType == null) return;
                 if (!ineUp || !addressProofUp) return;
                 _loading();
               },
@@ -357,7 +359,7 @@ class _DriverLicenseFormState extends State<DriverLicenseForm> {
 
     //Subir formalities a firestorage
     String urlINE =
-    await uploadFileToFirestorage(ineInPDF!, widget.user.curp, 'INE.pdf');
+        await uploadFileToFirestorage(ineInPDF!, widget.user.curp, 'INE.pdf');
     String urlAddressProof = await uploadFileToFirestorage(
         addressProofInPDF!, widget.user.curp, 'address_proof.pdf');
     String? urlOldLicense;
@@ -376,7 +378,7 @@ class _DriverLicenseFormState extends State<DriverLicenseForm> {
     int idFormalities = await getNumberOfFormalities();
 
     Formalities formalities = Formalities(
-        idFormalities: idFormalities+1,
+        idFormalities: idFormalities + 1,
         driverLicenseType: selectedDriverLicensesType!,
         user: widget.user,
         date: Timestamp.fromDate(DateTime.now()),
@@ -388,6 +390,8 @@ class _DriverLicenseFormState extends State<DriverLicenseForm> {
         status: 0);
 
     await addFormalities(formalities);
+
+    //TODO: LLEVAR A LA VENTANA DE PAGO GENERADO
 
     setState(() {
       loading = false;

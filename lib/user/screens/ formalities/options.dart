@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gps_semovil/app/core/design.dart';
 import 'package:gps_semovil/user/models/user_model.dart';
+import 'package:gps_semovil/user/screens/%20formalities/formalities.dart';
 import 'package:gps_semovil/user/screens/%20formalities/information.dart';
 
 class Options extends StatefulWidget {
@@ -60,6 +61,17 @@ class _OptionsState extends State<Options> {
                         MaterialPageRoute(
                             builder: (context) =>
                                 Information(mode: 2, user: widget.user)));
+                  }),
+              const SizedBox(height: 20),
+              CustomButton(
+                  label: 'Ver tramites pendientes',
+                  icon: Icons.warning_amber,
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                ScreenFormalities(user: widget.user)));
                   }),
             ],
           ),
