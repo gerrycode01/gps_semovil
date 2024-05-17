@@ -16,7 +16,6 @@ class UserSettings extends StatefulWidget {
 class _UserSettingsState extends State<UserSettings> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     //cargarDatos();
   }
@@ -25,16 +24,17 @@ class _UserSettingsState extends State<UserSettings> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Cuenta',style: TextStyle(color: Design.paleYellow),),
+        title: const Text(
+          'Cuenta',
+          style: TextStyle(color: Design.paleYellow),
+        ),
         actions: [
           IconButton(
-            icon: Icon(
+            icon: const Icon(
               Icons.settings,
               color: Design.paleYellow,
             ),
-            onPressed: () {
-
-            },
+            onPressed: () {},
           ),
         ],
         backgroundColor: Design.teal,
@@ -48,8 +48,11 @@ class _UserSettingsState extends State<UserSettings> {
           ),
           const SizedBox(height: 20),
           ListTile(
-            title: const Text('Nombre(s)',style: TextStyle(color: Design.teal),),
-            subtitle: Text(widget.userModel.names!),
+            title: const Text(
+              'Nombre(s)',
+              style: TextStyle(color: Design.teal),
+            ),
+            subtitle: Text(widget.userModel.names),
             leading: Icon(Icons.person,
                 color: Theme.of(context).colorScheme.secondary),
             trailing: IconButton(
@@ -60,13 +63,19 @@ class _UserSettingsState extends State<UserSettings> {
             ),
           ),
           ListTile(
-            title: const Text('Apellido Paterno',style: TextStyle(color: Design.teal),),
-            subtitle: Text(widget.userModel.lastname!),
+            title: const Text(
+              'Apellido Paterno',
+              style: TextStyle(color: Design.teal),
+            ),
+            subtitle: Text(widget.userModel.lastname),
             leading: Icon(Icons.person,
                 color: Theme.of(context).colorScheme.secondary),
           ),
           ListTile(
-            title: const Text('Apellido Materno',style: TextStyle(color: Design.teal),),
+            title: const Text(
+              'Apellido Materno',
+              style: TextStyle(color: Design.teal),
+            ),
             subtitle: Text(widget.userModel.lastname2!),
             leading: Icon(Icons.person,
                 color: Theme.of(context).colorScheme.secondary),

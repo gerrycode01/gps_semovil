@@ -7,7 +7,8 @@ Future<XFile?> getImage() async {
   return image;
 }
 
-Future<FilePickerResult?> pickPDFFile() async {
+Future<String?> pickPDFFile() async {
+  String? filePath;
   try {
     // Configura el selector para que solo acepte archivos PDF
     FilePickerResult? result = await FilePicker.platform.pickFiles(
@@ -18,9 +19,9 @@ Future<FilePickerResult?> pickPDFFile() async {
     if (result != null) {
       // Si el usuario selecciona un archivo, puedes hacer algo con él aquí
       // Por ejemplo, obtener la ruta del archivo seleccionado:
-      String? filePath = result.files.single.path;
+      filePath = result.files.single.path;
       print("Archivo seleccionado: $filePath");
-      return result;
+      return filePath;
     } else {
       // Usuario canceló la selección
       print("Selección de archivo cancelada");

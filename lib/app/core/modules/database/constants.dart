@@ -27,4 +27,11 @@ class Const {
     'Licencia Automovilista \$464.00',
     'Licencia Motociclista \$388.00'
   ];
+
+  static Map<int, String> statusForm = {
+    0: 'POR PAGAR',
+    1: 'EN REVISION',
+    2: 'ACEPTADA',
+    3: 'DENEGADA',
+  };
 }

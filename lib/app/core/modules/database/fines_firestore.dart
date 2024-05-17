@@ -7,8 +7,11 @@ FirebaseFirestore db = FirebaseFirestore.instance;
 
 Future<UserModel?> getUserByPlate(String plate) async {
   try {
-    final querySnapshot = await db.collection('user')
-        .where('plates', arrayContains: plate) // Buscar si el array 'plates' contiene la placa especificada
+    final querySnapshot = await db
+        .collection('user')
+        .where('plates',
+            arrayContains:
+                plate) // Buscar si el array 'plates' contiene la placa especificada
         .get();
 
     if (querySnapshot.docs.isNotEmpty) {
@@ -24,21 +27,23 @@ Future<UserModel?> getUserByPlate(String plate) async {
   }
 }
 
-Future<void> fineUser(FineModel fine) async{
-  try{
-    await db.collection('fine').add(fine.toJSON()).then((documentSnapshot) => print('Multa subida correctamente'));
+Future<void> fineUser(FineModel fine) async {
+  try {
+    await db
+        .collection('fine')
+        .add(fine.toJSON())
+        .then((documentSnapshot) => print('Multa subida correctamente'));
   } catch (e) {
-    print ("Error al subir la multa: $e");
+    print("Error al subir la multa: $e");
   }
 }
 
-
-
-
 Future<List<FineModel>> getFinesByUser(String curp) async {
   try {
-    final querySnapshot = await FirebaseFirestore.instance.collection('fine')
-        .where('user.curp', isEqualTo: curp) // Accediendo a la CURP dentro del mapa 'user'
+    final querySnapshot = await FirebaseFirestore.instance
+        .collection('fine')
+        .where('user.curp',
+            isEqualTo: curp) // Accediendo a la CURP dentro del mapa 'user'
         .get();
 
     return querySnapshot.docs

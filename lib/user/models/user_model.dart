@@ -39,21 +39,20 @@ class UserModel {
     final data = snapshot.data();
     if (data?['rol'] == 'user') {
       return UserModel(
-        curp: data?['curp'],
-        doccurp: data?['doccurp'],
-        names: data?['names'],
-        lastname: data?['lastname'],
-        lastname2: data?['lastname2'],
-        address: data?['address'],
-        docaddress: data?['docaddress'],
-        email: data?['email'],
-        phone: data?['phone'],
-        birthdate: data?['birthdate'],
-        bloodtype: data?['bloodtype'],
-        rol: data?['rol'],
-        profilePhoto: data?['profilePhoto'],
-        plates: data?['plates']
-      );
+          curp: data?['curp'],
+          doccurp: data?['doccurp'],
+          names: data?['names'],
+          lastname: data?['lastname'],
+          lastname2: data?['lastname2'],
+          address: data?['address'],
+          docaddress: data?['docaddress'],
+          email: data?['email'],
+          phone: data?['phone'],
+          birthdate: data?['birthdate'],
+          bloodtype: data?['bloodtype'],
+          rol: data?['rol'],
+          profilePhoto: data?['profilePhoto'],
+          plates: data?['plates']);
     } else {
       return UserModel(
           curp: data?['curp'],
@@ -65,6 +64,24 @@ class UserModel {
   }
 
   factory UserModel.fromMap(Map<String, dynamic> map) {
+    return UserModel(
+        curp: map['curp'],
+        doccurp: map['doccurp'],
+        names: map['names'],
+        lastname: map['lastname'],
+        lastname2: map['lastname2'],
+        address: map['address'],
+        docaddress: map['docaddress'],
+        email: map['email'],
+        phone: map['phone'],
+        birthdate: map['birthdate'],
+        bloodtype: map['bloodtype'],
+        rol: map['rol'],
+        profilePhoto: map['profilePhoto'],
+        plates: map['plates']);
+  }
+
+  factory UserModel.fromMapita(Map<String, dynamic> map) {
     return UserModel(
         curp: map['curp'],
         email: map['email'],
@@ -102,5 +119,4 @@ class UserModel {
       'rol': rol,
     };
   }
-
 }

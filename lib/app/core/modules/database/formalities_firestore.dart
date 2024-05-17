@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:gps_semovil/user/models/formalities_model.dart';
 
 FirebaseFirestore db = FirebaseFirestore.instance;
 
@@ -24,5 +25,43 @@ Future<int> getNumberOfFormalities() async {
     // Manejo de errores, por ejemplo, permisos insuficientes, problemas de red, etc.
     print("Error al obtener el número de formalidades: $e");
     return 0; // Retornar cero o manejar según el caso de uso
+  }
+}
+
+Future<void> incrementFormalitiesCount() async {
+  DocumentReference docRef = db.collection('counting').doc('formalities');
+
+  db.runTransaction((transaction) async {
+    DocumentSnapshot snapshot = await transaction.get(docRef);
+    if (!snapshot.exists) {
+      throw Exception("Documento no existe!");
+    }
+
+    int newCount = snapshot.get('total') + 1; // Incrementa el contador
+    transaction.update(docRef, {'total': newCount});
+  }).catchError((error) {
+    print("Error performing transaction: $error");
+  });
+}
+
+
+Future<void> addFormalities(Formalities formalities) async {
+  await db
+      .collection('formalities')
+      .doc(formalities.idFormalities.toString())
+      .set(formalities.toJSON());
+}
+
+
+Future<List<Formalities>> getAllFormalities() async {
+  try {
+    final querySnapshot = await db.collection('formalities').orderBy('date').get();
+    print("Successfully completed");
+    return querySnapshot.docs
+        .map((docSnapshot) => Formalities.fromFirestore(docSnapshot, null))
+        .toList();
+  } catch (e) {
+    print("Error obteniendo lista de pacientes: $e");
+    return []; //
   }
 }
