@@ -52,7 +52,7 @@ class _UserSettingsState extends State<UserSettings> {
               'Nombre(s)',
               style: TextStyle(color: Design.teal),
             ),
-            subtitle: Text(widget.userModel.names!),
+            subtitle: Text(widget.userModel.names),
             leading: Icon(Icons.person,
                 color: Theme.of(context).colorScheme.secondary),
             trailing: IconButton(
@@ -67,7 +67,7 @@ class _UserSettingsState extends State<UserSettings> {
               'Apellido Paterno',
               style: TextStyle(color: Design.teal),
             ),
-            subtitle: Text(widget.userModel.lastname!),
+            subtitle: Text(widget.userModel.lastname),
             leading: Icon(Icons.person,
                 color: Theme.of(context).colorScheme.secondary),
           ),
