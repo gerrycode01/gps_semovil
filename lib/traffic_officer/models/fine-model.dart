@@ -8,47 +8,21 @@ class FineModel {
   String? municipality;
   Map<String, dynamic>? user;
   Map<String, dynamic>? trafficOfficer;
-  String? article1;
-  String? justification1;
-  String? article2;
-  String? justification2;
-  String? article3;
-  String? justification3;
+  List<String>? articles;  // Lista para los artículos
+  List<String>? justifications;  // Lista para las justificaciones
   String? status;
 
-  FineModel(
-      {this.id,
-      this.place,
-      this.date,
-      this.municipality,
-      this.user,
-      this.trafficOfficer,
-      this.article1,
-      this.justification1,
-      this.article2,
-      this.justification2,
-      this.article3,
-      this.justification3,
-      this.status});
-
-  factory FineModel.fromFirestore(
-      DocumentSnapshot<Map<String, dynamic>> snapshot) {
-    final data = snapshot.data();
-    return FineModel(
-        id: snapshot.id,
-        place: data?['place'],
-        date: data?['date'],
-        municipality: data?['municipality'],
-        user: data?['user'],
-        trafficOfficer: data?['trafficOfficer'],
-        article1: data?['article1'],
-        justification1: data?['justification1'],
-        article2: data?['article2'],
-        justification2: data?['justification2'],
-        article3: data?['article3'],
-        justification3: data?['justification3'],
-        status: data?['status']);
-  }
+  FineModel({
+    this.id,
+    this.place,
+    this.date,
+    this.municipality,
+    this.user,
+    this.trafficOfficer,
+    this.articles,
+    this.justifications,
+    this.status,
+  });
 
   Map<String, dynamic> toJSON() {
     return {
@@ -57,22 +31,30 @@ class FineModel {
       'municipality': municipality,
       'user': user,
       'trafficOfficer': trafficOfficer,
-      'article1': article1,
-      'justification1': justification1,
-      'article2': article2,
-      'justification2': justification2,
-      'article3': article3,
-      'justification3': justification3,
+      'articles': articles,  // Guardar lista de artículos
+      'justifications': justifications,  // Guardar lista de justificaciones
       'status': status
     };
   }
 
-  // Método para formatear el campo de fecha como una cadena legible
+  factory FineModel.fromFirestore(DocumentSnapshot<Map<String, dynamic>> snapshot) {
+    var data = snapshot.data();
+    return FineModel(
+      id: snapshot.id,
+      place: data?['place'],
+      date: data?['date'],
+      municipality: data?['municipality'],
+      user: data?['user'],
+      trafficOfficer: data?['trafficOfficer'],
+      articles: List<String>.from(data?['articles'] ?? []),
+      justifications: List<String>.from(data?['justifications'] ?? []),
+      status: data?['status'],
+    );
+  }
+
   String formattedDate() {
     if (date != null) {
-      // Convierte el Timestamp en un objeto DateTime
       DateTime dateTime = date!.toDate();
-      // Formatea la fecha y hora como una cadena legible
       return DateFormat('dd/MM/yyyy HH:mm').format(dateTime);
     } else {
       return 'Fecha no disponible';

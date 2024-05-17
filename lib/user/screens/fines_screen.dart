@@ -84,7 +84,7 @@ class _FinesScreenState extends State<FinesScreen> {
             trailing: Text(fine.formattedDate(), style: TextStyle(fontWeight: FontWeight.bold)),
             subtitle: Text(fine.place ?? ""),
             isThreeLine: true,
-            title: Text("${fine.article1} - ${fine.justification1}", style: TextStyle(fontStyle: FontStyle.italic)),
+            title: Text("${fine.articles} - ${fine.justifications}", style: TextStyle(fontStyle: FontStyle.italic)),
             onTap: () {
               // Aquí puedes implementar una acción al tocar cada reporte, por ejemplo, mostrar detalles
             },

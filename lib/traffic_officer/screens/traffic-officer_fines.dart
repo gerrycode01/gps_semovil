@@ -104,40 +104,65 @@ class _TrafficOfficerFinesState extends State<TrafficOfficerFines> {
               'Datos necesarios para la multa',
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20,color: Design.teal),
             ),
-            Row(
-              children: [
-                Expanded(
-                  child: Design.campoTexto(placeController, "Dirección de la infracción"),
-                ),
-                SizedBox(width: 10),
-                Expanded(
-                  child: DropdownButton<String>(
-                    isExpanded: true,
-                    value: selectedMunicipality,
-                    onChanged: (newValue) {
-                      setState(() {
-                        selectedMunicipality = newValue;
-                      });
-                    },
-                    items: municipalities.map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                    hint: Text('Selecciona un municipio'),
+            Padding(
+              padding: const EdgeInsets.all(5.0),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Design.campoTexto(placeController, "Dirección de la infracción"),
                   ),
-                ),
-              ],
+                  SizedBox(width: 10),
+                  Expanded(
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+                      decoration: BoxDecoration(
+                        color: Colors.orange[100],
+                        borderRadius: BorderRadius.circular(30),
+                        border: Border.all(color: Colors.transparent),
+                      ),
+                      child: DropdownButtonHideUnderline(
+                        child: DropdownButton<String>(
+                          isExpanded: true,
+                          value: selectedMunicipality,
+                          onChanged: (newValue) {
+                            setState(() {
+                              selectedMunicipality = newValue;
+                            });
+                          },
+                          items: municipalities.map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            );
+                          }).toList(),
+                          icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
+                          iconSize: 24,
+                          elevation: 16,
+                          style: const TextStyle(color: Colors.black, fontSize: 16),
+                          hint: Text('Selecciona un municipio', style: const TextStyle(color: Colors.grey)),
+                        ),
+                      ),
+                    ),
+                  )
+
+                ],
+              ),
             ),SizedBox(height: 10),
             ...List.generate(articleControllers.length, (index) {
               return Row(
                 children: [
                   Expanded(
-                    child: Design.campoTexto(articleControllers[index], "Fundamento legal o artículos infringidos"),
+                    child: Padding(
+                        padding: EdgeInsets.all(5),
+                      child: Design.campoTexto(articleControllers[index], "Fundamento legal o artículos infringidos"),
+                    )
                   ),
+                  SizedBox(width: 5,),
                   Expanded(
-                    child: Design.campoTexto(justificationControllers[index], "Descripcion o justificacion de la infracción"),
+                    child: Padding(
+                        padding: EdgeInsets.all(5),
+                      child: Design.campoTexto(justificationControllers[index], "Descripcion o justificacion de la infracción"),
+                    )
                   ),
                   IconButton(
                     icon: Icon(Icons.add),
@@ -148,31 +173,35 @@ class _TrafficOfficerFinesState extends State<TrafficOfficerFines> {
                       icon: Icon(Icons.remove),
                       onPressed: () => removeArticle(index),
                     ),
+
                 ],
               );
             }),
+            SizedBox(height: 10,),
             ElevatedButton(
               onPressed: () {
+                List<String> articles = articleControllers.map((c) => c.text).toList();
+                List<String> justifications = justificationControllers.map((c) => c.text).toList();
+
                 FineModel fine = FineModel(
                     place: placeController.text,
                     date: Timestamp.fromDate(DateTime.now()),
                     municipality: selectedMunicipality,
                     user: user?.toSmallJSON(),
                     trafficOfficer: widget.trafficOfficer.toSmallJSON(),
-                    article1: articleControllers[0].text,
-                    justification1: justificationControllers[0].text,
-                    article2: articleControllers.length > 1 ? articleControllers[1].text : "",
-                    justification2: justificationControllers.length > 1 ? justificationControllers[1].text : "",
-                    article3: articleControllers.length > 2 ? articleControllers[2].text : "",
-                    justification3: justificationControllers.length > 2 ? justificationControllers[2].text : "",
+                    articles: articles,
+                    justifications: justifications,
                     status: 'Pendiente'
                 );
 
                 fineUser(fine);
+                Navigator.pop(context);
+                Design.showSnackBarGood(context, "Multa registrada correctamente");
               },
               style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Design.teal)),
               child: Text('Subir multa', style: TextStyle(color: Colors.white)),
             )
+
           ],
 
         ],
