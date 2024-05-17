@@ -47,7 +47,7 @@ class Formalities {
         paidProofDoc: data?['paidProofDoc'],
         status: data?['status'],
         trafficOfficer: data?['trafficOfficer'] != null
-            ? UserModel.fromMap(data?['trafficOfficer'])
+            ? UserModel.fromMapita(data?['trafficOfficer'])
             : null);
   }
 
