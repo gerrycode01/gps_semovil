@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gps_semovil/app/core/design.dart';
+import 'package:gps_semovil/app/core/login.dart';
 import 'package:gps_semovil/traffic_officer/screens/traffic-officer_fines.dart';
+import 'package:gps_semovil/traffic_officer/screens/traffic-officer_news.dart';
 import 'package:gps_semovil/traffic_officer/screens/traffic-officer_reports.dart';
 import 'package:gps_semovil/user/models/user_model.dart';
 
@@ -42,7 +44,12 @@ class _TrafficOfficerHomePageState extends State<TrafficOfficerHomePage> {
               leading: const Icon(Icons.newspaper, color: Colors.blue),
               title: const Text('Noticias',style: TextStyle(color: Design.teal),),
               onTap: () {
-                Navigator.pop(context); // Cerrar el drawer
+                Navigator.pop(context);
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => NewsScreenOfficer()));
+                 // Cerrar el drawer
                 // Navegación a Noticias
               },
             ),
@@ -55,10 +62,17 @@ class _TrafficOfficerHomePageState extends State<TrafficOfficerHomePage> {
               },
             ),
             ListTile(
-              leading: const Icon(Icons.receipt_long, color: Colors.red),
+              leading: const Icon(Icons.receipt_long, color: Colors.orange),
               title: const Text('Multas',style: TextStyle(color: Design.teal),),
               onTap: () {// Cerrar el drawer
                 Navigator.push(context, MaterialPageRoute(builder: (context) => TrafficOfficerFines(trafficOfficer: widget.trafficOfficer)));
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.door_back_door_outlined, color: Colors.red),
+              title: const Text('Cerrar sesion',style: TextStyle(color: Design.teal),),
+              onTap: () {// Cerrar el drawer
+                Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));
               },
             ),
 

@@ -196,6 +196,7 @@ class _SignUpState extends State<SignUp> {
                 const Text('Acepto términos y condiciones'),
               ],
             ),
+
             SizedBox(
               width: double.infinity,
               // Asegura que el botón se expanda para llenar el ancho
