@@ -109,30 +109,40 @@ class _FinesScreenState extends State<FinesScreen> {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Confirmación'),
-          content: Text('¿Deseas pagar?'),
-          actions: [
-            TextButton(
-              child: Text('Cancelar'),
-              onPressed: () {
-                Navigator.of(context).pop(); // Cierra el cuadro de diálogo
-              },
-            ),
-            TextButton(
-              child: Text('Pagar'),
-              onPressed: () {
-                if (model.status == 'Pendiente') {
+        if (model.status == 'Pendiente')
+          return AlertDialog(
+            title: Text('Confirmación'),
+            content: Text('¿Deseas pagar?'),
+            actions: [
+              TextButton(
+                child: Text('Cancelar'),
+                onPressed: () {
+                  Navigator.of(context).pop(); // Cierra el cuadro de diálogo
+                },
+              ),
+              TextButton(
+                child: Text('Pagar'),
+                onPressed: () {
                   payFine(model.id);
                   Navigator.of(context).pop(); // Cierra el cuadro de diálogo
                   setState(() {
                     loadFines();
                   });
-                }
-              },
-            ),
-          ],
-        );
+                },
+              ),
+            ],
+          );
+        else {
+          return AlertDialog(
+              title: Text("Este pago ya ha sido realizado"),
+              actions: [
+                TextButton(
+                    child: Text("Salir"),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    })
+              ]);
+        }
       },
     );
   }
