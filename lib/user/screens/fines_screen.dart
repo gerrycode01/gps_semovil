@@ -5,7 +5,6 @@ import '../../app/core/modules/database/fines_firestore.dart';
 import '../../traffic_officer/models/fine-model.dart';
 import '../models/user_model.dart';
 
-
 class FinesScreen extends StatefulWidget {
   final UserModel user;
 
@@ -16,7 +15,6 @@ class FinesScreen extends StatefulWidget {
 }
 
 class _FinesScreenState extends State<FinesScreen> {
-
   List<FineModel> _finesList = [];
 
   @override
@@ -45,7 +43,10 @@ class _FinesScreenState extends State<FinesScreen> {
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Design.teal,
-          title: Text('Tus multas',style: TextStyle(color: Colors.white),),
+          title: Text(
+            'Tus pagos',
+            style: TextStyle(color: Colors.white),
+          ),
           bottom: TabBar(
             labelColor: Design.paleYellow,
             dividerColor: Design.seaGreen,
@@ -60,7 +61,6 @@ class _FinesScreenState extends State<FinesScreen> {
         ),
         body: TabBarView(
           children: [
-
             buildFineList('Pendiente'),
             buildFineList('Atendido'),
           ],
@@ -70,8 +70,8 @@ class _FinesScreenState extends State<FinesScreen> {
   }
 
   Widget buildFineList(String status) {
-
-    List<FineModel> filteredFines = _finesList.where((fine) => fine.status == status).toList();
+    List<FineModel> filteredFines =
+        _finesList.where((fine) => fine.status == status).toList();
     return ListView.builder(
       itemCount: filteredFines.length,
       itemBuilder: (context, index) {
@@ -81,14 +81,57 @@ class _FinesScreenState extends State<FinesScreen> {
           elevation: 5,
           margin: EdgeInsets.all(10),
           child: ListTile(
-            trailing: Text(fine.formattedDate(), style: TextStyle(fontWeight: FontWeight.bold)),
-            subtitle: Text(fine.place ?? ""),
+            trailing: Text(fine.formattedDate(),
+                style: TextStyle(fontWeight: FontWeight.bold)),
+            subtitle: Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    "${fine.articles} - ${fine.justifications}" ?? "",
+                    style: TextStyle(fontSize: 10),
+                  ),
+                ),
+              ],
+            ),
             isThreeLine: true,
-            title: Text("${fine.articles} - ${fine.justifications}", style: TextStyle(fontStyle: FontStyle.italic)),
+            title: Text("${fine.place}",
+                style: TextStyle(fontStyle: FontStyle.italic)),
             onTap: () {
-              // Aquí puedes implementar una acción al tocar cada reporte, por ejemplo, mostrar detalles
+              _showPaymentDialog(context, fine);
             },
           ),
+        );
+      },
+    );
+  }
+
+  void _showPaymentDialog(BuildContext context, FineModel model) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Confirmación'),
+          content: Text('¿Deseas pagar?'),
+          actions: [
+            TextButton(
+              child: Text('Cancelar'),
+              onPressed: () {
+                Navigator.of(context).pop(); // Cierra el cuadro de diálogo
+              },
+            ),
+            TextButton(
+              child: Text('Pagar'),
+              onPressed: () {
+                if (model.status == 'Pendiente') {
+                  payFine(model.id);
+                  Navigator.of(context).pop(); // Cierra el cuadro de diálogo
+                  setState(() {
+                    loadFines();
+                  });
+                }
+              },
+            ),
+          ],
         );
       },
     );

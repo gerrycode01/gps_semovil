@@ -38,6 +38,17 @@ Future<void> fineUser(FineModel fine) async {
   }
 }
 
+Future<void> payFine(String? id) async {
+  try{
+    db.collection('fine').doc(id).update({'status': 'Atendido'});
+    print("Pago realizado exitosamente");
+
+  } catch (e) {
+    print("Error finalizando reporte: $e");
+  }
+}
+
+
 Future<List<FineModel>> getFinesByUser(String curp) async {
   try {
     final querySnapshot = await FirebaseFirestore.instance
