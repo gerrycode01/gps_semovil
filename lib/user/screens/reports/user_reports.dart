@@ -58,8 +58,6 @@ class _UserReportsState extends State<UserReports> {
           ],
           bottom: TabBar(
             labelColor: Design.paleYellow,
-            dividerColor: Design.seaGreen,
-            automaticIndicatorColorAdjustment: true,
             indicatorColor: Design.seaGreen,
             unselectedLabelColor: Colors.white,
             tabs: [
@@ -86,35 +84,71 @@ class _UserReportsState extends State<UserReports> {
       itemCount: filteredReports.length,
       itemBuilder: (context, index) {
         ReportModel report = filteredReports[index];
-        return Card(
-          color: Design.paleYellow,
-          elevation: 5,
-          margin: EdgeInsets.all(10),
-          child: ListTile(
-
-            title: Text(report.reportType ?? "", style: TextStyle(fontWeight: FontWeight.bold)),
-            subtitle: Text(report.description ?? ""),
-            isThreeLine: true,
-            trailing: Text(report.accidentType ?? "", style: TextStyle(fontStyle: FontStyle.italic)),
-            onTap: () {
-              // Aquí puedes implementar una acción al tocar cada reporte, por ejemplo, mostrar detalles
-            },
-          ),
-        );
+        return reportCard(report);
       },
     );
   }
 
-  Color getColorByStatus(String? status) {
-    switch (status) {
-      case 'Reportado':
-        return Colors.red;
-      case 'Atendiendo':
-        return Colors.orange;
-      case 'Atendido':
-        return Colors.green;
-      default:
-        return Colors.grey;
-    }
+  Widget reportCard(ReportModel report) {
+    return InkWell(
+      onTap: () => showDialogForReport(report),
+      child: Card(
+        elevation: 10,
+        color: Design.seaGreen,
+        clipBehavior: Clip.antiAlias,
+        margin: EdgeInsets.all(8),
+        child: Column(
+          children: [
+            SizedBox(
+              height: 200, // Altura fija para la imagen
+              width: double.infinity, // Asume el ancho completo del contenedor
+              child: Image.asset(
+                'assets/images/choque.jpg',
+                fit: BoxFit.cover, // Cubre el tamaño del box manteniendo la relación de aspecto
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(report.reportType ?? "Sin tipo", style: TextStyle(fontWeight: FontWeight.bold, color: Design.paleYellow, fontSize: 30)),
+                  Text(report.description ?? "Sin descripción", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white, fontSize: 20)),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void showDialogForReport(ReportModel report) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          title: Text('Detalles del Reporte', style: TextStyle(color: Design.teal)),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: [
+                Text('Tipo: ${report.reportType}'),
+                Text('Descripción: ${report.description}'),
+                Text('Fecha: ${report.formattedDate()}'),
+                Text('Estado: ${report.status}'),
+                Text('GURB: ${report.GURB}'),
+                Text('Tipo de Accidente: ${report.accidentType}'),
+              ],
+            ),
+          ),
+          actions: [
+            Design.botonRed("Cerrar", () {
+              Navigator.pop(context);
+            })
+          ],
+        );
+      },
+    );
   }
 }
