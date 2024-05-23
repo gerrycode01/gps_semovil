@@ -49,6 +49,31 @@ Future<void> addReport(ReportModel report) async {
   }
 }
 
+Future<void> assignReport(String id, UserModel? officer) async {
+  try{
+    db.collection('report').doc(id).update({'officer': officer?.toSmallJSON()});
+    print("Reporte asignado exitosamente");
+
+  } catch (e) {
+    print("Error asignando reporte: $e");
+  }
+}
+
+Future<List<ReportModel>> getReportsByOfficer(String curp) async {
+  try {
+    final querySnapshot = await FirebaseFirestore.instance.collection('report')
+        .where('officer.curp', isEqualTo: curp) // Accediendo a la CURP dentro del mapa 'officer'
+        .get();
+
+    return querySnapshot.docs
+        .map((docSnapshot) => ReportModel.fromFirestore(docSnapshot))
+        .toList();
+  } catch (e) {
+    print("Error buscando reportes por CURP del oficial: $e");
+    return [];
+  }
+}
+
 Future<List<ReportModel>> getReportsByUser(String curp) async {
   try {
     final querySnapshot = await FirebaseFirestore.instance.collection('report')
@@ -60,6 +85,22 @@ Future<List<ReportModel>> getReportsByUser(String curp) async {
         .toList();
   } catch (e) {
     print("Error buscando reportes por CURP de usuario: $e");
+    return [];
+  }
+}
+
+Future<List<ReportModel>> getUnassignedReports() async {
+  try {
+    final querySnapshot = await FirebaseFirestore.instance.collection('report')
+        .where('status', isEqualTo: 'Reportado')
+        .where('officer', isNull: true) // Agregar condición para que el officer sea nulo
+        .get();
+
+    return querySnapshot.docs
+        .map((docSnapshot) => ReportModel.fromFirestore(docSnapshot))
+        .toList();
+  } catch (e) {
+    print("Error buscando reportes no asignados: $e");
     return [];
   }
 }

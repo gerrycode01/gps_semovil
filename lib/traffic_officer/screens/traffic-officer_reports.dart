@@ -27,7 +27,7 @@ class _TrafficOfficerReportsState extends State<TrafficOfficerReports> {
 
   Future<void> loadReportsList() async {
     try {
-      List<ReportModel> reports = await getAllReports();
+      List<ReportModel> reports = await getReportsByOfficer(widget.trafficOfficer.curp);
       setState(() {
         _reportsList = reports;
       });

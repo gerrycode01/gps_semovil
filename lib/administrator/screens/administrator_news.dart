@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:gps_semovil/administrator/screens/administrator_add_news.dart';
 import 'package:gps_semovil/app/core/design.dart';
+import 'package:gps_semovil/user/models/news_model.dart';
+
+import '../../app/core/modules/database/news_firestore.dart';
 
 class AdministratorNews extends StatefulWidget {
   const AdministratorNews({super.key});
@@ -9,7 +12,28 @@ class AdministratorNews extends StatefulWidget {
   State<AdministratorNews> createState() => _AdministratorNewsState();
 }
 
+
+
 class _AdministratorNewsState extends State<AdministratorNews> {
+  List<NewsModel> _newsList = [];
+
+  @override
+  void initState() {
+    super.initState();
+    loadNewsList();
+  }
+
+  Future<void> loadNewsList() async{
+    try {
+      List<NewsModel> news = await getAllNews();
+      setState(() {
+        _newsList = news;
+      });
+    } catch (error) {
+      print("Error cargando la lista de noticias: $error");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,7 +54,7 @@ class _AdministratorNewsState extends State<AdministratorNews> {
         ],
       ),
       body: ListView.builder(
-        itemCount: 10, // Number of news items
+        itemCount: _newsList.length, // Number of news items
         itemBuilder: (BuildContext context, int index) {
           return Card(
             clipBehavior: Clip.antiAlias,
@@ -52,7 +76,13 @@ class _AdministratorNewsState extends State<AdministratorNews> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Título de la Noticia ${index + 1}',
+                        "${_newsList[index].formattedDate()}",
+                        textAlign: TextAlign.right,
+                        style: TextStyle(
+                          fontSize: 13,
+                        ),
+                      ),Text(
+                        "${_newsList[index].title ?? ''}",
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
@@ -60,7 +90,7 @@ class _AdministratorNewsState extends State<AdministratorNews> {
                       ),
                       SizedBox(height: 8),
                       Text(
-                        'Descripción corta de la noticia, proporcionando un resumen o un dato interesante que captará la atención de los lectores.',
+                        "${_newsList[index].description}",
                         style: TextStyle(
                           fontSize: 16,
                         ),

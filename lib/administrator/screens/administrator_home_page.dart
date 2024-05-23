@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:gps_semovil/administrator/screens/administrator_asign_reports.dart';
 import 'package:gps_semovil/administrator/screens/administrator_news.dart';
 import 'package:gps_semovil/user/models/user_model.dart';
 
 import '../../app/core/design.dart';
-import 'administrator_add_news.dart';
 
 class AdministradorHomePage extends StatelessWidget {
   final UserModel admin;
@@ -96,7 +96,13 @@ class _AdministratorHomePageState extends State<AdministratorHomePage> {
             ListTile(
               leading: Icon(Icons.report),
               title: Text('Reportes'),
-              onTap: () {},
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => AdministratorAsignReports()));
+              },
             ),
             ListTile(
               leading: Icon(Icons.payment),

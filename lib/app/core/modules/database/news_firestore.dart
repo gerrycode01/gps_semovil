@@ -3,17 +3,20 @@ import '../../../../user/models/news_model.dart';
 
 FirebaseFirestore db = FirebaseFirestore.instance;
 
-Future<List<NewsModel>> getAllNews() async{
-try {
-final querySnapshot = await db.collection('news').get();
-print("Operación completada exitosamente");
-return querySnapshot.docs
-    .map((docSnapshot) => NewsModel.fromFirestore(docSnapshot))
-    .toList();
-} catch (e) {
-print("Error obteniendo lista de noticias: $e");
-return []; // Devuelve una lista vacía en caso de error
-}
+Future<List<NewsModel>> getAllNews() async {
+  try {
+    // Suponiendo que el campo de fecha en los documentos se llama 'date'
+    final querySnapshot = await db.collection('news')
+        .orderBy('date', descending: true) // Ordena por el campo 'date' de manera descendente
+        .get();
+    print("Operación completada exitosamente");
+    return querySnapshot.docs
+        .map((docSnapshot) => NewsModel.fromFirestore(docSnapshot))
+        .toList();
+  } catch (e) {
+    print("Error obteniendo lista de noticias: $e");
+    return []; // Devuelve una lista vacía en caso de error
+  }
 }
 
 Future<void> addNew(NewsModel news) async{

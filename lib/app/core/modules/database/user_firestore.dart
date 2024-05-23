@@ -19,6 +19,29 @@ Future<UserModel> getUser(String email) async {
   }
 }
 
+Future<UserModel?> getUserByCURP(String curp) async {
+  try {
+    final querySnapshot = await FirebaseFirestore.instance.collection('user')
+        .where('curp', isEqualTo: curp)
+        .get();
+
+    if (querySnapshot.docs.isNotEmpty) {
+      // Obtén el primer documento de la consulta
+      final docSnapshot = querySnapshot.docs.first;
+      print(docSnapshot.toString());
+      // Devuelve el modelo del primer usuario utilizando el método fromFirestore
+      return UserModel.fromFirestore(docSnapshot, null); // Aquí el segundo argumento puede ser null o alguna SnapshotOptions si lo tienes configurado
+    } else {
+      // Si no se encuentran documentos, devuelve null
+      print("No se encontró el usuario");
+      return null;
+    }
+  } catch (e) {
+    print("Error buscando usuario por CURP: $e");
+    return null;
+  }
+}
+
 Future<void> addUser(UserModel userModel) async {
   await db.collection('user').doc(userModel.email).set(userModel.toJSON());
 }
