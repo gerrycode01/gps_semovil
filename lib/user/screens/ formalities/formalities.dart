@@ -3,6 +3,7 @@ import 'package:gps_semovil/app/core/modules/database/constants.dart';
 import 'package:gps_semovil/app/core/modules/database/formalities_firestore.dart';
 import 'package:gps_semovil/user/models/formalities_model.dart';
 import 'package:gps_semovil/user/models/user_model.dart';
+import 'package:gps_semovil/user/screens/%20formalities/payment_information.dart';
 
 class ScreenFormalities extends StatefulWidget {
   const ScreenFormalities({super.key, required this.user});
@@ -47,6 +48,11 @@ class _ScreenFormalitiesState extends State<ScreenFormalities> {
                       icon: const Icon(Icons.paid),
                       onPressed: () {
                         //TODO: LLEVAR A LA PANTALLA DE PAGO
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (builder) => PaymentInformation(
+                                    formalities: formalities[index])));
                       },
                     )
                   : null,
