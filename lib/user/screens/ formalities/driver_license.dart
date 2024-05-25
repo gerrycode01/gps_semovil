@@ -20,6 +20,7 @@ class DriverLicenseForm extends StatefulWidget {
 }
 
 class _DriverLicenseFormState extends State<DriverLicenseForm> {
+  int mode = 0;
   bool ineUp = false;
   bool addressProofUp = false;
   bool oldLicenseUp = false;
@@ -33,213 +34,41 @@ class _DriverLicenseFormState extends State<DriverLicenseForm> {
   File? oldLicenseInPDF;
   File? lostThefCertificateInPDF;
 
-  @override
-  Widget build(BuildContext context) {
-    return dinamico();
-  }
+  List<String> driverLicenses = [];
 
-  Widget dinamico() {
-    switch (widget.mode) {
-      case 1:
-        {
-          return driverLicensesTypesRenew();
-        }
-      case 2:
-        {
-          return driverLicensesLostThef();
-        }
-      default:
-        {
-          return driverLicensesTypes();
-        }
+  @override
+  void initState() {
+    super.initState();
+    mode = widget.mode;
+    if (mode == 0) {
+      driverLicenses = Const.driverLicensesTypes;
+    } else if (mode == 1) {
+      driverLicenses = Const.driverLicensesTypesRenew;
+    } else {
+      driverLicenses = Const.driverLicensesLostThef;
     }
   }
 
-  Widget driverLicensesTypesRenew() {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'RENOVAR LICENCIA DE CONDUCIR',
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-        ),
-        centerTitle: true,
-        backgroundColor: Colors.black,
-      ),
-      body: ListView(
-        padding: const EdgeInsets.all(40),
-        children: [
-          DropdownButton<String>(
-              value: selectedDriverLicensesType,
-              onChanged: (String? newValue) {
-                setState(() {
-                  selectedDriverLicensesType = newValue;
-                });
-              },
-              items: Const.driverLicensesTypes
-                  .map<DropdownMenuItem<String>>((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
-                );
-              }).toList(),
-              hint: const Text('SELECCIONA EL TIPO DE LICENCIA')),
-          Row(
-            children: [
-              Text(ineUp == false ? 'SUBE TU INE' : 'INE ARRIBA'),
-              IconButton(
-                  onPressed: addIne,
-                  icon: Icon(ineUp == false ? Icons.add : Icons.check))
-            ],
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Row(
-            children: [
-              Text(addressProofUp == false
-                  ? 'SUBE TU COMPROBANTE DE DOMICILIO'
-                  : 'COMPROBANTE DE DOMICILIO'),
-              IconButton(
-                  onPressed: addAddressProof,
-                  icon: Icon(addressProofUp == false ? Icons.add : Icons.check))
-            ],
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Row(
-            children: [
-              Text(oldLicenseUp == false
-                  ? 'SUBE TU LICENCIA DE CONDUCIR ANTERIOR'
-                  : 'LICENCIA DE CONDUCIR ANTERIOR'),
-              IconButton(
-                  onPressed: addOldLicenses,
-                  icon: Icon(oldLicenseUp == false ? Icons.add : Icons.check))
-            ],
-          ),
-          TextButton(
-              onPressed: () {
-                //TODO: VALIDACIONES DE FORMA CORRECTA
-                if (selectedDriverLicensesType == null) return;
-                if (!ineUp || !addressProofUp || !oldLicenseUp) return;
-
-                _loading();
-              },
-              child: loading == true
-                  ? const CircularProgressIndicator()
-                  : const Text('CONTINUAR')),
-          const SizedBox(
-            height: 20,
-          ),
-          TextButton(
-              onPressed: () {
-                //TODO: REGRESAR AL MENU PRINCIPAL
-                Navigator.pushReplacementNamed(context, '/user_homepage',
-                    arguments: widget.user);
-              },
-              child: const Text('CANCELAR'))
-        ],
-      ),
-    );
+  @override
+  Widget build(BuildContext context) {
+    return driverLicensesTypes();
   }
 
-  Widget driverLicensesLostThef() {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'RECUPERAR LICENCIA DE CONDUCIR',
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-        ),
-        centerTitle: true,
-        backgroundColor: Colors.black,
-      ),
-      body: ListView(
-        padding: const EdgeInsets.all(40),
-        children: [
-          DropdownButton<String>(
-              value: selectedDriverLicensesType,
-              onChanged: (String? newValue) {
-                setState(() {
-                  selectedDriverLicensesType = newValue;
-                });
-              },
-              items: Const.driverLicensesTypes
-                  .map<DropdownMenuItem<String>>((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
-                );
-              }).toList(),
-              hint: const Text('SELECCIONA EL TIPO DE LICENCIA')),
-          Row(
-            children: [
-              Text(ineUp == false ? 'SUBE TU INE' : 'INE ARRIBA'),
-              IconButton(
-                  onPressed: addIne,
-                  icon: Icon(ineUp == false ? Icons.add : Icons.check))
-            ],
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Row(
-            children: [
-              Text(addressProofUp == false
-                  ? 'SUBE TU COMPROBANTE DE DOMICILIO'
-                  : 'COMPROBANTE DE DOMICILIO'),
-              IconButton(
-                  onPressed: addAddressProof,
-                  icon: Icon(addressProofUp == false ? Icons.add : Icons.check))
-            ],
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Row(
-            children: [
-              Text(lostTheftCertificateUp == false
-                  ? 'SUBE TU CERTIFICADO DE PERDIDA O ROBO'
-                  : 'CERTIFICADO DE PERDIDA O ROBO'),
-              IconButton(
-                  onPressed: addAddressProof,
-                  icon: Icon(lostTheftCertificateUp == false
-                      ? Icons.add
-                      : Icons.check))
-            ],
-          ),
-          TextButton(
-              onPressed: () {
-                //TODO: VALIDACIONES DE FORMA CORRECTA
-                if (selectedDriverLicensesType == null) return;
-                if (!ineUp || !addressProofUp || !lostTheftCertificateUp)
-                  return;
-
-                _loading();
-              },
-              child: loading == true
-                  ? const CircularProgressIndicator()
-                  : const Text('CONTINUAR')),
-          const SizedBox(
-            height: 20,
-          ),
-          TextButton(
-              onPressed: () {
-                //TODO: REGRESAR AL MENU PRINCIPAL
-                Navigator.pushReplacementNamed(context, '/user_homepage',
-                    arguments: widget.user);
-              },
-              child: const Text('CANCELAR'))
-        ],
-      ),
-    );
-  }
+  String processText = 'TRAMITAR LICENCIA DE CONDUCIR';
+  String renewText = 'RENOVAR LICENCIA DE CONDUCIR';
+  String recoverText = 'RENOVAR LICENCIA DE CONDUCIR';
 
   Widget driverLicensesTypes() {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'TRAMITAR LICENCIA DE CONDUCIR',
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+        title: Text(
+          mode == 0
+              ? processText
+              : mode == 1
+                  ? renewText
+                  : renewText,
+          style:
+              const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
         backgroundColor: Colors.black,
@@ -254,8 +83,8 @@ class _DriverLicenseFormState extends State<DriverLicenseForm> {
                   selectedDriverLicensesType = newValue;
                 });
               },
-              items: Const.driverLicensesTypes
-                  .map<DropdownMenuItem<String>>((String value) {
+              items:
+                  driverLicenses.map<DropdownMenuItem<String>>((String value) {
                 return DropdownMenuItem<String>(
                   value: value,
                   child: Text(value),
@@ -264,7 +93,7 @@ class _DriverLicenseFormState extends State<DriverLicenseForm> {
               hint: const Text('SELECCIONA EL TIPO DE LICENCIA')),
           Row(
             children: [
-              Text(ineUp == false ? 'SUBE TU INE' : 'INE ARRIBA'),
+              Text(ineUp == false ? 'INE' : 'INE LISTA'),
               IconButton(
                   onPressed: addIne,
                   icon: Icon(ineUp == false ? Icons.add : Icons.check))
@@ -276,18 +105,73 @@ class _DriverLicenseFormState extends State<DriverLicenseForm> {
           Row(
             children: [
               Text(addressProofUp == false
-                  ? 'SUBE TU COMPROBANTE DE DOMICILIO'
-                  : 'COMPROBANTE DE DOMICILIO'),
+                  ? 'COMPROBANTE DE DOMICILIO'
+                  : 'COMPROBANTE DE DOMICILIO LISTO'),
               IconButton(
                   onPressed: addAddressProof,
                   icon: Icon(addressProofUp == false ? Icons.add : Icons.check))
             ],
           ),
+          const SizedBox(
+            height: 20,
+          ),
+          mode == 0
+              ? const Row()
+              : mode == 1
+                  ? Row(
+                      children: [
+                        Text(oldLicenseUp == false
+                            ? 'LICENCIA DE CONDUCIR ANTERIOR'
+                            : 'LICENCIA DE CONDUCIR ANTERIOR LISTA'),
+                        IconButton(
+                            onPressed: addOldLicenses,
+                            icon: Icon(oldLicenseUp == false
+                                ? Icons.add
+                                : Icons.check))
+                      ],
+                    )
+                  : Row(
+                      children: [
+                        Text(lostTheftCertificateUp == false
+                            ? 'CERTIFICADO DE PERDIDA O ROBO'
+                            : 'CERTIFICADO DE PERDIDA O ROBO LISTO'),
+                        IconButton(
+                            onPressed: addAddressProof,
+                            icon: Icon(lostTheftCertificateUp == false
+                                ? Icons.add
+                                : Icons.check))
+                      ],
+                    ),
           TextButton(
               onPressed: () {
-                //TODO: VALIDACIONES DE FORMA CORRECTA
-                if (selectedDriverLicensesType == null) return;
-                if (!ineUp || !addressProofUp) return;
+                if (selectedDriverLicensesType == null) {
+                  mensaje(
+                      'SELECCIONE EL TIPO DE LICENCIA A TRAMITAR', Colors.red);
+                  return;
+                }
+                if (!ineUp) {
+                  mensaje('FALTA SUBIR INE', Colors.red);
+                  return;
+                }
+                if (!addressProofUp) {
+                  mensaje('FALTA SUBIR COMPROBANTE DE DOMICILIO', Colors.red);
+                  return;
+                }
+                if (mode == 1) {
+                  if (!oldLicenseUp) {
+                    mensaje('ES NECESARIO SUBIR LICENCIA DE CONDUCIR ANTIGUA',
+                        Colors.red);
+                    return;
+                  }
+                }
+                if (mode == 2) {
+                  if (!lostTheftCertificateUp) {
+                    mensaje('ES NECESARIO SUBIR CERTIFICADO DE PERDIDA O ROBO',
+                        Colors.red);
+                    return;
+                  }
+                }
+
                 _loading();
               },
               child: loading == true
@@ -298,7 +182,7 @@ class _DriverLicenseFormState extends State<DriverLicenseForm> {
           ),
           TextButton(
               onPressed: () {
-                //TODO: REGRESAR AL MENU PRINCIPAL
+                //TODO: REGRESAR AL MENU PRINCIPAL YA LO HACE PERO NO DE FORMA CORRECTA
                 Navigator.pushReplacementNamed(context, '/user_homepage',
                     arguments: widget.user);
               },
@@ -357,7 +241,7 @@ class _DriverLicenseFormState extends State<DriverLicenseForm> {
       loading = true;
     });
 
-    //Subir formalities a firestorage
+    //Subir tramites a firestorage
     String urlINE =
         await uploadFileToFirestorage(ineInPDF!, widget.user.curp, 'INE.pdf');
     String urlAddressProof = await uploadFileToFirestorage(
@@ -396,5 +280,12 @@ class _DriverLicenseFormState extends State<DriverLicenseForm> {
     setState(() {
       loading = false;
     });
+  }
+
+  void mensaje(String string, Color color) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text(string),
+      backgroundColor: color,
+    ));
   }
 }
