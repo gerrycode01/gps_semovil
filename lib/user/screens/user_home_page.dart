@@ -18,6 +18,8 @@ class UserHomePage extends StatefulWidget {
 class _UserHomePageState extends State<UserHomePage> {
   @override
   Widget build(BuildContext context) {
+
+    int gridCount = MediaQuery.of(context).size.width > 600 ? 4 : 2;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(

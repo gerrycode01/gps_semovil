@@ -114,7 +114,7 @@ class _UserAddReportsState extends State<UserAddReports> {
                   user: widget.user.toSmallJSON(),
                 );
                 addReport(report);
-                Design.showSnackBarGood(context, "REPORTE REGISTRADO");
+                Design.showSnackBarGood(context, "REPORTE REGISTRADO",Colors.green);
                 Navigator.pop(context);
               })
             ],

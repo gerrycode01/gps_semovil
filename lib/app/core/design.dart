@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class Design{
-  static TextFormField campoTexto(TextEditingController t, String texto){
+class Design {
+  static TextFormField campoTexto(TextEditingController t, String texto) {
     return TextFormField(
       controller: t,
       decoration: InputDecoration(
@@ -16,14 +16,17 @@ class Design{
       ),
     );
   }
-  static Widget botonGreen(String texto, void Function() accion){
+
+  static Widget botonGreen(String texto, void Function() accion) {
     return ElevatedButton(
       onPressed: () {
         accion();
       },
       style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all<Color>(Design.teal), // Background color
-        foregroundColor: MaterialStateProperty.all<Color>(Colors.white), // Text color
+        backgroundColor: MaterialStateProperty.all<Color>(Design.teal),
+        // Background color
+        foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+        // Text color
         shape: MaterialStateProperty.all<RoundedRectangleBorder>(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
@@ -34,14 +37,17 @@ class Design{
       child: Text(texto),
     );
   }
-  static Widget botonRed(String texto, void Function() accion){
+
+  static Widget botonRed(String texto, void Function() accion) {
     return ElevatedButton(
       onPressed: () {
         accion();
       },
       style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all<Color>(Colors.red), // Background color
-        foregroundColor: MaterialStateProperty.all<Color>(Colors.white), // Text color
+        backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
+        // Background color
+        foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+        // Text color
         shape: MaterialStateProperty.all<RoundedRectangleBorder>(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
@@ -52,7 +58,9 @@ class Design{
       child: Text(texto),
     );
   }
-  static Widget campoFecha(BuildContext context, TextEditingController controller, String hintText) {
+
+  static Widget campoFecha(
+      BuildContext context, TextEditingController controller, String hintText) {
     return TextFormField(
       controller: controller,
       decoration: InputDecoration(
@@ -64,7 +72,6 @@ class Design{
           borderSide: BorderSide.none,
         ),
       ),
-
       readOnly: true,
       onTap: () async {
         FocusScope.of(context).requestFocus(FocusNode());
@@ -81,6 +88,7 @@ class Design{
       },
     );
   }
+
   static Widget campoDropdown<T>({
     required T value,
     required List<T> items,
@@ -114,29 +122,33 @@ class Design{
       ),
     );
   }
-  static void showSnackBarGood(BuildContext context, String message) {
+
+  static void showSnackBarGood(
+      BuildContext context, String message, Color color) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text(message, style: TextStyle(
-            color: Colors.white
-        ),),
-        backgroundColor: Colors.green,
+        content: Text(
+          message,
+          style: const TextStyle(color: Colors.white),
+        ),
+        backgroundColor: color,
         behavior: SnackBarBehavior.floating,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
         ),
       ),
     );
-  }static void showSnackBarNotGood(BuildContext context, String message) {
+  }
+
+  static void showSnackBarNotGood(
+      BuildContext context, String message, Color color) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(
           message,
-          style: TextStyle(
-          color: Colors.white
+          style: const TextStyle(color: Colors.white),
         ),
-        ),
-        backgroundColor: Colors.red,
+        backgroundColor: color,
         behavior: SnackBarBehavior.floating,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
@@ -146,10 +158,10 @@ class Design{
   }
 
   static Future<void> showAlertDialog(
-      BuildContext context,
-      String title,
-      String content,
-      ) async {
+    BuildContext context,
+    String title,
+    String content,
+  ) async {
     return showDialog<void>(
       context: context,
       builder: (BuildContext context) {
@@ -177,6 +189,7 @@ class Design{
       },
     );
   }
+
   static void navigateTo(BuildContext context, Widget page) {
     Navigator.push(
       context,
@@ -202,7 +215,7 @@ class Design{
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         Icon(icono, color: color, size: iconSize),
-        SizedBox(width: 8), // Espacio entre ícono y texto
+        const SizedBox(width: 8), // Espacio entre ícono y texto
         Text(
           texto,
           style: TextStyle(
@@ -213,6 +226,7 @@ class Design{
       ],
     );
   }
+
   static Widget campoTextoNoEditable({
     required TextEditingController controller,
     required String hintText,
@@ -224,18 +238,20 @@ class Design{
       decoration: InputDecoration(
         hintText: hintText,
         filled: true,
-        fillColor: backgroundColor, // Color de fondo personalizable
+        fillColor: backgroundColor,
+        // Color de fondo personalizable
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(20),
           borderSide: BorderSide.none,
         ),
-        contentPadding: EdgeInsets.all(10), // Padding dentro del campo
+        contentPadding: const EdgeInsets.all(10), // Padding dentro del campo
       ),
       style: TextStyle(
         fontSize: fontSize,
         color: Colors.black, // Color del texto
       ),
-      readOnly: true, // Hace que el campo sea solo de lectura
+      readOnly: true,
+      // Hace que el campo sea solo de lectura
       enabled: false, // Deshabilita el campo
     );
   }
@@ -246,8 +262,4 @@ class Design{
   static const Color seaGreen = Color(0xFF56A292);
   static const Color teal = Color(0xFF1C8080);
   static Color? lightOrange = Colors.orange[100];
-
-
-
-
 }

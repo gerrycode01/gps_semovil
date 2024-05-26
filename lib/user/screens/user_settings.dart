@@ -15,12 +15,6 @@ class UserSettings extends StatefulWidget {
 
 class _UserSettingsState extends State<UserSettings> {
   @override
-  void initState() {
-    super.initState();
-    //cargarDatos();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -43,43 +37,16 @@ class _UserSettingsState extends State<UserSettings> {
         padding: const EdgeInsets.all(20),
         children: [
           CircularImage(
-            userModel: widget.userModel, // Reemplaza con tu URL de imagen
-            radius: 100.0, // Tamaño del círculo
+            userModel: widget.userModel,
+            radius: 100.0,
           ),
           const SizedBox(height: 20),
-          ListTile(
-            title: const Text(
-              'Nombre(s)',
-              style: TextStyle(color: Design.teal),
-            ),
-            subtitle: Text(widget.userModel.names),
-            leading: Icon(Icons.person,
-                color: Theme.of(context).colorScheme.secondary),
-            trailing: IconButton(
-              icon: const Icon(Icons.edit),
-              onPressed: () {
-                widget.userModel.doccurp = '';
-              },
-            ),
-          ),
-          ListTile(
-            title: const Text(
-              'Apellido Paterno',
-              style: TextStyle(color: Design.teal),
-            ),
-            subtitle: Text(widget.userModel.lastname),
-            leading: Icon(Icons.person,
-                color: Theme.of(context).colorScheme.secondary),
-          ),
-          ListTile(
-            title: const Text(
-              'Apellido Materno',
-              style: TextStyle(color: Design.teal),
-            ),
-            subtitle: Text(widget.userModel.lastname2!),
-            leading: Icon(Icons.person,
-                color: Theme.of(context).colorScheme.secondary),
-          ),
+          buildUserInfo(context, 'Nombre(s)', widget.userModel.names),
+          buildUserInfo(context, 'Apellido Paterno', widget.userModel.lastname),
+          buildUserInfo(context, 'Apellido Materno', widget.userModel.lastname2!),
+          buildUserInfo(context, 'Número de Teléfono', widget.userModel.phone?? ""),
+          buildUserInfo(context, 'Tipo de Sangre', widget.userModel.bloodtype?? ""),
+          buildUserInfo(context, 'Correo Electrónico', widget.userModel.email?? ""),
           const SizedBox(height: 60),
           Design.botonRed("Cerrar sesión", () {
             Navigator.push(context,
@@ -87,6 +54,22 @@ class _UserSettingsState extends State<UserSettings> {
           })
         ],
       ),
+    );
+  }
+
+  Widget buildUserInfo(BuildContext context, String title, String subtitle) {
+    return ListTile(
+      title: Text(
+        title,
+        style: TextStyle(color: Design.teal),
+      ),
+      subtitle: Text(subtitle),
+      leading: Icon(Icons.person,
+          color: Theme.of(context).colorScheme.secondary),
+      trailing: title == 'Nombre(s)' ? IconButton(
+        icon: const Icon(Icons.edit),
+        onPressed: () {},
+      ) : null,
     );
   }
 }

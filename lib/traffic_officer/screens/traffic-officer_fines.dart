@@ -196,7 +196,7 @@ class _TrafficOfficerFinesState extends State<TrafficOfficerFines> {
 
                 fineUser(fine);
                 Navigator.pop(context);
-                Design.showSnackBarGood(context, "Multa registrada correctamente");
+                Design.showSnackBarGood(context, "Multa registrada correctamente",Colors.green);
               },
               style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Design.teal)),
               child: Text('Subir multa', style: TextStyle(color: Colors.white)),
