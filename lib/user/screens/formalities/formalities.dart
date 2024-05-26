@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:gps_semovil/app/core/modules/database/constants.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:gps_semovil/app/core/design.dart';
 import 'package:gps_semovil/app/core/modules/database/formalities_firestore.dart';
 import 'package:gps_semovil/user/models/formalities_model.dart';
 import 'package:gps_semovil/user/models/user_model.dart';
 import 'package:gps_semovil/user/screens/formalities/payment_screen.dart';
 
 class ScreenFormalities extends StatefulWidget {
-  const ScreenFormalities({super.key, required this.user});
-
   final UserModel user;
+  const ScreenFormalities({super.key, required this.user});
 
   @override
   State<ScreenFormalities> createState() => _ScreenFormalitiesState();
@@ -34,45 +34,71 @@ class _ScreenFormalitiesState extends State<ScreenFormalities> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('TRAMITES'),
+        title: const Text('Trámites', style: TextStyle(color: Design.paleYellow)),
+        backgroundColor: Design.teal,
+        centerTitle: true,
       ),
-      body: ListView.builder(
+      body: AnimationLimiter(
+        child: ListView.builder(
           itemCount: formalities.length,
           itemBuilder: (context, index) {
-            String formalitiesType = getFormalitiesType(formalities[index]);
-            return ListTile(
-              title: Text(
-                  '${formalities[index].driverLicenseType} - ${Const.statusForm[formalities[index].status]} \n$formalitiesType'),
-              trailing: formalities[index].status == 0
-                  ? IconButton(
-                      icon: const Icon(Icons.paid),
-                      onPressed: () {
-                        Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (builder) => PaymentScreen(
-                                        formalities: formalities[index])))
-                            .then((value) => setState(() {
-                                  cargarDatos();
-                                }));
-                      },
-                    )
-                  : null,
+            return AnimationConfiguration.staggeredList(
+              position: index,
+              duration: const Duration(milliseconds: 375),
+              child: SlideAnimation(
+                verticalOffset: 50.0,
+                child: FadeInAnimation(
+                  child: formalitiesCard(formalities[index]),
+                ),
+              ),
             );
-          }),
+          },
+        ),
+      ),
+    );
+  }
+
+  Widget formalitiesCard(Formalities formalities) {
+    return Card(
+      elevation: 8,
+      margin: const EdgeInsets.all(10),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+      color: Design.seaGreen,
+      child: ListTile(
+        contentPadding: const EdgeInsets.all(16),
+        title: Text(
+          '${formalities.driverLicenseType} - ${formalities.firsTime ? "Nuevo" : "Renovación"}',
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+        ),
+        subtitle: Text(
+          getFormalitiesType(formalities),
+          style: TextStyle(color: Colors.white.withOpacity(0.7)),
+        ),
+        trailing: formalities.status == 0 ? IconButton(
+          icon: const Icon(Icons.payment, color: Colors.white),
+          onPressed: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (builder) => PaymentScreen(formalities: formalities)
+                )
+            ).then((value) => cargarDatos());
+          },
+        ) : Icon(Icons.check, color: Colors.green[200]),
+      ),
     );
   }
 
   String getFormalitiesType(Formalities formalities) {
     if (formalities.firsTime) {
-      return 'TRAMITE DE LICENCIA';
+      return 'Trámite de licencia';
     }
     if (formalities.oldDriversLicense != null) {
-      return 'RENOVACIÓN DE LICENCIA';
+      return 'Renovación de licencia';
     }
     if (formalities.theftLostCertificate != null) {
-      return 'RECUPERACIÓN DE LICENCIA';
+      return 'Recuperación de licencia';
     }
-    return '';
+    return 'Sin especificar';
   }
 }

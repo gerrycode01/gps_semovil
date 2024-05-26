@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:gps_semovil/app/core/design.dart';
 import 'package:gps_semovil/user/models/user_model.dart';
 import 'package:gps_semovil/user/screens/formalities/formalities.dart';
 import 'package:gps_semovil/user/screens/formalities/information.dart';
 
 class Options extends StatefulWidget {
-  const Options({super.key, required this.user});
-
   final UserModel user;
+  const Options({super.key, required this.user});
 
   @override
   State<Options> createState() => _OptionsState();
@@ -18,17 +18,20 @@ class _OptionsState extends State<Options> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title:
-            const Text('Opciones', style: TextStyle(color: Design.paleYellow)),
+        title: const Text('Opciones', style: TextStyle(color: Design.paleYellow)),
         backgroundColor: Design.teal,
       ),
-      body: Center(
-          child: ListView(
-        padding: const EdgeInsets.all(50),
-        children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
+      body: AnimationLimiter(
+        child: GridView.count(
+          crossAxisCount: MediaQuery.of(context).size.width > 500 ? 2 : 1,
+          childAspectRatio: MediaQuery.of(context).size.width > 500 ? 3 : 4,
+          children: AnimationConfiguration.toStaggeredList(
+            duration: const Duration(milliseconds: 375),
+            childAnimationBuilder: (widget) => SlideAnimation(
+              verticalOffset: 30.0,
+              child: FadeInAnimation(child: widget),
+            ),
+            children: [
               CustomButton(
                 label: 'Primera vez',
                 icon: Icons.fiber_new,
@@ -36,47 +39,43 @@ class _OptionsState extends State<Options> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) =>
-                              Information(mode: 0, user: widget.user)));
+                          builder: (context) => Information(mode: 0, user: widget.user)));
                 },
               ),
-              const SizedBox(height: 20),
               CustomButton(
-                  label: 'Renovación',
-                  icon: Icons.refresh,
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                Information(mode: 1, user: widget.user)));
-                  }),
-              const SizedBox(height: 20),
+                label: 'Renovación',
+                icon: Icons.refresh,
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => Information(mode: 1, user: widget.user)));
+                },
+              ),
               CustomButton(
-                  label: 'Extraviado',
-                  icon: Icons.error_outline,
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                Information(mode: 2, user: widget.user)));
-                  }),
-              const SizedBox(height: 20),
+                label: 'Extraviado',
+                icon: Icons.error_outline,
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => Information(mode: 2, user: widget.user)));
+                },
+              ),
               CustomButton(
-                  label: 'Ver tramites pendientes',
-                  icon: Icons.warning_amber,
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                ScreenFormalities(user: widget.user)));
-                  }),
+                label: 'Ver trámites pendientes',
+                icon: Icons.warning_amber,
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ScreenFormalities(user: widget.user)));
+                },
+              ),
             ],
           ),
-        ],
-      )),
+        ),
+      ),
     );
   }
 }
@@ -95,22 +94,18 @@ class CustomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity, // Hace que el botón tenga el ancho máximo
+    return Card(
+      elevation: 5,
+      margin: const EdgeInsets.all(5),
       child: ElevatedButton.icon(
-        icon: Icon(icon, size: 30), // Aumenta el tamaño del ícono
-        label: Text(label),
+        icon: Icon(icon, size: 30),
+        label: Text(label, style: const TextStyle(fontSize: 16)),
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          foregroundColor: Colors.white,
-          backgroundColor: Colors.blueAccent,
-          // Color de texto e ícono
-          textStyle: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-          // Aumenta el tamaño del texto
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-          // Aumenta el relleno para un botón más grande
+          foregroundColor: Colors.white, backgroundColor: Design.seaGreen,
+          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8), // Bordes redondeados
+            borderRadius: BorderRadius.circular(8),
           ),
         ),
       ),
