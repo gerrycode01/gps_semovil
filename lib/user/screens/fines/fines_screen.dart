@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:gps_semovil/app/core/design.dart';
 import '../../../app/core/modules/database/fines_firestore.dart';
 import '../../../traffic_officer/models/fine-model.dart';
@@ -35,12 +36,13 @@ class _FinesScreenState extends State<FinesScreen> {
 
   @override
   Widget build(BuildContext context) {
+    int crossAxisCount = MediaQuery.of(context).size.width > 600 ? 3 : 2; // Ajusta aquí para más columnas en pantallas más grandes
     return DefaultTabController(
       length: 2,
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Design.teal,
-          title: Text('Tus Multas', style: TextStyle(color: Colors.white)),
+          title: Text('Tus multas', style: TextStyle(color: Colors.white)),
           bottom: TabBar(
             labelColor: Design.paleYellow,
             indicatorColor: Design.seaGreen,
@@ -53,26 +55,39 @@ class _FinesScreenState extends State<FinesScreen> {
         ),
         body: TabBarView(
           children: [
-            buildFineList('Pendiente'),
-            buildFineList('Atendido'),
+            buildFineList('Pendiente', crossAxisCount),
+            buildFineList('Atendido', crossAxisCount),
           ],
         ),
       ),
     );
   }
 
-  Widget buildFineList(String status) {
+  Widget buildFineList(String status, int crossAxisCount) {
     List<FineModel> filteredFines = _finesList.where((fine) => fine.status == status).toList();
-    return GridView.builder(
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        childAspectRatio: 1.5,
+    return AnimationLimiter(
+      child: GridView.builder(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: crossAxisCount,
+          childAspectRatio: 1.5,
+        ),
+        itemCount: filteredFines.length,
+        itemBuilder: (context, index) {
+          return AnimationConfiguration.staggeredGrid(
+            position: index,
+            duration: const Duration(milliseconds: 375),
+            columnCount: crossAxisCount,
+            child: ScaleAnimation(
+              child: FadeInAnimation(
+                child: FineCard(
+                  fine: filteredFines[index],
+                  onTap: status == 'Pendiente' ? () => _showPaymentDialog(context, filteredFines[index]) : null,
+                ),
+              ),
+            ),
+          );
+        },
       ),
-      itemCount: filteredFines.length,
-      itemBuilder: (context, index) {
-        FineModel fine = filteredFines[index];
-        return FineCard(fine: fine, onTap: () => _showPaymentDialog(context, fine));
-      },
     );
   }
 
@@ -114,9 +129,9 @@ class _FinesScreenState extends State<FinesScreen> {
 
 class FineCard extends StatelessWidget {
   final FineModel fine;
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
 
-  const FineCard({Key? key, required this.fine, required this.onTap}) : super(key: key);
+  const FineCard({Key? key, required this.fine, this.onTap}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
