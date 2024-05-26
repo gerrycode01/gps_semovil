@@ -49,7 +49,7 @@ class _UserHomePageState extends State<UserHomePage> {
           ),
           Expanded(
             child: GridView.count(
-              crossAxisCount: 2,
+              crossAxisCount: gridCount,
               childAspectRatio: 1.5,
               padding: const EdgeInsets.all(8),
               mainAxisSpacing: 8,
