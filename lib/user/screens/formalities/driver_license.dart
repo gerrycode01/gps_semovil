@@ -8,6 +8,7 @@ import 'package:gps_semovil/app/core/modules/database/storage.dart';
 import 'package:gps_semovil/app/core/modules/select_image.dart';
 import 'package:gps_semovil/user/models/formalities_model.dart';
 import 'package:gps_semovil/user/models/user_model.dart';
+import 'package:gps_semovil/user/screens/formalities/payment_screen.dart';
 
 class DriverLicenseForm extends StatefulWidget {
   const DriverLicenseForm({super.key, required this.mode, required this.user});
@@ -28,25 +29,17 @@ class _DriverLicenseFormState extends State<DriverLicenseForm> {
   bool loading = false;
 
   String? selectedDriverLicensesType;
+  double? selectedPrice;
 
   File? ineInPDF;
   File? addressProofInPDF;
   File? oldLicenseInPDF;
   File? lostThefCertificateInPDF;
 
-  List<String> driverLicenses = [];
-
   @override
   void initState() {
     super.initState();
     mode = widget.mode;
-    if (mode == 0) {
-      driverLicenses = Const.driverLicensesTypes;
-    } else if (mode == 1) {
-      driverLicenses = Const.driverLicensesTypesRenew;
-    } else {
-      driverLicenses = Const.driverLicensesLostThef;
-    }
   }
 
   @override
@@ -81,16 +74,26 @@ class _DriverLicenseFormState extends State<DriverLicenseForm> {
               onChanged: (String? newValue) {
                 setState(() {
                   selectedDriverLicensesType = newValue;
+                  selectedPrice = getPrice(newValue!, mode);
                 });
               },
-              items:
-                  driverLicenses.map<DropdownMenuItem<String>>((String value) {
+              items: Const.driverLicensesTypes
+                  .map<DropdownMenuItem<String>>((String value) {
                 return DropdownMenuItem<String>(
                   value: value,
                   child: Text(value),
                 );
               }).toList(),
               hint: const Text('SELECCIONA EL TIPO DE LICENCIA')),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 20.0),
+            child: Text(
+              selectedPrice == null
+                  ? 'PRECIO DISPONIBLE AL SELECCIONAR TIPO DE LICENCIA'
+                  : 'Precio: \$${selectedPrice!.toStringAsFixed(2)}',
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
+          ),
           Row(
             children: [
               Text(ineUp == false ? 'INE' : 'INE LISTA'),
@@ -264,6 +267,7 @@ class _DriverLicenseFormState extends State<DriverLicenseForm> {
     Formalities formalities = Formalities(
         idFormalities: idFormalities + 1,
         driverLicenseType: selectedDriverLicensesType!,
+        price: selectedPrice!,
         user: widget.user,
         date: Timestamp.fromDate(DateTime.now()),
         ineDoc: urlINE,
@@ -274,8 +278,12 @@ class _DriverLicenseFormState extends State<DriverLicenseForm> {
         status: 0);
 
     await addFormalities(formalities);
+    await incrementFormalitiesCount();
 
+    mensaje('TRAMITE AGREGADO, REVISA TRAMITES PENDIENTES', Colors.green);
     //TODO: LLEVAR A LA VENTANA DE PAGO GENERADO
+    Navigator.pushReplacementNamed(context, '/user_homepage',
+        arguments: widget.user);
 
     setState(() {
       loading = false;
@@ -287,5 +295,18 @@ class _DriverLicenseFormState extends State<DriverLicenseForm> {
       content: Text(string),
       backgroundColor: color,
     ));
+  }
+
+  double getPrice(String licenseType, int mode) {
+    switch (mode) {
+      case 0:
+        return Const.driverLicensesPrices[licenseType] ?? 0;
+      case 1:
+        return Const.driverLicensesPricesRenew[licenseType] ?? 0;
+      case 2:
+        return Const.driverLicensesPricesLostTheft[licenseType] ?? 0;
+      default:
+        return 0;
+    }
   }
 }

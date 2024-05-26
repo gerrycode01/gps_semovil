@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gps_semovil/app/core/design.dart';
 import 'package:gps_semovil/user/models/user_model.dart';
-import 'package:gps_semovil/user/screens/%20formalities/driver_license.dart';
+import 'package:gps_semovil/user/screens/formalities/driver_license.dart';
 
 class Information extends StatefulWidget {
   const Information({super.key, required this.mode, required this.user});

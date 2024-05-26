@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gps_semovil/app/core/design.dart';
 import 'package:gps_semovil/user/models/user_model.dart';
-import 'package:gps_semovil/user/screens/%20formalities/formalities.dart';
-import 'package:gps_semovil/user/screens/%20formalities/information.dart';
+import 'package:gps_semovil/user/screens/formalities/formalities.dart';
+import 'package:gps_semovil/user/screens/formalities/information.dart';
 
 class Options extends StatefulWidget {
   const Options({super.key, required this.user});

@@ -44,7 +44,6 @@ Future<void> incrementFormalitiesCount() async {
   });
 }
 
-
 Future<void> addFormalities(Formalities formalities) async {
   await db
       .collection('formalities')
@@ -52,10 +51,17 @@ Future<void> addFormalities(Formalities formalities) async {
       .set(formalities.toJSON());
 }
 
+Future<void> updateFormalities(Formalities formalities) async {
+  await db
+      .collection('formalities')
+      .doc(formalities.idFormalities.toString())
+      .update(formalities.toJSON());
+}
 
 Future<List<Formalities>> getAllFormalities() async {
   try {
-    final querySnapshot = await db.collection('formalities').orderBy('date').get();
+    final querySnapshot =
+        await db.collection('formalities').orderBy('date',descending: true).get();
     print("Successfully completed");
     return querySnapshot.docs
         .map((docSnapshot) => Formalities.fromFirestore(docSnapshot, null))

@@ -4,6 +4,7 @@ import 'package:gps_semovil/user/models/user_model.dart';
 class Formalities {
   final int idFormalities;
   final String driverLicenseType;
+  final double price;
   final UserModel user;
   final Timestamp date;
   String ineDoc;
@@ -18,6 +19,7 @@ class Formalities {
   Formalities(
       {required this.idFormalities,
       required this.driverLicenseType,
+      required this.price,
       required this.user,
       required this.date,
       required this.ineDoc,
@@ -37,6 +39,7 @@ class Formalities {
     return Formalities(
         idFormalities: data?['idFormalities'],
         driverLicenseType: data?['driverLicenseType'],
+        price: data?['price'],
         user: UserModel.fromMap(data?['user']),
         date: data?['date'],
         ineDoc: data?['ineDoc'],
@@ -55,6 +58,7 @@ class Formalities {
     return {
       'idFormalities': idFormalities,
       'driverLicenseType': driverLicenseType,
+      'price': price,
       'user': {
         'curp': user.curp,
         'doccurp': user.doccurp,

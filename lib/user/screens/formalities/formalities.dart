@@ -3,7 +3,7 @@ import 'package:gps_semovil/app/core/modules/database/constants.dart';
 import 'package:gps_semovil/app/core/modules/database/formalities_firestore.dart';
 import 'package:gps_semovil/user/models/formalities_model.dart';
 import 'package:gps_semovil/user/models/user_model.dart';
-import 'package:gps_semovil/user/screens/%20formalities/payment_information.dart';
+import 'package:gps_semovil/user/screens/formalities/payment_screen.dart';
 
 class ScreenFormalities extends StatefulWidget {
   const ScreenFormalities({super.key, required this.user});
@@ -40,24 +40,41 @@ class _ScreenFormalitiesState extends State<ScreenFormalities> {
       body: ListView.builder(
           itemCount: formalities.length,
           itemBuilder: (context, index) {
+            String formalitiesType = getFormalitiesType(formalities[index]);
             return ListTile(
               title: Text(
-                  '${formalities[index].driverLicenseType} - ${Const.statusForm[formalities[index].status]}'),
+                  '${formalities[index].driverLicenseType} - ${Const.statusForm[formalities[index].status]} \n$formalitiesType'),
               trailing: formalities[index].status == 0
                   ? IconButton(
                       icon: const Icon(Icons.paid),
                       onPressed: () {
                         //TODO: LLEVAR A LA PANTALLA DE PAGO
                         Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (builder) => PaymentInformation(
-                                    formalities: formalities[index])));
+                                context,
+                                MaterialPageRoute(
+                                    builder: (builder) => PaymentScreen(
+                                        formalities: formalities[index])))
+                            .then((value) => setState(() {
+                                  cargarDatos();
+                                }));
                       },
                     )
                   : null,
             );
           }),
     );
+  }
+
+  String getFormalitiesType(Formalities formalities) {
+    if (formalities.firsTime) {
+      return 'TRAMITE DE LICENCIA';
+    }
+    if (formalities.oldDriversLicense != null) {
+      return 'RENOVACIÓN DE LICENCIA';
+    }
+    if (formalities.theftLostCertificate != null) {
+      return 'RECUPERACIÓN DE LICENCIA';
+    }
+    return '';
   }
 }
