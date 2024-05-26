@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:gps_semovil/app/core/design.dart';
 import 'package:gps_semovil/app/core/modules/database/formalities_firestore.dart';
 import 'package:gps_semovil/app/core/modules/select_image.dart'; // Asegúrate de tener un método para seleccionar archivos PDF.
 import 'package:gps_semovil/app/core/modules/database/storage.dart'; // Asumiendo que tienes un método para subir archivos.
@@ -81,23 +82,26 @@ class _PaymentScreenState extends State<PaymentScreen> {
   }
 
   void _submitPayment() async {
-    if (paymentProofPDF != null) {
-      setState(() {
-        loading = true;
-      });
-      String url = await uploadFileToFirestorage(
-          paymentProofPDF!, widget.formalities.user.curp, 'payment_proof.pdf');
-      widget.formalities.paidProofDoc = url;
-      widget.formalities.status = 1; // Cambiar estado a 'EN REVISION'.
+    if (paymentProofPDF == null) {
+      Design.showSnackBarGood(context, 'FALTA SUBIR COMPROBANTE DE PAGO', Colors.red);
+      return;
 
-      await updateFormalities(widget.formalities);
-
-      setState(() {
-        loading = false;
-      });
-
-      Navigator.pop(
-          context);
     }
+    setState(() {
+      loading = true;
+    });
+    String url = await uploadFileToFirestorage(
+        paymentProofPDF!, widget.formalities.user.curp, 'payment_proof.pdf');
+    widget.formalities.paidProofDoc = url;
+    widget.formalities.status = 1; // Cambiar estado a 'EN REVISION'.
+
+    await updateFormalities(widget.formalities);
+
+    setState(() {
+      loading = false;
+    });
+
+    Navigator.pop(
+        context);
   }
 }

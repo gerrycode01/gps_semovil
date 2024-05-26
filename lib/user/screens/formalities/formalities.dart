@@ -19,7 +19,6 @@ class _ScreenFormalitiesState extends State<ScreenFormalities> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     cargarDatos();
   }
@@ -48,7 +47,6 @@ class _ScreenFormalitiesState extends State<ScreenFormalities> {
                   ? IconButton(
                       icon: const Icon(Icons.paid),
                       onPressed: () {
-                        //TODO: LLEVAR A LA PANTALLA DE PAGO
                         Navigator.push(
                                 context,
                                 MaterialPageRoute(

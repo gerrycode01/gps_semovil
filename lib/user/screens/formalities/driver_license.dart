@@ -2,13 +2,13 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:gps_semovil/app/core/design.dart';
 import 'package:gps_semovil/app/core/modules/database/constants.dart';
 import 'package:gps_semovil/app/core/modules/database/formalities_firestore.dart';
 import 'package:gps_semovil/app/core/modules/database/storage.dart';
 import 'package:gps_semovil/app/core/modules/select_image.dart';
 import 'package:gps_semovil/user/models/formalities_model.dart';
 import 'package:gps_semovil/user/models/user_model.dart';
-import 'package:gps_semovil/user/screens/formalities/payment_screen.dart';
 
 class DriverLicenseForm extends StatefulWidget {
   const DriverLicenseForm({super.key, required this.mode, required this.user});
@@ -148,28 +148,34 @@ class _DriverLicenseFormState extends State<DriverLicenseForm> {
           TextButton(
               onPressed: () {
                 if (selectedDriverLicensesType == null) {
-                  mensaje(
+                  Design.showSnackBarGood(context,
                       'SELECCIONE EL TIPO DE LICENCIA A TRAMITAR', Colors.red);
                   return;
                 }
                 if (!ineUp) {
-                  mensaje('FALTA SUBIR INE', Colors.red);
+                  Design.showSnackBarGood(
+                      context, 'FALTA SUBIR INE', Colors.red);
                   return;
                 }
                 if (!addressProofUp) {
-                  mensaje('FALTA SUBIR COMPROBANTE DE DOMICILIO', Colors.red);
+                  Design.showSnackBarGood(context,
+                      'FALTA SUBIR COMPROBANTE DE DOMICILIO', Colors.red);
                   return;
                 }
                 if (mode == 1) {
                   if (!oldLicenseUp) {
-                    mensaje('ES NECESARIO SUBIR LICENCIA DE CONDUCIR ANTIGUA',
+                    Design.showSnackBarGood(
+                        context,
+                        'ES NECESARIO SUBIR LICENCIA DE CONDUCIR ANTIGUA',
                         Colors.red);
                     return;
                   }
                 }
                 if (mode == 2) {
                   if (!lostTheftCertificateUp) {
-                    mensaje('ES NECESARIO SUBIR CERTIFICADO DE PERDIDA O ROBO',
+                    Design.showSnackBarGood(
+                        context,
+                        'ES NECESARIO SUBIR CERTIFICADO DE PERDIDA O ROBO',
                         Colors.red);
                     return;
                   }
@@ -185,7 +191,7 @@ class _DriverLicenseFormState extends State<DriverLicenseForm> {
           ),
           TextButton(
               onPressed: () {
-                //TODO: REGRESAR AL MENU PRINCIPAL YA LO HACE PERO NO DE FORMA CORRECTA
+                //TODO: CORREGIR LA INTERACTIVIDAD CON LAS VENTANAS
                 Navigator.pushReplacementNamed(context, '/user_homepage',
                     arguments: widget.user);
               },
@@ -280,21 +286,15 @@ class _DriverLicenseFormState extends State<DriverLicenseForm> {
     await addFormalities(formalities);
     await incrementFormalitiesCount();
 
-    mensaje('TRAMITE AGREGADO, REVISA TRAMITES PENDIENTES', Colors.green);
-    //TODO: LLEVAR A LA VENTANA DE PAGO GENERADO
+    Design.showSnackBarGood(
+        context, 'TRAMITE AGREGADO, REVISA TRAMITES PENDIENTES', Colors.green);
+    //TODO: CORREGIR LA INTERACTIVIDAD CON LAS VENTANAS
     Navigator.pushReplacementNamed(context, '/user_homepage',
         arguments: widget.user);
 
     setState(() {
       loading = false;
     });
-  }
-
-  void mensaje(String string, Color color) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text(string),
-      backgroundColor: color,
-    ));
   }
 
   double getPrice(String licenseType, int mode) {
