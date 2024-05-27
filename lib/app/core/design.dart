@@ -122,6 +122,39 @@ class Design {
       ),
     );
   }
+  static Widget campoDropdowns<T>({
+    required T value,
+    required List<T> items,
+    required void Function(T?) onChanged,
+    required String hintText,
+  }) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+      decoration: BoxDecoration(
+        color: Colors.orange[100],
+        borderRadius: BorderRadius.circular(30),
+        border: Border.all(color: Colors.transparent),
+      ),
+      child: DropdownButtonHideUnderline(
+        child: DropdownButton<T>(
+          value: value,
+          isExpanded: true,
+          icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
+          iconSize: 24,
+          elevation: 16,
+          style: const TextStyle(color: Colors.black, fontSize: 16),
+          onChanged: onChanged,
+          items: items.map<DropdownMenuItem<T>>((T value) {
+            return DropdownMenuItem<T>(
+              value: value,
+              child: Text(value.toString()),
+            );
+          }).toList(),
+          hint: Text(hintText, style: const TextStyle(color: Colors.black)),
+        ),
+      ),
+    );
+  }
 
   static void showSnackBarGood(
       BuildContext context, String message, Color color) {
