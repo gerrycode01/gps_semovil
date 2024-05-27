@@ -20,6 +20,7 @@ class DriverLicenseForm extends StatefulWidget {
 }
 
 class _DriverLicenseFormState extends State<DriverLicenseForm> {
+  int mode = 0;
   bool ineUp = false;
   bool addressProofUp = false;
   bool oldLicenseUp = false;
@@ -33,6 +34,12 @@ class _DriverLicenseFormState extends State<DriverLicenseForm> {
   File? addressProofInPDF;
   File? oldLicenseInPDF;
   File? lostThefCertificateInPDF;
+
+  @override
+  void initState() {
+    super.initState();
+    mode = widget.mode;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,9 +61,9 @@ class _DriverLicenseFormState extends State<DriverLicenseForm> {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
               decoration: BoxDecoration(
-                  color: Colors.orange[100],  // Un color suave para el fondo
-                  borderRadius: BorderRadius.circular(30),  // Bordes redondeados
-                  border: Border.all(color: Colors.transparent)  // Borde transparente
+                  color: Colors.orange[100],
+                  borderRadius: BorderRadius.circular(30),
+                  border: Border.all(color: Colors.transparent)
               ),
               child: DropdownButtonHideUnderline(
                 child: DropdownButton<String>(
@@ -74,12 +81,12 @@ class _DriverLicenseFormState extends State<DriverLicenseForm> {
                       child: Text(value),
                     );
                   }).toList(),
-                  hint: Text('SELECCIONA EL TIPO DE LICENCIA', style: TextStyle(color: Colors.black)), // Texto del hint con estilo personalizado
-                  icon: const Icon(Icons.arrow_drop_down, color: Colors.black), // Icono con color personalizado
-                  iconSize: 24,  // Tamaño del ícono
-                  elevation: 16,  // Elevación del menú dropdown
-                  style: const TextStyle(color: Colors.black, fontSize: 16), // Estilo del texto de los items
-                  dropdownColor: Colors.white,  // Color de fondo del menú dropdown
+                  hint: Text('SELECCIONA EL TIPO DE LICENCIA', style: TextStyle(color: Colors.black)),
+                  icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
+                  iconSize: 24,
+                  elevation: 16,
+                  style: const TextStyle(color: Colors.black, fontSize: 16),
+                  dropdownColor: Colors.white,
                 ),
               ),
             ),
@@ -194,7 +201,15 @@ class _DriverLicenseFormState extends State<DriverLicenseForm> {
   }
 
   double getPrice(String licenseType, int mode) {
-    // Esta función debería buscar el precio adecuado basándose en el tipo de licencia y el modo.
-    return 100.0; // Valor de ejemplo
+    switch (mode) {
+      case 0:
+        return Const.driverLicensesPrices[licenseType] ?? 0;
+      case 1:
+        return Const.driverLicensesPricesRenew[licenseType] ?? 0;
+      case 2:
+        return Const.driverLicensesPricesLostTheft[licenseType] ?? 0;
+      default:
+        return 0;
+    }
   }
 }
