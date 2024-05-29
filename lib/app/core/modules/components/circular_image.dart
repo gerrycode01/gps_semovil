@@ -29,37 +29,39 @@ class _CircularImageState extends State<CircularImage> {
         child: _loading
             ? const CircularProgressIndicator()
             : CircleAvatar(
-                radius: widget.radius,
-                backgroundColor:
-                    Colors.orange, // Color de fondo cuando no hay imagen
-                backgroundImage: widget.userModel.profilePhoto!.isNotEmpty
-                    ? NetworkImage(widget.userModel.profilePhoto!)
-                    : null,
-                child: widget.userModel.profilePhoto!.isEmpty
-                    ? Icon(Icons.person, size: widget.radius)
-                    : null, // Muestra un icono si no hay imagen
-              ),
+          radius: widget.radius,
+          backgroundColor:
+          Colors.orange, // Color de fondo cuando no hay imagen
+          backgroundImage: (widget.userModel.profilePhoto != null && widget.userModel.profilePhoto!.isNotEmpty)
+              ? NetworkImage(widget.userModel.profilePhoto!)
+              : null,
+          child: (widget.userModel.profilePhoto == null || widget.userModel.profilePhoto!.isEmpty)
+              ? Icon(Icons.person, size: widget.radius)
+              : null, // Muestra un icono si no hay imagen
+        ),
       ),
     );
   }
 
   void acciones() async {
     final image = await getImage();
-    final imageToUpload = File(image!.path);
+    if (image != null) {
+      final imageToUpload = File(image.path);
 
-    setState(() {
-      _loading = true;
-    });
+      setState(() {
+        _loading = true;
+      });
 
-    final url = await uploadFileToFirestorage(
-        imageToUpload, widget.userModel.curp, 'profilePhoto');
-    widget.userModel.profilePhoto = url;
-    if (url != 'ERROR') {
-      await updateUser(widget.userModel);
+      final url = await uploadFileToFirestorage(
+          imageToUpload, widget.userModel.curp, 'profilePhoto');
+      widget.userModel.profilePhoto = url;
+      if (url != 'ERROR') {
+        await updateUser(widget.userModel);
+      }
+
+      setState(() {
+        _loading = false;
+      });
     }
-
-    setState(() {
-      _loading = false;
-    });
   }
 }
