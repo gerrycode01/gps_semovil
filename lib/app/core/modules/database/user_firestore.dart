@@ -75,4 +75,14 @@ Future<List<UserModel>> getTrafficOfficers() async {
     return [];
   }
 }
+Future<void> deleteUser(String email) async {
+  try {
+    await db.collection('user').doc(email).delete();
+    print("Oficial eliminado correctamente");
+  } catch (e) {
+    print("Error al eliminar oficial: $e");
+    throw Exception('Error al eliminar usuario: $e');
+  }
+}
+
 
