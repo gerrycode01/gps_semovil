@@ -12,6 +12,7 @@ import '../../models/user_model.dart';
 
 class UserAddReports extends StatefulWidget {
   final UserModel user;
+
   const UserAddReports({super.key, required this.user});
 
   @override
@@ -135,8 +136,8 @@ class _UserAddReportsState extends State<UserAddReports> {
                           date: Timestamp.fromDate(DateTime.now()),
                           place: placeController.text,
                           GURB: GURBController.text,
-                          accidentType:
-                              selectedAccidentType, // Use the dropdown selection
+                          accidentType: selectedAccidentType,
+                          // Use the dropdown selection
                           status: "Reportado",
                           user: widget.user.toSmallJSON(),
                           evidence: '');

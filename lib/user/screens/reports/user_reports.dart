@@ -46,10 +46,11 @@ class _UserReportsState extends State<UserReports> {
           centerTitle: true,
           foregroundColor: Design.paleYellow,
           backgroundColor: Design.teal,
-          title: Text('Tus reportes', style: TextStyle(color: Colors.white)),
+          title:
+              const Text('Tus reportes', style: TextStyle(color: Colors.white)),
           actions: [
             IconButton(
-              icon: Icon(Icons.add, color: Colors.white),
+              icon: const Icon(Icons.add, color: Colors.white),
               onPressed: () {
                 Navigator.push(
                   context,
@@ -60,7 +61,7 @@ class _UserReportsState extends State<UserReports> {
               },
             ),
           ],
-          bottom: TabBar(
+          bottom: const TabBar(
             labelColor: Design.paleYellow,
             indicatorColor: Design.seaGreen,
             unselectedLabelColor: Colors.white,
@@ -83,7 +84,8 @@ class _UserReportsState extends State<UserReports> {
   }
 
   Widget buildReportList(String status, bool isWideScreen) {
-    List<ReportModel> filteredReports = _reportsList.where((report) => report.status == status).toList();
+    List<ReportModel> filteredReports =
+        _reportsList.where((report) => report.status == status).toList();
     return GridView.builder(
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: isWideScreen ? 3 : 1,
@@ -101,25 +103,37 @@ class _UserReportsState extends State<UserReports> {
       elevation: 10,
       color: Design.seaGreen,
       clipBehavior: Clip.antiAlias,
-      margin: EdgeInsets.all(8),
+      margin: const EdgeInsets.all(8),
       child: Column(
         children: [
           SizedBox(
-            height: isWideScreen ? 100 : 50, // Adjust height based on screen size
+            height: isWideScreen ? 100 : 50,
+            // Adjust height based on screen size
             width: double.infinity,
-            child: Image.asset(
-              'assets/images/choque.jpg',
-              fit: BoxFit.cover,
-            ),
+            child: report.evidence == '' || report.evidence == 'ERROR'
+                ? Image.asset(
+                    'assets/images/choque.jpg',
+                    fit: BoxFit.cover,
+                  )
+                : Image.network(
+                    report.evidence!,
+                    fit: BoxFit.cover,
+                  ),
           ),
           Padding(
             padding: const EdgeInsets.all(10),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(report.reportType ?? "Sin tipo", style: TextStyle(fontWeight: FontWeight.bold, color: Design.paleYellow, fontSize: isWideScreen ? 24 : 16)),
-                SizedBox(height: 10),
-                Text(report.description ?? "Sin descripción", style: TextStyle(color: Colors.white, fontSize: isWideScreen ? 18 : 12)),
+                Text(report.reportType ?? "Sin tipo",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Design.paleYellow,
+                        fontSize: isWideScreen ? 24 : 16)),
+                const SizedBox(height: 10),
+                Text(report.description ?? "Sin descripción",
+                    style: TextStyle(
+                        color: Colors.white, fontSize: isWideScreen ? 18 : 12)),
               ],
             ),
           ),
