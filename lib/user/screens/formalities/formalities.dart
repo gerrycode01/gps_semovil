@@ -37,6 +37,7 @@ class _ScreenFormalitiesState extends State<ScreenFormalities> {
         title: const Text('Trámites', style: TextStyle(color: Design.paleYellow)),
         backgroundColor: Design.teal,
         centerTitle: true,
+        foregroundColor: Design.paleYellow,
       ),
       body: AnimationLimiter(
         child: ListView.builder(

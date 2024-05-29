@@ -48,10 +48,11 @@ Future<void> addUser(UserModel userModel) async {
 
 Future<void> updateUser(UserModel userModel) async {
   try {
-    final ref = db.collection('user').doc(userModel.email);
+    final ref = FirebaseFirestore.instance.collection('user').doc(userModel.email);
     await ref.update(userModel.toJSON());
     print("Usuario actualizado correctamente");
   } catch (e) {
     print("Error actualizando usuario: $e");
+    throw Exception('Error al actualizar usuario: $e');
   }
 }

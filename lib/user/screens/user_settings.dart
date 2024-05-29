@@ -4,6 +4,7 @@ import 'package:gps_semovil/app/core/design.dart';
 import 'package:gps_semovil/app/core/login.dart';
 import 'package:gps_semovil/app/core/modules/components/circular_image.dart';
 import 'package:gps_semovil/user/models/user_model.dart';
+import 'package:gps_semovil/user/screens/user_settings_reload.dart';
 
 class UserSettings extends StatefulWidget {
   final UserModel userModel;
@@ -19,13 +20,18 @@ class _UserSettingsState extends State<UserSettings> {
     bool isLargeScreen = MediaQuery.of(context).size.width > 600; // Considera 600px como el breakpoint para una pantalla grande
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
+        foregroundColor: Design.paleYellow,
         title: Text('Cuenta', style: TextStyle(color: Design.paleYellow)),
         backgroundColor: Design.teal,
         actions: [
           IconButton(
             icon: Icon(Icons.settings, color: Design.paleYellow),
             onPressed: () {
-              // Open settings
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ChangeUserData(userModel: widget.userModel))).then((value) => setState(() {}));
             },
           ),
         ],

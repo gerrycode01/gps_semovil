@@ -43,6 +43,8 @@ class _FinesScreenState extends State<FinesScreen> {
         appBar: AppBar(
           backgroundColor: Design.teal,
           title: Text('Tus multas', style: TextStyle(color: Colors.white)),
+          centerTitle: true,
+          foregroundColor: Design.paleYellow,
           bottom: TabBar(
             labelColor: Design.paleYellow,
             indicatorColor: Design.seaGreen,

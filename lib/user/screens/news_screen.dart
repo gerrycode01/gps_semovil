@@ -39,6 +39,7 @@ class _NewsScreenState extends State<NewsScreen> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
+        foregroundColor: Design.paleYellow,
         title: const Text('Noticias', style: TextStyle(color: Design.paleYellow)),
         backgroundColor: Design.teal,
       ),

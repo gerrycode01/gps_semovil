@@ -1,5 +1,10 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:gps_semovil/app/core/modules/database/storage.dart';
+import 'package:gps_semovil/app/core/modules/select_image.dart';
+import 'package:image_picker/image_picker.dart';
 import '../../../app/core/design.dart';
 import '../../../app/core/modules/database/report_firestore.dart';
 import '../../models/report_model.dart';
@@ -7,6 +12,7 @@ import '../../models/user_model.dart';
 
 class UserAddReports extends StatefulWidget {
   final UserModel user;
+
   const UserAddReports({super.key, required this.user});
 
   @override
@@ -16,6 +22,11 @@ class UserAddReports extends StatefulWidget {
 class _UserAddReportsState extends State<UserAddReports> {
   String? reportType; // Tipo de reporte seleccionado
   String? selectedAccidentType; // Tipo de accidente seleccionado
+  XFile? evidence;
+  File? evidenceToUpload;
+
+  bool _loading = false;
+  bool evidenciaUp = false;
 
   final List<DropdownMenuItem<String>> reportTypes = [
     const DropdownMenuItem(
@@ -39,7 +50,6 @@ class _UserAddReportsState extends State<UserAddReports> {
   final routeController =
       TextEditingController(); // Solo para transporte público
   final GURBController = TextEditingController();
-  final evidenceController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -50,6 +60,7 @@ class _UserAddReportsState extends State<UserAddReports> {
           style: TextStyle(color: Colors.teal),
         ),
         centerTitle: true,
+        foregroundColor: Design.paleYellow,
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
@@ -110,30 +121,75 @@ class _UserAddReportsState extends State<UserAddReports> {
                 // Since we're using Dropdown for accident type, no need for another Text Field here
                 const SizedBox(height: 20),
               ],
-              Design.campoTexto(evidenceController, "Evidencia (opcional)"),
-              IconButton(onPressed: () {}, icon: const Icon(Icons.download)),
+              filePickerSection(),
               const SizedBox(height: 30),
-              Design.botonGreen("Subir reporte", () {
-                ReportModel report = ReportModel(
-                  reportType: reportType,
-                  description: descriptionController.text,
-                  date: Timestamp.fromDate(DateTime.now()),
-                  place: placeController.text,
-                  GURB: GURBController.text,
-                  evidence: evidenceController.text,
-                  accidentType: selectedAccidentType,
-                  status: "Reportado",
-                  user: widget.user.toSmallJSON(),
-                );
-                addReport(report);
-                Design.showSnackBarGood(
-                    context, "REPORTE REGISTRADO", Colors.green);
-                Navigator.pop(context);
-              })
+              _loading
+                  ? const CircularProgressIndicator()
+                  : Design.botonGreen("Subir reporte", () async {
+                      setState(() {
+                        _loading = true;
+                      });
+
+                      ReportModel report = ReportModel(
+                          reportType: reportType,
+                          description: descriptionController.text,
+                          date: Timestamp.fromDate(DateTime.now()),
+                          place: placeController.text,
+                          GURB: GURBController.text,
+                          accidentType: selectedAccidentType,
+                          // Use the dropdown selection
+                          status: "Reportado",
+                          user: widget.user.toSmallJSON(),
+                          evidence: '');
+                      String? id = await addReport(report);
+                      String url = '';
+
+                      if (evidenceToUpload != null && id != null) {
+                        url = await uploadFileToFirestorage(
+                            evidenceToUpload!, 'reportes', id);
+                      }
+
+                      if (url != 'ERROR') {
+                        report.evidence = url;
+                        await updateReport(report, id!);
+                      }
+
+                      Design.showSnackBarGood(
+                          context, "REPORTE REGISTRADO", Colors.green);
+                      Navigator.pop(context);
+
+                      setState(() {
+                        _loading = false;
+                      });
+                    })
             ],
           ],
         ),
       ),
     );
+  }
+
+  Widget filePickerSection() {
+    return ElevatedButton.icon(
+      icon: const Icon(Icons.file_upload, color: Colors.white),
+      label: evidenciaUp
+          ? const Text('Evidencia subida')
+          : const Text('Subir evidencia'),
+      onPressed: _pickEvidence,
+      style: ElevatedButton.styleFrom(
+        foregroundColor: Colors.white,
+        backgroundColor: Colors.blue, // Color del botón
+      ),
+    );
+  }
+
+  void _pickEvidence() async {
+    final image = await getImage();
+    if (image != null) {
+      setState(() {
+        evidenceToUpload = File(image.path);
+        evidenciaUp = true;
+      });
+    }
   }
 }
