@@ -54,10 +54,35 @@ class _PaymentScreenState extends State<PaymentScreen> {
   }
 
   Widget paymentInfoTile() {
-    return ListTile(
-      title: Text('Tipo de Licencia: ${widget.formalities.driverLicenseType}', style: TextStyle(color: Design.paleYellow)),
-      subtitle: Text('Precio: \$${widget.formalities.price.toStringAsFixed(2)}', style: TextStyle(color: Design.lightOrange)),
-      tileColor: Design.seaGreen,
+    return Card(
+      elevation: 10,
+      color: Design.seaGreen,
+      clipBehavior: Clip.antiAlias,
+      margin: EdgeInsets.all(8),
+      child: Center(
+        child: Column(
+          children: [
+            SizedBox(
+              height: 50,
+              // Adjust height based on screen size
+              width: double.infinity,
+              child: Icon(Icons.monetization_on, color: Design.paleYellow,)
+            ),
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: Center(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Center(child: Text('Tipo de Licencia: ${widget.formalities.driverLicenseType}', style: TextStyle(fontSize: 25,color: Design.paleYellow))),
+                    Text('Precio: \$${widget.formalities.price.toStringAsFixed(2)}', style: TextStyle(fontSize: 20,color: Colors.white)),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
@@ -73,10 +98,10 @@ class _PaymentScreenState extends State<PaymentScreen> {
     )
         : Column(
       children: [
-        const Text('Comprobante de Pago Cargado', style: TextStyle(color: Colors.green)),
+        const Text('Comprobante de Pago Cargado', style: TextStyle(color: Colors.green, fontSize: 15)),
         ElevatedButton.icon(
           icon: const Icon(Icons.replay, color: Colors.white),
-          label: const Text('Reemplazar Comprobante'),
+          label: const Text('Reemplazar Comprobante',style: TextStyle(color: Design.paleYellow),),
           onPressed: () => _pickPaymentProof(),
           style: ElevatedButton.styleFrom(backgroundColor: Design.teal),
         ),
