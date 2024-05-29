@@ -14,7 +14,6 @@ class Formalities {
   String? theftLostCertificate;
   String? paidProofDoc;
   int status;
-  UserModel? trafficOfficer;
 
   Formalities(
       {required this.idFormalities,
@@ -28,8 +27,7 @@ class Formalities {
       this.oldDriversLicense,
       this.theftLostCertificate,
       this.paidProofDoc,
-      required this.status,
-      this.trafficOfficer});
+      required this.status});
 
   factory Formalities.fromFirestore(
     DocumentSnapshot<Map<String, dynamic>> snapshot,
@@ -48,10 +46,7 @@ class Formalities {
         oldDriversLicense: data?['oldDriversLicense'],
         theftLostCertificate: data?['theftLostCertificate'],
         paidProofDoc: data?['paidProofDoc'],
-        status: data?['status'],
-        trafficOfficer: data?['trafficOfficer'] != null
-            ? UserModel.fromMapita(data?['trafficOfficer'])
-            : null);
+        status: data?['status']);
   }
 
   Map<String, dynamic> toJSON() {
@@ -81,14 +76,7 @@ class Formalities {
       'oldDriversLicense': oldDriversLicense,
       'theftLostCertificate': theftLostCertificate,
       'paidProofDoc': paidProofDoc,
-      'status': status,
-      'trafficOfficer': {
-        'curp': trafficOfficer?.curp ?? '',
-        'names': trafficOfficer?.names ?? '',
-        'lastname': trafficOfficer?.lastname ?? '',
-        'email': trafficOfficer?.email ?? '',
-        'rol': trafficOfficer?.rol ?? '',
-      },
+      'status': status
     };
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gps_semovil/app/core/design.dart';
 import 'package:gps_semovil/app/core/modules/database/constants.dart';
+import 'package:gps_semovil/app/core/modules/database/formalities_firestore.dart';
 import 'package:gps_semovil/user/models/formalities_model.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
@@ -9,7 +10,7 @@ import 'package:dio/dio.dart';
 class FormalitiesDetailScreen extends StatelessWidget {
   final Formalities formalities;
 
-  const FormalitiesDetailScreen({Key? key, required this.formalities}) : super(key: key);
+  const FormalitiesDetailScreen({super.key, required this.formalities});
 
   @override
   Widget build(BuildContext context) {
@@ -25,19 +26,28 @@ class FormalitiesDetailScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            DetailCard(title: "ID", value: formalities.idFormalities.toString()),
-            DetailCard(title: "Tipo de Licencia", value: formalities.driverLicenseType),
-            DetailCard(title: "Precio", value: "\$${formalities.price.toString()}"),
-            DetailCard(title: "CURP del Usuario", value: formalities.user.curp),
-            DetailCard(title: "Fecha", value: "${formalities.date.toDate()}"),
-            DetailCard(title: "Primera Vez", value: formalities.firsTime ? "Sí" : "No"),
-            DetailCard(title: "Estado Actual", value: Const.statusForm[formalities.status]!),
+            detailCard(
+                title: "ID", value: formalities.idFormalities.toString()),
+            detailCard(
+                title: "Tipo de Licencia",
+                value: formalities.driverLicenseType),
+            detailCard(
+                title: "Precio", value: "\$${formalities.price.toString()}"),
+            detailCard(title: "CURP del Usuario", value: formalities.user.curp),
+            detailCard(title: "Fecha", value: "${formalities.date.toDate()}"),
+            detailCard(
+                title: "Primera Vez",
+                value: formalities.firsTime ? "Sí" : "No"),
+            detailCard(
+                title: "Estado Actual",
+                value: Const.statusForm[formalities.status]!),
             const SizedBox(height: 20),
             ...buildDocumentLinks(context),
             ElevatedButton(
               onPressed: () => updateStatus(context),
               style: ElevatedButton.styleFrom(
-                foregroundColor: Design.teal, backgroundColor: Design.paleYellow, // Text color
+                foregroundColor: Design.teal,
+                backgroundColor: Design.paleYellow, // Text color
               ),
               child: const Text('Actualizar Estado'),
             ),
@@ -52,11 +62,14 @@ class FormalitiesDetailScreen extends StatelessWidget {
       if (formalities.ineDoc.isNotEmpty)
         documentItem(context, 'Documento INE', formalities.ineDoc),
       if (formalities.addressProofDoc.isNotEmpty)
-        documentItem(context, 'Comprobante de Domicilio', formalities.addressProofDoc),
+        documentItem(
+            context, 'Comprobante de Domicilio', formalities.addressProofDoc),
       if (formalities.oldDriversLicense != null)
-        documentItem(context, 'Licencia Anterior', formalities.oldDriversLicense!),
+        documentItem(
+            context, 'Licencia Anterior', formalities.oldDriversLicense!),
       if (formalities.theftLostCertificate != null)
-        documentItem(context, 'Certificado de Extravío', formalities.theftLostCertificate!),
+        documentItem(context, 'Certificado de Extravío',
+            formalities.theftLostCertificate!),
       if (formalities.paidProofDoc != null)
         documentItem(context, 'Comprobante de Pago', formalities.paidProofDoc!),
     ];
@@ -64,23 +77,25 @@ class FormalitiesDetailScreen extends StatelessWidget {
 
   Widget documentItem(BuildContext context, String title, String url) {
     return ListTile(
-      title: Text(title, style: TextStyle(color: Design.teal)),
+      title: Text(title, style: const TextStyle(color: Design.teal)),
       trailing: IconButton(
-        icon: Icon(Icons.visibility, color: Design.teal),
+        icon: const Icon(Icons.visibility, color: Design.teal),
         onPressed: () => downloadAndOpenPDF(context, url),
       ),
     );
   }
 
-  Widget DetailCard({required String title, required String value}) {
+  Widget detailCard({required String title, required String value}) {
     return Card(
       color: Design.teal,
-      child: ListTile(
-        title: Text(title, style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-        subtitle: Text(value, style: TextStyle(color: Colors.white70)),
-      ),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       elevation: 5,
+      child: ListTile(
+        title: Text(title,
+            style: const TextStyle(
+                color: Colors.white, fontWeight: FontWeight.bold)),
+        subtitle: Text(value, style: const TextStyle(color: Colors.white70)),
+      ),
     );
   }
 
@@ -90,9 +105,11 @@ class FormalitiesDetailScreen extends StatelessWidget {
     final path = '${dir.path}/temp.pdf';
     try {
       await dio.download(url, path);
-      Navigator.push(context, MaterialPageRoute(builder: (_) => PDFView(filePath: path)));
+      Navigator.push(
+          context, MaterialPageRoute(builder: (_) => PDFView(filePath: path)));
     } catch (e) {
-      final snackBar = SnackBar(content: Text('Error al abrir el documento: $e'));
+      final snackBar =
+          SnackBar(content: Text('Error al abrir el documento: $e'));
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
     }
   }
@@ -104,10 +121,13 @@ class FormalitiesDetailScreen extends StatelessWidget {
         return ListView.builder(
           itemCount: Const.statusForm.length,
           itemBuilder: (context, index) => ListTile(
-            title: Text(Const.statusForm[index]!, style: TextStyle(color: Design.teal)),
-            onTap: () {
+            title: Text(Const.statusForm[index]!,
+                style: const TextStyle(color: Design.teal)),
+            onTap: () async {
+              formalities.status = index;
+              await updateFormalities(formalities);
               Navigator.pop(context);
-              // Lógica para actualizar el estado aquí
+              Navigator.pop(context);
             },
           ),
         );
