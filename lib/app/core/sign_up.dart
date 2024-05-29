@@ -37,6 +37,7 @@ class _SignUpState extends State<SignUp> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        foregroundColor: Design.paleYellow,
         title:  Text('Registrate',style: TextStyle(color: Colors.white),),
         centerTitle: true,
         backgroundColor: Design.teal, // Adjust the color to match your theme

@@ -5,6 +5,9 @@ import 'package:gps_semovil/app/core/modules/database/formalities_firestore.dart
 import 'package:gps_semovil/user/models/formalities_model.dart';
 import 'package:gps_semovil/user/models/user_model.dart';
 import 'package:gps_semovil/user/screens/formalities/payment_screen.dart';
+import 'package:intl/intl.dart';
+
+import '../../../app/core/modules/database/constants.dart'; // Necesario para formatear la fecha
 
 class ScreenFormalities extends StatefulWidget {
   final UserModel user;
@@ -71,9 +74,22 @@ class _ScreenFormalitiesState extends State<ScreenFormalities> {
           '${formalities.driverLicenseType} - ${formalities.firsTime ? "Nuevo" : "Renovación"}',
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
-        subtitle: Text(
-          getFormalitiesType(formalities),
-          style: TextStyle(color: Colors.white.withOpacity(0.7)),
+        subtitle: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              getFormalitiesType(formalities),
+              style: TextStyle(color: Colors.white.withOpacity(0.7)),
+            ),
+            Text(
+              'Estado: ${Const.statusForm[formalities.status]}',
+              style: TextStyle(color: Colors.white.withOpacity(0.5)),
+            ),
+            Text(
+              'Fecha:${formalities.date.toDate()}', // Asegúrate de que 'date' es un DateTime
+              style: TextStyle(color: Colors.white.withOpacity(0.5)),
+            ),
+          ],
         ),
         trailing: formalities.status == 0 ? IconButton(
           icon: const Icon(Icons.payment, color: Colors.white),
