@@ -2,10 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 
 class NewsModel{
-  final String? id;
-  final String? title;
-  final String? description;
-  final Timestamp? date;
+   String? id;
+   String? title;
+   String? description;
+   Timestamp? date;
 
   NewsModel({
     this.id,

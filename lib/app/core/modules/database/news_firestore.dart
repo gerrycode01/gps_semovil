@@ -37,7 +37,7 @@ Future<void> updateNew(NewsModel news) async {
   }
 }
 
-Future<void> deleteNew(String id) async{
+Future<void> deleteNew(String? id) async{
   try{
     final ref = db.collection('news').doc(id);
     await ref.delete();

@@ -4,6 +4,7 @@ import 'package:gps_semovil/app/core/design.dart';
 import 'package:gps_semovil/user/models/news_model.dart';
 
 import '../../app/core/modules/database/news_firestore.dart';
+import 'administrator_edit_news.dart';
 
 class AdministratorNews extends StatefulWidget {
   const AdministratorNews({super.key});
@@ -101,8 +102,10 @@ class _AdministratorNewsState extends State<AdministratorNews> {
                 ButtonBar(
                   alignment: MainAxisAlignment.start,
                   children: [
-                    Design.botonGreen("MAS DETALLES", () {
-
+                    Design.botonGreen("Mas opciones", () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => EditNews(news: _newsList[index])));
                     })
                   ],
                 ),
