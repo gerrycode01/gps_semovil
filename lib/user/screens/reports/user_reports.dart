@@ -43,6 +43,8 @@ class _UserReportsState extends State<UserReports> {
       length: 3,
       child: Scaffold(
         appBar: AppBar(
+          centerTitle: true,
+          foregroundColor: Design.paleYellow,
           backgroundColor: Design.teal,
           title: Text('Tus reportes', style: TextStyle(color: Colors.white)),
           actions: [

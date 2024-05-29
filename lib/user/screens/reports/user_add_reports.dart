@@ -45,11 +45,13 @@ class _UserAddReportsState extends State<UserAddReports> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+
         title: const Text(
           'Agregar Reporte',
           style: TextStyle(color: Colors.teal),
         ),
         centerTitle: true,
+        foregroundColor: Design.paleYellow,
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),

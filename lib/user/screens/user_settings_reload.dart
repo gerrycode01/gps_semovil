@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gps_semovil/app/core/design.dart';
 import 'package:intl/intl.dart';
 
 
@@ -22,6 +23,7 @@ class _ChangeUserDataState extends State<ChangeUserData> {
       appBar: AppBar(
         title: const Text('Registrate'),
         centerTitle: true,
+        foregroundColor: Design.paleYellow,
         backgroundColor: Colors.green, // Adjust the color to match your theme
       ),
       body: SingleChildScrollView(

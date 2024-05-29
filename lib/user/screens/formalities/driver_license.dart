@@ -45,6 +45,7 @@ class _DriverLicenseFormState extends State<DriverLicenseForm> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+
         title: Text(
           widget.mode == 0
               ? 'TRAMITAR LICENCIA DE CONDUCIR'
@@ -52,6 +53,7 @@ class _DriverLicenseFormState extends State<DriverLicenseForm> {
           style: const TextStyle(color: Design.paleYellow),
         ),
         centerTitle: true,
+        foregroundColor: Design.paleYellow,
         backgroundColor: Design.teal,
       ),
       body: SingleChildScrollView(

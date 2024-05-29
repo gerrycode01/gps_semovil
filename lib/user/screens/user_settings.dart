@@ -19,6 +19,8 @@ class _UserSettingsState extends State<UserSettings> {
     bool isLargeScreen = MediaQuery.of(context).size.width > 600; // Considera 600px como el breakpoint para una pantalla grande
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
+        foregroundColor: Design.paleYellow,
         title: Text('Cuenta', style: TextStyle(color: Design.paleYellow)),
         backgroundColor: Design.teal,
         actions: [

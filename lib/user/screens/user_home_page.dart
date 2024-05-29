@@ -22,6 +22,8 @@ class _UserHomePageState extends State<UserHomePage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        centerTitle: true,
+        foregroundColor: Design.paleYellow,
         backgroundColor: Design.teal,
         title: const Text('Bienvenido',
             style: TextStyle(color: Design.paleYellow)),

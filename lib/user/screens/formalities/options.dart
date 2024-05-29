@@ -18,6 +18,8 @@ class _OptionsState extends State<Options> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
+        foregroundColor: Design.paleYellow,
         title:
             const Text('Opciones', style: TextStyle(color: Design.paleYellow)),
         backgroundColor: Design.teal,

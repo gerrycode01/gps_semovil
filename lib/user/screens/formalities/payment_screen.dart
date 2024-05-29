@@ -24,6 +24,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
+        foregroundColor: Design.paleYellow,
         title: const Text('Pago de Trámite', style: TextStyle(color: Design.paleYellow)),
         backgroundColor: Design.teal,
       ),
