@@ -47,6 +47,8 @@ class _AdministratorHomePageState extends State<AdministratorHomePage> {
       appBar: AppBar(
         title: const Text('Administrador', style: TextStyle(color: Design.paleYellow)),
         backgroundColor: Design.teal,
+        centerTitle: true,
+        foregroundColor: Design.paleYellow,
         elevation: 0,
       ),
       drawer: Drawer(

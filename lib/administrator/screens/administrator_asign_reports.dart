@@ -38,7 +38,9 @@ class _AdministratorAsignReportsState extends State<AdministratorAsignReports> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
+        foregroundColor: Design.paleYellow,
         title: const Text('Reportes sin asignar', style: TextStyle(color: Design.paleYellow)),
+
         backgroundColor: Design.teal,
       ),
       body: ListView.builder(

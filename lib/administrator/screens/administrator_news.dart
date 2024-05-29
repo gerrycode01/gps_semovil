@@ -40,6 +40,8 @@ class _AdministratorNewsState extends State<AdministratorNews> {
       appBar: AppBar(
         title: Text('Noticias', style: TextStyle(color: Design.paleYellow),),
         backgroundColor: Colors.teal,
+        centerTitle: true,
+        foregroundColor: Design.paleYellow,
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.add, color: Design.paleYellow,),

@@ -20,6 +20,8 @@ class _AdministratorAddNewsState extends State<AdministratorAddNews> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Añadir Noticia', style: TextStyle(color: Design.paleYellow)),
+        centerTitle: true,
+        foregroundColor: Design.paleYellow,
         backgroundColor: Design.teal,
       ),
       body: SingleChildScrollView(
