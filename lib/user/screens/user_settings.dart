@@ -4,6 +4,7 @@ import 'package:gps_semovil/app/core/design.dart';
 import 'package:gps_semovil/app/core/login.dart';
 import 'package:gps_semovil/app/core/modules/components/circular_image.dart';
 import 'package:gps_semovil/user/models/user_model.dart';
+import 'package:gps_semovil/user/screens/user_settings_reload.dart';
 
 class UserSettings extends StatefulWidget {
   final UserModel userModel;
@@ -27,7 +28,10 @@ class _UserSettingsState extends State<UserSettings> {
           IconButton(
             icon: Icon(Icons.settings, color: Design.paleYellow),
             onPressed: () {
-              // Open settings
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ChangeUserData(userModel: widget.userModel))).then((value) => setState(() {}));
             },
           ),
         ],
