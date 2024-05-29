@@ -49,7 +49,7 @@ class _DriverLicenseFormState extends State<DriverLicenseForm> {
           widget.mode == 0
               ? 'TRAMITAR LICENCIA DE CONDUCIR'
               : 'RENOVAR LICENCIA DE CONDUCIR',
-          style: TextStyle(color: Design.paleYellow),
+          style: const TextStyle(color: Design.paleYellow),
         ),
         centerTitle: true,
         backgroundColor: Design.teal,
@@ -63,8 +63,7 @@ class _DriverLicenseFormState extends State<DriverLicenseForm> {
               decoration: BoxDecoration(
                   color: Colors.orange[100],
                   borderRadius: BorderRadius.circular(30),
-                  border: Border.all(color: Colors.transparent)
-              ),
+                  border: Border.all(color: Colors.transparent)),
               child: DropdownButtonHideUnderline(
                 child: DropdownButton<String>(
                   value: selectedDriverLicensesType,
@@ -81,7 +80,8 @@ class _DriverLicenseFormState extends State<DriverLicenseForm> {
                       child: Text(value),
                     );
                   }).toList(),
-                  hint: Text('SELECCIONA EL TIPO DE LICENCIA', style: TextStyle(color: Colors.black)),
+                  hint: const Text('SELECCIONA EL TIPO DE LICENCIA',
+                      style: TextStyle(color: Colors.black)),
                   icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
                   iconSize: 24,
                   elevation: 16,
@@ -90,23 +90,29 @@ class _DriverLicenseFormState extends State<DriverLicenseForm> {
                 ),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Text(
               selectedPrice == null
                   ? 'PRECIO DISPONIBLE AL SELECCIONAR TIPO DE LICENCIA'
                   : 'Precio: \$${selectedPrice!.toStringAsFixed(2)}',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Design.brightRed),
+              style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Design.brightRed),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             documentUploadSection('INE', ineUp, addIne),
-            documentUploadSection('COMPROBANTE DE DOMICILIO', addressProofUp, addAddressProof),
-            if (widget.mode != 0) documentUploadSection(
-                widget.mode == 1 ? 'LICENCIA DE CONDUCIR ANTERIOR' : 'CERTIFICADO DE PERDIDA O ROBO',
-                widget.mode == 1 ? oldLicenseUp : lostTheftCertificateUp,
-                widget.mode == 1 ? addOldLicenses : addLostThefCertificate
-            ),
+            documentUploadSection(
+                'COMPROBANTE DE DOMICILIO', addressProofUp, addAddressProof),
+            if (widget.mode != 0)
+              documentUploadSection(
+                  widget.mode == 1
+                      ? 'LICENCIA DE CONDUCIR ANTERIOR'
+                      : 'CERTIFICADO DE PERDIDA O ROBO',
+                  widget.mode == 1 ? oldLicenseUp : lostTheftCertificateUp,
+                  widget.mode == 1 ? addOldLicenses : addLostThefCertificate),
             actionButton('CONTINUAR', _loading),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             actionButton('CANCELAR', () {
               Navigator.pop(context);
             }),
@@ -122,7 +128,8 @@ class _DriverLicenseFormState extends State<DriverLicenseForm> {
         Expanded(child: Text(uploaded ? '$title LISTO' : title)),
         IconButton(
           onPressed: () => onTap(),
-          icon: Icon(uploaded ? Icons.check_circle : Icons.file_upload, color: Design.mintGreen),
+          icon: Icon(uploaded ? Icons.check_circle : Icons.file_upload,
+              color: Design.mintGreen),
         ),
       ],
     );
@@ -131,13 +138,14 @@ class _DriverLicenseFormState extends State<DriverLicenseForm> {
   Widget actionButton(String text, Function onPressed) {
     return ElevatedButton(
       onPressed: () => onPressed(),
-      child: loading && text == 'CONTINUAR'
-          ? CircularProgressIndicator(color: Design.paleYellow)
-          : Text(text),
       style: ElevatedButton.styleFrom(
-        foregroundColor: Colors.white, backgroundColor: Design.teal,
-        textStyle: TextStyle(fontSize: 16),
+        foregroundColor: Colors.white,
+        backgroundColor: Design.teal,
+        textStyle: const TextStyle(fontSize: 16),
       ),
+      child: loading && text == 'CONTINUAR'
+          ? const CircularProgressIndicator(color: Design.paleYellow)
+          : Text(text),
     );
   }
 
@@ -181,20 +189,68 @@ class _DriverLicenseFormState extends State<DriverLicenseForm> {
     }
   }
 
-  void _loading() {
+  Future<void> _loading() async {
     if (!validSubmission()) return;
     setState(() {
       loading = true;
     });
 
-    // Aquí iría el código para subir los archivos y actualizar la base de datos.
+    String urlINE =
+        await uploadFileToFirestorage(ineInPDF!, widget.user.curp, 'INE.pdf');
+    String urlAddressProof = await uploadFileToFirestorage(
+        addressProofInPDF!, widget.user.curp, 'address_proof.pdf');
+    String? urlOldLicense;
+    if (oldLicenseUp) {
+      urlOldLicense = await uploadFileToFirestorage(
+          oldLicenseInPDF!, widget.user.curp, 'old_license.pdf');
+    }
+    String? urlLostThefCertificate;
+    if (lostTheftCertificateUp) {
+      urlLostThefCertificate = await uploadFileToFirestorage(
+          lostThefCertificateInPDF!,
+          widget.user.curp,
+          'thef_lost_certificate.pdf');
+    }
 
-    Navigator.pop(context);
+    int idFormalities = await getNumberOfFormalities();
+
+    Formalities formalities = Formalities(
+        idFormalities: idFormalities + 1,
+        driverLicenseType: selectedDriverLicensesType!,
+        price: selectedPrice!,
+        user: widget.user,
+        date: Timestamp.fromDate(DateTime.now()),
+        ineDoc: urlINE,
+        addressProofDoc: urlAddressProof,
+        firsTime: widget.mode == 0,
+        oldDriversLicense: urlOldLicense,
+        theftLostCertificate: urlLostThefCertificate,
+        status: 0);
+
+    await addFormalities(formalities);
+    await incrementFormalitiesCount();
+
+    Design.showSnackBarGood(
+        context, 'TRAMITE AGREGADO, REVISA TRAMITES PENDIENTES', Colors.green);
+    //TODO: CORREGIR LA INTERACTIVIDAD CON LAS VENTANAS
+    Navigator.pushReplacementNamed(context, '/user_homepage',
+        arguments: widget.user);
+
+    setState(() {
+      loading = false;
+    });
   }
 
   bool validSubmission() {
-    if (selectedDriverLicensesType == null || !ineUp || !addressProofUp || (widget.mode == 1 && !oldLicenseUp) || (widget.mode == 2 && !lostTheftCertificateUp)) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Por favor, completa todos los campos necesarios.', style: TextStyle(color: Colors.white)), backgroundColor: Design.brightRed));
+    if (selectedDriverLicensesType == null ||
+        !ineUp ||
+        !addressProofUp ||
+        (widget.mode == 1 && !oldLicenseUp) ||
+        (widget.mode == 2 && !lostTheftCertificateUp)) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('Por favor, completa todos los campos necesarios.',
+              style: TextStyle(color: Colors.white)),
+          backgroundColor: Design.brightRed));
       return false;
     }
     return true;

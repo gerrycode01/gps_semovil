@@ -18,7 +18,8 @@ class _OptionsState extends State<Options> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Opciones', style: TextStyle(color: Design.paleYellow)),
+        title:
+            const Text('Opciones', style: TextStyle(color: Design.paleYellow)),
         backgroundColor: Design.teal,
       ),
       body: AnimationLimiter(
@@ -39,7 +40,8 @@ class _OptionsState extends State<Options> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => Information(mode: 0, user: widget.user)));
+                          builder: (context) =>
+                              Information(mode: 0, user: widget.user)));
                 },
               ),
               CustomButton(
@@ -49,7 +51,8 @@ class _OptionsState extends State<Options> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => Information(mode: 1, user: widget.user)));
+                          builder: (context) =>
+                              Information(mode: 1, user: widget.user)));
                 },
               ),
               CustomButton(
@@ -59,7 +62,8 @@ class _OptionsState extends State<Options> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => Information(mode: 2, user: widget.user)));
+                          builder: (context) =>
+                              Information(mode: 2, user: widget.user)));
                 },
               ),
               CustomButton(
@@ -69,7 +73,8 @@ class _OptionsState extends State<Options> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => ScreenFormalities(user: widget.user)));
+                          builder: (context) =>
+                              ScreenFormalities(user: widget.user)));
                 },
               ),
             ],
@@ -102,7 +107,8 @@ class CustomButton extends StatelessWidget {
         label: Text(label, style: const TextStyle(fontSize: 16)),
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          foregroundColor: Colors.white, backgroundColor: Design.seaGreen,
+          foregroundColor: Colors.white,
+          backgroundColor: Design.seaGreen,
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8),

@@ -14,22 +14,30 @@ class UserAddReports extends StatefulWidget {
 }
 
 class _UserAddReportsState extends State<UserAddReports> {
-  String? reportType;  // Tipo de reporte seleccionado
-  String? selectedAccidentType;  // Tipo de accidente seleccionado
+  String? reportType; // Tipo de reporte seleccionado
+  String? selectedAccidentType; // Tipo de accidente seleccionado
 
   final List<DropdownMenuItem<String>> reportTypes = [
-    DropdownMenuItem(value: "Transporte público", child: Text("Transporte público")),
-    DropdownMenuItem(value: "Accidente vial", child: Text("Accidente vial")),
+    const DropdownMenuItem(
+        value: "Transporte público", child: Text("Transporte público")),
+    const DropdownMenuItem(
+        value: "Accidente vial", child: Text("Accidente vial")),
   ];
   final List<DropdownMenuItem<String>> accidentTypes = [
-    DropdownMenuItem(value: "Accidente con peatones", child: Text("Accidente con peatones")),
-    DropdownMenuItem(value: "Accidente con ciclistas", child: Text("Accidente con ciclistas")),
-    DropdownMenuItem(value: "Accidente con transporte público", child: Text("Accidente con transporte público")),
+    const DropdownMenuItem(
+        value: "Accidente con peatones", child: Text("Accidente con peatones")),
+    const DropdownMenuItem(
+        value: "Accidente con ciclistas",
+        child: Text("Accidente con ciclistas")),
+    const DropdownMenuItem(
+        value: "Accidente con transporte público",
+        child: Text("Accidente con transporte público")),
   ];
 
   final descriptionController = TextEditingController();
   final placeController = TextEditingController();
-  final routeController = TextEditingController();  // Solo para transporte público
+  final routeController =
+      TextEditingController(); // Solo para transporte público
   final GURBController = TextEditingController();
   final evidenceController = TextEditingController();
 
@@ -37,7 +45,10 @@ class _UserAddReportsState extends State<UserAddReports> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Agregar Reporte',style: TextStyle(color: Colors.teal),),
+        title: const Text(
+          'Agregar Reporte',
+          style: TextStyle(color: Colors.teal),
+        ),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -51,7 +62,7 @@ class _UserAddReportsState extends State<UserAddReports> {
               onChanged: (String? value) {
                 setState(() {
                   reportType = value;
-                  selectedAccidentType = null;  // Reset when report type changes
+                  selectedAccidentType = null; // Reset when report type changes
                 });
               },
               decoration: InputDecoration(
@@ -100,7 +111,7 @@ class _UserAddReportsState extends State<UserAddReports> {
                 const SizedBox(height: 20),
               ],
               Design.campoTexto(evidenceController, "Evidencia (opcional)"),
-              IconButton(onPressed: (){}, icon: Icon(Icons.download)),
+              IconButton(onPressed: () {}, icon: const Icon(Icons.download)),
               const SizedBox(height: 30),
               Design.botonGreen("Subir reporte", () {
                 ReportModel report = ReportModel(
@@ -110,12 +121,13 @@ class _UserAddReportsState extends State<UserAddReports> {
                   place: placeController.text,
                   GURB: GURBController.text,
                   evidence: evidenceController.text,
-                  accidentType: selectedAccidentType, // Use the dropdown selection
+                  accidentType: selectedAccidentType,
                   status: "Reportado",
                   user: widget.user.toSmallJSON(),
                 );
                 addReport(report);
-                Design.showSnackBarGood(context, "REPORTE REGISTRADO",Colors.green);
+                Design.showSnackBarGood(
+                    context, "REPORTE REGISTRADO", Colors.green);
                 Navigator.pop(context);
               })
             ],

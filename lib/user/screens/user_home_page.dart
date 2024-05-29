@@ -18,13 +18,14 @@ class UserHomePage extends StatefulWidget {
 class _UserHomePageState extends State<UserHomePage> {
   @override
   Widget build(BuildContext context) {
-
     int gridCount = MediaQuery.of(context).size.width > 600 ? 4 : 2;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Design.teal,
-        title: const Text('Bienvenido', style: TextStyle(color: Design.paleYellow)),
+        title: const Text('Bienvenido',
+            style: TextStyle(color: Design.paleYellow)),
+        automaticallyImplyLeading: false,
         actions: [
           IconButton(
             color: Design.paleYellow,
@@ -34,8 +35,8 @@ class _UserHomePageState extends State<UserHomePage> {
                   context,
                   MaterialPageRoute(
                       builder: (context) => UserSettings(
-                        userModel: widget.user,
-                      ))).then((value) => setState(() {}));
+                            userModel: widget.user,
+                          ))).then((value) => setState(() {}));
             },
           )
         ],
@@ -44,7 +45,7 @@ class _UserHomePageState extends State<UserHomePage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Image.asset("assets/images/secre11.png"),
-          SizedBox(
+          const SizedBox(
             height: 30,
           ),
           Expanded(
@@ -63,7 +64,9 @@ class _UserHomePageState extends State<UserHomePage> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => Options(user: widget.user,)));
+                              builder: (context) => Options(
+                                    user: widget.user,
+                                  )));
                     }),
                 IconActionButton(
                     icon: Icons.report,
@@ -74,8 +77,8 @@ class _UserHomePageState extends State<UserHomePage> {
                           context,
                           MaterialPageRoute(
                               builder: (context) => UserReports(
-                                user: widget.user,
-                              ))).then((value) => setState(() {}));
+                                    user: widget.user,
+                                  ))).then((value) => setState(() {}));
                     }),
                 IconActionButton(
                     icon: Icons.payment,
@@ -86,8 +89,8 @@ class _UserHomePageState extends State<UserHomePage> {
                           context,
                           MaterialPageRoute(
                               builder: (context) => FinesScreen(
-                                user: widget.user,
-                              ))).then((value) => setState(() {}));
+                                    user: widget.user,
+                                  ))).then((value) => setState(() {}));
                     }),
                 IconActionButton(
                     icon: Icons.newspaper,

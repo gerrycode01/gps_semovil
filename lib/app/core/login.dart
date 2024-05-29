@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:gps_semovil/app/core/design.dart';
 import 'package:gps_semovil/local.dart';
@@ -48,11 +50,12 @@ class _LoginState extends State<Login> {
                 arguments: userModel);
             break;
           }
-        default: {
-          Navigator.pushReplacementNamed(context, '/traffic_officer_homepage',
-              arguments: userModel);
-          break;
-        }
+        default:
+          {
+            Navigator.pushReplacementNamed(context, '/traffic_officer_homepage',
+                arguments: userModel);
+            break;
+          }
       }
 
       print('Login exitoso');
@@ -126,7 +129,6 @@ class _LoginState extends State<Login> {
                             'He olvidado mi contraseña',
                             style: TextStyle(color: Design.teal),
                           ),
-
                         ),
                         const SizedBox(height: 20),
                         _loading
@@ -176,7 +178,10 @@ class _LoginState extends State<Login> {
                             ),
                             elevation: MaterialStateProperty.all(8.0),
                           ),
-                          child: const Text('Sign up',style: TextStyle(color: Design.teal),),
+                          child: const Text(
+                            'Sign up',
+                            style: TextStyle(color: Design.teal),
+                          ),
                         ),
                       ],
                     ),
