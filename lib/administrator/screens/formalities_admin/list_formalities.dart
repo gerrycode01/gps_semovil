@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gps_semovil/administrator/screens/formalities_admin/formalities_details_screen.dart';
+import 'package:gps_semovil/app/core/design.dart';
 import 'package:gps_semovil/app/core/modules/database/constants.dart';
 import 'package:gps_semovil/app/core/modules/database/formalities_firestore.dart';
 import 'package:gps_semovil/user/models/formalities_model.dart';
@@ -33,21 +34,39 @@ class _ListFormalitiesState extends State<ListFormalities> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Lista de Trámites'),
+        backgroundColor: Design.teal,
+        centerTitle: true,
+        foregroundColor: Design.paleYellow,
       ),
       body: ListView.builder(
         itemCount: formalities.length,
         itemBuilder: (BuildContext context, int index) {
           final f = formalities[index];
-          return ListTile(
-            onTap: () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) =>
-                        FormalitiesDetailScreen(formalities: f))),
-            title: Text('ID: ${f.idFormalities} - ${f.driverLicenseType}'),
-            subtitle: Text(
-                'Precio: \$${f.price.toStringAsFixed(2)} - Fecha: ${DateFormat('dd/MM/yyyy').format(f.date.toDate())}'),
-            trailing: Text('${Const.statusForm[f.status]}'),
+          return Card(
+            elevation: 10,
+            color: Design.teal,
+            margin: const EdgeInsets.all(10),
+            child: ListTile(
+              leading: Icon(Icons.person, size: 50, color: Design.paleYellow),
+              title: Text('ID: ${f.idFormalities} - ${f.driverLicenseType}',style: TextStyle(color: Colors.white),),
+              subtitle: Text('Precio: \$${f.price.toStringAsFixed(2)} - Fecha: ${DateFormat('dd/MM/yyyy').format(f.date.toDate())}',style: TextStyle(color: Design.lightOrange),),
+              trailing: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.remove_red_eye, color: Design.mintGreen,),
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  FormalitiesDetailScreen(formalities: f)));
+                    },
+                  ),
+
+                ],
+              ),
+            ),
           );
         },
       ),
