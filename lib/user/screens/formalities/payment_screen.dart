@@ -26,7 +26,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
       appBar: AppBar(
         centerTitle: true,
         foregroundColor: Design.paleYellow,
-        title: const Text('Pago de Trámite', style: TextStyle(color: Design.paleYellow)),
+        title: const Text('Pago de Trámite',
+            style: TextStyle(color: Design.paleYellow)),
         backgroundColor: Design.teal,
       ),
       body: AnimationLimiter(
@@ -44,7 +45,9 @@ class _PaymentScreenState extends State<PaymentScreen> {
                 const SizedBox(height: 20),
                 paymentProofSection(),
                 const SizedBox(height: 20),
-                loading ? const CircularProgressIndicator() : submitPaymentButton(),
+                loading
+                    ? const CircularProgressIndicator()
+                    : submitPaymentButton(),
               ],
             ),
           ),
@@ -58,24 +61,33 @@ class _PaymentScreenState extends State<PaymentScreen> {
       elevation: 10,
       color: Design.seaGreen,
       clipBehavior: Clip.antiAlias,
-      margin: EdgeInsets.all(8),
+      margin: const EdgeInsets.all(8),
       child: Center(
         child: Column(
           children: [
-            SizedBox(
-              height: 50,
-              // Adjust height based on screen size
-              width: double.infinity,
-              child: Icon(Icons.monetization_on, color: Design.paleYellow,)
-            ),
+            const SizedBox(
+                height: 50,
+                // Adjust height based on screen size
+                width: double.infinity,
+                child: Icon(
+                  Icons.monetization_on,
+                  color: Design.paleYellow,
+                )),
             Padding(
               padding: const EdgeInsets.all(10),
               child: Center(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Center(child: Text('Tipo de Licencia: ${widget.formalities.driverLicenseType}', style: TextStyle(fontSize: 25,color: Design.paleYellow))),
-                    Text('Precio: \$${widget.formalities.price.toStringAsFixed(2)}', style: TextStyle(fontSize: 20,color: Colors.white)),
+                    Center(
+                        child: Text(
+                            'Tipo de Licencia: ${widget.formalities.driverLicenseType}',
+                            style: const TextStyle(
+                                fontSize: 25, color: Design.paleYellow))),
+                    Text(
+                        'Precio: \$${widget.formalities.price.toStringAsFixed(2)}',
+                        style:
+                            const TextStyle(fontSize: 20, color: Colors.white)),
                   ],
                 ),
               ),
@@ -89,24 +101,29 @@ class _PaymentScreenState extends State<PaymentScreen> {
   Widget paymentProofSection() {
     return paymentProofPDF == null
         ? ElevatedButton.icon(
-      icon: const Icon(Icons.cloud_upload, color: Colors.white),
-      label: const Text('Subir Comprobante de Pago'),
-      onPressed: () => _pickPaymentProof(),
-      style: ElevatedButton.styleFrom(
-        foregroundColor: Design.paleYellow, backgroundColor: Design.teal, // button text color
-      ),
-    )
+            icon: const Icon(Icons.cloud_upload, color: Colors.white),
+            label: const Text('Subir Comprobante de Pago'),
+            onPressed: () => _pickPaymentProof(),
+            style: ElevatedButton.styleFrom(
+              foregroundColor: Design.paleYellow,
+              backgroundColor: Design.teal, // button text color
+            ),
+          )
         : Column(
-      children: [
-        const Text('Comprobante de Pago Cargado', style: TextStyle(color: Colors.green, fontSize: 15)),
-        ElevatedButton.icon(
-          icon: const Icon(Icons.replay, color: Colors.white),
-          label: const Text('Reemplazar Comprobante',style: TextStyle(color: Design.paleYellow),),
-          onPressed: () => _pickPaymentProof(),
-          style: ElevatedButton.styleFrom(backgroundColor: Design.teal),
-        ),
-      ],
-    );
+            children: [
+              const Text('Comprobante de Pago Cargado',
+                  style: TextStyle(color: Colors.green, fontSize: 15)),
+              ElevatedButton.icon(
+                icon: const Icon(Icons.replay, color: Colors.white),
+                label: const Text(
+                  'Reemplazar Comprobante',
+                  style: TextStyle(color: Design.paleYellow),
+                ),
+                onPressed: () => _pickPaymentProof(),
+                style: ElevatedButton.styleFrom(backgroundColor: Design.teal),
+              ),
+            ],
+          );
   }
 
   Widget submitPaymentButton() {
@@ -114,7 +131,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
       onPressed: paymentProofPDF == null ? null : _submitPayment,
       child: const Text('Enviar Pago', style: TextStyle(color: Colors.white)),
       style: ElevatedButton.styleFrom(
-        foregroundColor: Design.paleYellow, backgroundColor: Design.teal, // button text color
+        foregroundColor: Design.paleYellow,
+        backgroundColor: Design.teal, // button text color
       ),
     );
   }
@@ -130,13 +148,15 @@ class _PaymentScreenState extends State<PaymentScreen> {
 
   void _submitPayment() async {
     if (paymentProofPDF == null) {
-      Design.showSnackBarGood(context, 'FALTA SUBIR COMPROBANTE DE PAGO', Colors.red);
+      Design.showSnackBarGood(
+          context, 'FALTA SUBIR COMPROBANTE DE PAGO', Colors.red);
       return;
     }
     setState(() {
       loading = true;
     });
-    String url = await uploadFileToFirestorage(paymentProofPDF!, widget.formalities.user.curp, 'payment_proof.pdf');
+    String url = await uploadFileToFirestorage(
+        paymentProofPDF!, widget.formalities.user.curp, 'payment_proof.pdf');
     widget.formalities.paidProofDoc = url;
     widget.formalities.status = 1; // Cambiar estado a 'EN REVISION'.
 
