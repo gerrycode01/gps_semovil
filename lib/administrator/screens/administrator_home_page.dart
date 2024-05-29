@@ -5,6 +5,7 @@ import 'package:gps_semovil/administrator/screens/traffic_officer_admin/administ
 import 'package:gps_semovil/user/models/user_model.dart';
 
 import '../../app/core/design.dart';
+import 'formalities_admin/list_formalities.dart';
 
 class AdministradorHomePage extends StatelessWidget {
   final UserModel admin;
@@ -13,7 +14,7 @@ class AdministradorHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
       home: AdministratorHomePage(),
     );
@@ -30,7 +31,7 @@ class AdministratorHomePage extends StatefulWidget {
 class _AdministratorHomePageState extends State<AdministratorHomePage> {
   int _selectedIndex = 0;
 
-  List<Widget> _pages = [
+  final List<Widget> _pages = [
     NewsPage(), // Placeholder widget for News
     ReportsPage(), // Placeholder widget for Reports
     PaymentsPage(), // Placeholder widget for Payments
@@ -46,7 +47,8 @@ class _AdministratorHomePageState extends State<AdministratorHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Administrador', style: TextStyle(color: Design.paleYellow)),
+        title: const Text('Administrador',
+            style: TextStyle(color: Design.paleYellow)),
         backgroundColor: Design.teal,
         centerTitle: true,
         foregroundColor: Design.paleYellow,
@@ -56,9 +58,11 @@ class _AdministratorHomePageState extends State<AdministratorHomePage> {
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
-            UserAccountsDrawerHeader(
-              accountName: Text("Admin Name", style: TextStyle(color: Design.paleYellow)),
-              accountEmail: Text("admin@example.com", style: TextStyle(color: Colors.white)),
+            const UserAccountsDrawerHeader(
+              accountName: Text("Admin Name",
+                  style: TextStyle(color: Design.paleYellow)),
+              accountEmail: Text("admin@example.com",
+                  style: TextStyle(color: Colors.white)),
               currentAccountPicture: CircleAvatar(
                 backgroundColor: Colors.white,
                 child: Text(
@@ -69,57 +73,61 @@ class _AdministratorHomePageState extends State<AdministratorHomePage> {
               decoration: BoxDecoration(
                 color: Design.teal,
               ),
-            ),ListTile(
-              leading: Icon(Icons.note_alt_sharp),
-              title: Text('Tramites'),
-              onTap: () {},
             ),
-
             ListTile(
-              leading: Icon(Icons.traffic),
-              title: Text('Tránsitos'),
+              leading: const Icon(Icons.note_alt_sharp),
+              title: const Text('Tramites'),
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (b) => const ListFormalities()));
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.traffic),
+              title: const Text('Tránsitos'),
               onTap: () {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => HomeAdminTraficOfficer()));
+                        builder: (context) => const HomeAdminTraficOfficer()));
               },
             ),
             ListTile(
-              leading: Icon(Icons.supervisor_account),
-              title: Text('Usuarios'),
+              leading: const Icon(Icons.supervisor_account),
+              title: const Text('Usuarios'),
               onTap: () {},
             ),
             ListTile(
-              leading: Icon(Icons.newspaper),
-              title: Text('Noticias'),
-              onTap: () {
-                Navigator.pop(context);
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => AdministratorNews()));
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.report),
-              title: Text('Reportes'),
+              leading: const Icon(Icons.newspaper),
+              title: const Text('Noticias'),
               onTap: () {
                 Navigator.pop(context);
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => AdministratorAsignReports()));
+                        builder: (context) => const AdministratorNews()));
               },
             ),
             ListTile(
-              leading: Icon(Icons.payment),
-              title: Text('Pagos'),
+              leading: const Icon(Icons.report),
+              title: const Text('Reportes'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            const AdministratorAsignReports()));
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.payment),
+              title: const Text('Pagos'),
               onTap: () {},
             ),
             ListTile(
-              leading: Icon(Icons.exit_to_app),
-              title: Text('Cerrar sesión'),
+              leading: const Icon(Icons.exit_to_app),
+              title: const Text('Cerrar sesión'),
               onTap: () {},
             ),
           ],
@@ -153,20 +161,20 @@ class _AdministratorHomePageState extends State<AdministratorHomePage> {
 class NewsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Center(child: Text("Noticias Más Actuales"));
+    return const Center(child: Text("Noticias Más Actuales"));
   }
 }
 
 class ReportsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Center(child: Text("Reportes de Usuarios"));
+    return const Center(child: Text("Reportes de Usuarios"));
   }
 }
 
 class PaymentsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Center(child: Text("Pagos Más Actuales"));
+    return const Center(child: Text("Pagos Más Actuales"));
   }
 }
