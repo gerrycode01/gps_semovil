@@ -44,6 +44,8 @@ class _TrafficOfficerReportsState extends State<TrafficOfficerReports> {
         appBar: AppBar(
           title: const Text('Reportes',style: TextStyle(color: Design.paleYellow),),
           backgroundColor: Design.teal,
+          centerTitle: true,
+          foregroundColor: Design.paleYellow,
           bottom: TabBar(
             labelColor: Design.paleYellow,
             dividerColor: Design.seaGreen,

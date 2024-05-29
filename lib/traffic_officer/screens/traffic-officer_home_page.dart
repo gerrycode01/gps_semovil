@@ -21,6 +21,8 @@ class _TrafficOfficerHomePageState extends State<TrafficOfficerHomePage> {
       appBar: AppBar(
         backgroundColor: Design.teal,
         title: const Text('Inicio',style: TextStyle(color: Design.paleYellow),),
+        centerTitle: true,
+        foregroundColor: Design.paleYellow,
       ),
       drawer: Drawer(
         child: ListView(

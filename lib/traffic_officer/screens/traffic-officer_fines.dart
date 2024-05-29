@@ -47,6 +47,8 @@ class _TrafficOfficerFinesState extends State<TrafficOfficerFines> {
       appBar: AppBar(
         backgroundColor: Design.teal,
         title: Text('Registro de Multas', style: TextStyle(color: Design.paleYellow)),
+        centerTitle: true,
+        foregroundColor: Design.paleYellow,
       ),
       body: ListView(
         padding: EdgeInsets.all(8),
