@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:gps_semovil/app/core/design.dart';
-import 'package:gps_semovil/app/core/login.dart';
-import 'package:gps_semovil/app/core/modules/components/circular_image.dart';
 import 'package:gps_semovil/user/models/user_model.dart';
 import 'package:intl/intl.dart';
 
@@ -29,11 +26,8 @@ class _ChangeUserDataState extends State<ChangeUserData> {
   final TextEditingController _localityController = TextEditingController();
   final TextEditingController _bloodTypeController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController = TextEditingController();
 
   @override
-
   void initState() {
     super.initState();
     _namesController.text = widget.userModel.names;
@@ -43,9 +37,12 @@ class _ChangeUserDataState extends State<ChangeUserData> {
     _birthdateController.text = widget.userModel.birthdate ?? "";
     _curpController.text = widget.userModel.curp;
     _streetController.text = widget.userModel.address ?? "";
-    _streetNoController.text = "";  // Supongamos que tienes esta información separada
-    _neighborhoodController.text = "";  // Supongamos que tienes esta información separada
-    _localityController.text = "";  // Supongamos que tienes esta información separada
+    _streetNoController.text =
+        ""; // Supongamos que tienes esta información separada
+    _neighborhoodController.text =
+        ""; // Supongamos que tienes esta información separada
+    _localityController.text =
+        ""; // Supongamos que tienes esta información separada
     _bloodTypeController.text = widget.userModel.bloodtype ?? "";
     _emailController.text = widget.userModel.email ?? "";
     // No inicializamos los campos de contraseña por razones de seguridad
@@ -81,7 +78,9 @@ class _ChangeUserDataState extends State<ChangeUserData> {
                 ),
               ),
             ),
-            const SizedBox(height: 10,),
+            const SizedBox(
+              height: 10,
+            ),
             TextFormField(
               controller: _lastnameController,
               decoration: InputDecoration(
@@ -129,8 +128,10 @@ class _ChangeUserDataState extends State<ChangeUserData> {
                   lastDate: DateTime.now(),
                 );
                 if (pickedDate != null) {
-                  String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate); // Formato que prefieras
-                  _birthdateController.text = formattedDate; // Setea el texto del campo con la fecha
+                  String formattedDate = DateFormat('yyyy-MM-dd')
+                      .format(pickedDate); // Formato que prefieras
+                  _birthdateController.text =
+                      formattedDate; // Setea el texto del campo con la fecha
                 }
               },
             ),
@@ -209,7 +210,6 @@ class _ChangeUserDataState extends State<ChangeUserData> {
                     ),
                   ),
                 ),
-
               ],
             ),
             const SizedBox(height: 10), // Espacio entre las filas
@@ -257,29 +257,30 @@ class _ChangeUserDataState extends State<ChangeUserData> {
             ),
             const SizedBox(height: 10),
             SizedBox(
-              width: double.infinity, // Asegura que el botón se expanda para llenar el ancho
-              child: ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
-                  foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
+                width: double
+                    .infinity, // Asegura que el botón se expanda para llenar el ancho
+                child: ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all<Color>(Colors.green),
+                    foregroundColor:
+                        MaterialStateProperty.all<Color>(Colors.white),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
                     ),
                   ),
-                ),
-                onPressed: _updateUserData, // Asegura que esta función es llamada aquí
-                child: Text('Guardar cambios'),
-              )
-
-            ),
-
-
+                  onPressed:
+                      _updateUserData, // Asegura que esta función es llamada aquí
+                  child: Text('Guardar cambios'),
+                )),
           ],
         ),
       ),
     );
   }
+
   void _updateUserData() async {
     if (!_validateInputs()) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -319,6 +320,4 @@ class _ChangeUserDataState extends State<ChangeUserData> {
         _emailController.text.isNotEmpty &&
         _curpController.text.isNotEmpty;
   }
-
-
 }

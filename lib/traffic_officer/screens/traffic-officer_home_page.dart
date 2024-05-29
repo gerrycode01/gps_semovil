@@ -20,7 +20,10 @@ class _TrafficOfficerHomePageState extends State<TrafficOfficerHomePage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Design.teal,
-        title: const Text('Inicio',style: TextStyle(color: Design.paleYellow),),
+        title: const Text(
+          'Inicio',
+          style: TextStyle(color: Design.paleYellow),
+        ),
         centerTitle: true,
         foregroundColor: Design.paleYellow,
       ),
@@ -29,13 +32,16 @@ class _TrafficOfficerHomePageState extends State<TrafficOfficerHomePage> {
           padding: EdgeInsets.zero,
           children: <Widget>[
             UserAccountsDrawerHeader(
-              accountName: Text(widget.trafficOfficer.names), // Nombre del usuario
-              accountEmail: Text(widget.trafficOfficer.lastname), // Email del usuario
+              accountName:
+                  Text(widget.trafficOfficer.names), // Nombre del usuario
+              accountEmail:
+                  Text(widget.trafficOfficer.lastname), // Email del usuario
               currentAccountPicture: CircleAvatar(
                 backgroundColor: Design.seaGreen,
                 child: Text(
                   widget.trafficOfficer.names[0], // Primera letra del nombre
-                  style: const TextStyle(fontSize: 40.0,color: Design.paleYellow),
+                  style:
+                      const TextStyle(fontSize: 40.0, color: Design.paleYellow),
                 ),
               ),
               decoration: const BoxDecoration(
@@ -44,61 +50,85 @@ class _TrafficOfficerHomePageState extends State<TrafficOfficerHomePage> {
             ),
             ListTile(
               leading: const Icon(Icons.newspaper, color: Colors.blue),
-              title: const Text('Noticias',style: TextStyle(color: Design.teal),),
+              title: const Text(
+                'Noticias',
+                style: TextStyle(color: Design.teal),
+              ),
               onTap: () {
                 Navigator.pop(context);
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => NewsScreenOfficer()));
-                 // Cerrar el drawer
+                        builder: (context) => const NewsScreenOfficer()));
+                // Cerrar el drawer
                 // Navegación a Noticias
               },
             ),
             ListTile(
               leading: const Icon(Icons.report, color: Colors.green),
-              title: const Text('Reportes',style: TextStyle(color: Design.teal),),
+              title: const Text(
+                'Reportes',
+                style: TextStyle(color: Design.teal),
+              ),
               onTap: () {
                 Navigator.pop(context);
-                Navigator.push(context, MaterialPageRoute(builder: (context) => TrafficOfficerReports(trafficOfficer: widget.trafficOfficer)));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => TrafficOfficerReports(
+                            trafficOfficer: widget.trafficOfficer)));
               },
             ),
             ListTile(
               leading: const Icon(Icons.receipt_long, color: Colors.orange),
-              title: const Text('Multas',style: TextStyle(color: Design.teal),),
-              onTap: () {// Cerrar el drawer
-                Navigator.push(context, MaterialPageRoute(builder: (context) => TrafficOfficerFines(trafficOfficer: widget.trafficOfficer)));
+              title: const Text(
+                'Multas',
+                style: TextStyle(color: Design.teal),
+              ),
+              onTap: () {
+                // Cerrar el drawer
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => TrafficOfficerFines(
+                            trafficOfficer: widget.trafficOfficer)));
               },
             ),
             ListTile(
-              leading: const Icon(Icons.door_back_door_outlined, color: Colors.red),
-              title: const Text('Cerrar sesion',style: TextStyle(color: Design.teal),),
-              onTap: () {// Cerrar el drawer
-                Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));
+              leading:
+                  const Icon(Icons.door_back_door_outlined, color: Colors.red),
+              title: const Text(
+                'Cerrar sesion',
+                style: TextStyle(color: Design.teal),
+              ),
+              onTap: () {
+                // Cerrar el drawer
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => const Login()));
               },
             ),
-
           ],
         ),
       ),
-      body:  Column(
+      body: Column(
         children: [
           Padding(
-              padding: EdgeInsets.all(20),
+            padding: const EdgeInsets.all(20),
             child: Image.asset("assets/images/secre.jpg"),
           ),
           Container(
             color: Colors.red, // Ajusta este color al tema de tu app
             child: const Column(
               children: [
-                SizedBox(height: 16),  // Espacio para ajustar la visualización
+                SizedBox(height: 16), // Espacio para ajustar la visualización
                 CircleAvatar(
                   radius: 60, // Tamaño del avatar, ajusta según necesidad
-                  backgroundColor: Colors.pink, // Color del círculo, cambia según tu diseño
+                  backgroundColor:
+                      Colors.pink, // Color del círculo, cambia según tu diseño
                   // Inserta la imagen del usuario aquí
                   child: Text('imagen', style: TextStyle(color: Colors.white)),
                 ),
-                SizedBox(height: 16),  // Espacio después del avatar
+                SizedBox(height: 16), // Espacio después del avatar
               ],
             ),
           ),
@@ -108,7 +138,7 @@ class _TrafficOfficerHomePageState extends State<TrafficOfficerHomePage> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  '${widget.trafficOfficer.names}',
+                  widget.trafficOfficer.names,
                   style: const TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
@@ -124,7 +154,7 @@ class _TrafficOfficerHomePageState extends State<TrafficOfficerHomePage> {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  'Oficial de tránsito',  // Asegúrate de ajustar según el rol o título
+                  'Oficial de tránsito', // Asegúrate de ajustar según el rol o título
                   style: TextStyle(
                     color: Colors.grey[800],
                     fontSize: 18,
