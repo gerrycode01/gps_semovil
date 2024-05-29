@@ -100,6 +100,7 @@ class _UserAddReportsState extends State<UserAddReports> {
                 const SizedBox(height: 20),
               ],
               Design.campoTexto(evidenceController, "Evidencia (opcional)"),
+              IconButton(onPressed: (){}, icon: Icon(Icons.download)),
               const SizedBox(height: 30),
               Design.botonGreen("Subir reporte", () {
                 ReportModel report = ReportModel(
