@@ -56,3 +56,23 @@ Future<void> updateUser(UserModel userModel) async {
     throw Exception('Error al actualizar usuario: $e');
   }
 }
+Future<List<UserModel>> getTrafficOfficers() async {
+  try {
+    final querySnapshot = await db.collection('user')
+        .where('rol', isEqualTo: 'traffic_officer')
+        .get();
+
+    print("Número de oficiales encontrados: ${querySnapshot.docs.length}");  // Imprimir número de documentos obtenidos
+
+    List<UserModel> officers = [];
+    for (var doc in querySnapshot.docs) {
+      print("Datos de oficial: ${doc.data()}");  // Imprimir datos de cada oficial
+      officers.add(UserModel.fromFirestore(doc, null));
+    }
+    return officers;
+  } catch (e) {
+    print("Error al obtener los oficiales de tránsito: $e");
+    return [];
+  }
+}
+

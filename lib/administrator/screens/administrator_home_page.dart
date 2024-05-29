@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gps_semovil/administrator/screens/administrator_asign_reports.dart';
 import 'package:gps_semovil/administrator/screens/administrator_news.dart';
+import 'package:gps_semovil/administrator/screens/traffic_officer_admin/administrator_trafic_oficer_home.dart';
 import 'package:gps_semovil/user/models/user_model.dart';
 
 import '../../app/core/design.dart';
@@ -77,7 +78,12 @@ class _AdministratorHomePageState extends State<AdministratorHomePage> {
             ListTile(
               leading: Icon(Icons.traffic),
               title: Text('Tránsitos'),
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => HomeAdminTraficOfficer()));
+              },
             ),
             ListTile(
               leading: Icon(Icons.supervisor_account),
