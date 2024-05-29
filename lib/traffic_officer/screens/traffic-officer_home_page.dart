@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gps_semovil/app/core/design.dart';
 import 'package:gps_semovil/app/core/login.dart';
+import 'package:gps_semovil/app/core/modules/components/circular_image.dart';
 import 'package:gps_semovil/traffic_officer/screens/traffic-officer_fines.dart';
 import 'package:gps_semovil/traffic_officer/screens/traffic-officer_news.dart';
 import 'package:gps_semovil/traffic_officer/screens/traffic-officer_reports.dart';
@@ -8,6 +9,7 @@ import 'package:gps_semovil/user/models/user_model.dart';
 
 class TrafficOfficerHomePage extends StatefulWidget {
   final UserModel trafficOfficer;
+
   const TrafficOfficerHomePage({super.key, required this.trafficOfficer});
 
   @override
@@ -17,6 +19,7 @@ class TrafficOfficerHomePage extends StatefulWidget {
 class _TrafficOfficerHomePageState extends State<TrafficOfficerHomePage> {
   @override
   Widget build(BuildContext context) {
+    bool isLargeScreen = MediaQuery.of(context).size.width > 600;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Design.teal,
@@ -114,22 +117,11 @@ class _TrafficOfficerHomePageState extends State<TrafficOfficerHomePage> {
         children: [
           Padding(
             padding: const EdgeInsets.all(20),
-            child: Image.asset("assets/images/secre.jpg"),
-          ),
-          Container(
-            color: Colors.red, // Ajusta este color al tema de tu app
-            child: const Column(
-              children: [
-                SizedBox(height: 16), // Espacio para ajustar la visualización
-                CircleAvatar(
-                  radius: 60, // Tamaño del avatar, ajusta según necesidad
-                  backgroundColor:
-                      Colors.pink, // Color del círculo, cambia según tu diseño
-                  // Inserta la imagen del usuario aquí
-                  child: Text('imagen', style: TextStyle(color: Colors.white)),
-                ),
-                SizedBox(height: 16), // Espacio después del avatar
-              ],
+            child: CircularImage(
+              userModel: widget.trafficOfficer,
+              radius: isLargeScreen
+                  ? 150.0
+                  : 100.0, // Mayor tamaño en pantallas grandes
             ),
           ),
           Padding(
@@ -146,7 +138,8 @@ class _TrafficOfficerHomePageState extends State<TrafficOfficerHomePage> {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  ' ${widget.trafficOfficer.lastname}', // Asegúrate de ajustar según los datos
+                  ' ${widget.trafficOfficer.lastname}',
+                  // Asegúrate de ajustar según los datos
                   style: TextStyle(
                     color: Colors.grey[700],
                     fontSize: 20,
@@ -154,7 +147,8 @@ class _TrafficOfficerHomePageState extends State<TrafficOfficerHomePage> {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  'Oficial de tránsito', // Asegúrate de ajustar según el rol o título
+                  'Oficial de tránsito',
+                  // Asegúrate de ajustar según el rol o título
                   style: TextStyle(
                     color: Colors.grey[800],
                     fontSize: 18,

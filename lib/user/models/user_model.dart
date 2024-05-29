@@ -59,7 +59,8 @@ class UserModel {
           email: data?['email'],
           rol: data?['rol'],
           names: data?['names'],
-          lastname: data?['lastname']);
+          lastname: data?['lastname'],
+          profilePhoto: data?['profilePhoto']);
     }
   }
 
@@ -87,7 +88,8 @@ class UserModel {
         email: map['email'],
         rol: map['rol'],
         names: map['names'],
-        lastname: map['lastname']);
+        lastname: map['lastname'],
+        profilePhoto: map['profilePhoto']);
   }
 
   Map<String, dynamic> toJSON() {
